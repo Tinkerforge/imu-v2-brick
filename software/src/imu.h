@@ -203,11 +203,7 @@ typedef struct {
 void tick_task(const uint8_t tick_type);
 void make_period_callback(const uint8_t type);
 
-void update_gyr_temperature_aprox(void);
 void update_sensor_data(void);
-void callback_accelerometer(Async *a);
-void callback_magnetometer(Async *a);
-void callback_gyroscope(Async *a);
 
 void imu_blinkenlights(void);
 void imu_leds_on(const bool on);
@@ -215,4 +211,5 @@ void bmo_read_register(const uint8_t reg, uint8_t *data, const uint8_t length);
 void bmo_write_register(const uint8_t reg, const uint8_t value);
 
 void imu_init(void);
+
 #endif
