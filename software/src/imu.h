@@ -174,29 +174,29 @@
 #define REG_UNIQUE_ID_F      0x5F
 
 typedef struct {
-	int16_t acc_x;
+	int16_t acc_x; // 1m/s^2 = 100 LSB
 	int16_t acc_y;
 	int16_t acc_z;
-	int16_t mag_x;
+	int16_t mag_x; // 1µT = 16 LSB
 	int16_t mag_y;
 	int16_t mag_z;
-	int16_t gyr_x;
+	int16_t gyr_x; // 1dps (degree-per-second) = 16 LSB
 	int16_t gyr_y;
 	int16_t gyr_z;
-	int16_t eul_heading;
+	int16_t eul_heading; // 1° = 16 LSB
 	int16_t eul_roll;
 	int16_t eul_pitch;
-	int16_t qua_w;
-	int16_t qua_x;
-	int16_t qua_y;
-	int16_t qua_z;
-	int16_t lia_x;
+	uint16_t qua_w; // 1 Quaternion = 2^14 LSB
+	uint16_t qua_x;
+	uint16_t qua_y;
+	uint16_t qua_z;
+	int16_t lia_x; // 1m/s^2 = 100 LSB
 	int16_t lia_y;
 	int16_t lia_z;
-	int16_t grv_x;
+	int16_t grv_x; // 1m/s^2 = 100 LSB
 	int16_t grv_y;
 	int16_t grv_z;
-	uint8_t temperature;
+	int8_t temperature; // 1°C = 1 LSB
 	uint8_t calibration_status;
 } __attribute__((packed)) SensorData;
 
@@ -204,7 +204,7 @@ void tick_task(const uint8_t tick_type);
 void make_period_callback(const uint8_t type);
 
 void update_gyr_temperature_aprox(void);
-void update_sensors(void);
+void update_sensor_data(void);
 void callback_accelerometer(Async *a);
 void callback_magnetometer(Async *a);
 void callback_gyroscope(Async *a);

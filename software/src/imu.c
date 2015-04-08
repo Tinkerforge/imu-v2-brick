@@ -107,7 +107,7 @@ void tick_task(const uint8_t tick_type) {
 	static int8_t message_counter = 0;
 
 	if(tick_type == TICK_TASK_TYPE_CALCULATION) {
-		update_sensors();
+		update_sensor_data();
 
 		for(uint8_t i = 0; i < IMU_PERIOD_NUM; i++) {
 			if(imu_period_counter[i] < UINT32_MAX) {
@@ -360,8 +360,9 @@ void imu_blinkenlights(void) {
 	}
 }
 
-void update_sensors(void) {
+void update_sensor_data(void) {
 	update_sensor_counter++;
+	// Can we use interrupt pin instead of counter?
 	if(update_sensor_counter >= 100) {
 		bmo_read_register(REG_ACC_DATA_X_LSB, (uint8_t*)&sensor_data, sizeof(SensorData));
 		update_sensor_counter = 0;
