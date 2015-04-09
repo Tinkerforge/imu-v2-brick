@@ -49,37 +49,11 @@
 uint32_t imu_period[IMU_PERIOD_NUM] = {0};
 uint32_t imu_period_counter[IMU_PERIOD_NUM] = {0};
 
-int16_t imu_acc_x = 0;
-int16_t imu_acc_y = 0;
-int16_t imu_acc_z = 0;
-
-int16_t imu_mag_x = 0;
-int16_t imu_mag_y = 0;
-int16_t imu_mag_z = 0;
-
-int16_t imu_gyr_x = 0;
-int16_t imu_gyr_y = 0;
-int16_t imu_gyr_z = 0;
-
-int16_t imu_pitch = 0;
-int16_t imu_roll = 0;
-int16_t imu_yaw = 0;
-
-int16_t imu_gyr_temperature = 0;
-int32_t imu_gyr_temperature_sum = 0;
-uint32_t imu_gyr_temperature_counter = 0;
-
-float imu_qua_x = 1.0;
-float imu_qua_y = 0.0;
-float imu_qua_z = 0.0;
-float imu_qua_w = 0.0;
-
 bool imu_use_leds = false;
 bool imu_use_orientation = true;
 bool imu_mode_update = true;
-Async imu_async;
-uint8_t imu_sensor_data[8] = {0};
 
+Async imu_async;
 extern Twid twid;
 extern Mutex mutex_twi_bricklet;
 
@@ -149,9 +123,9 @@ void make_period_callback(const uint8_t type) {
 		case IMU_PERIOD_TYPE_ACC: {
 			AccelerationCallback as;
 			com_make_default_header(&as, com_info.uid, sizeof(AccelerationCallback), FID_ACCELERATION);
-			as.x = imu_acc_x;
-			as.y = imu_acc_y;
-			as.z = imu_acc_z;
+			as.x = sensor_data.acc_x;
+			as.y = sensor_data.acc_y;
+			as.z = sensor_data.acc_z;
 
 			send_blocking_with_timeout(&as,
 			                           sizeof(AccelerationCallback),
@@ -162,9 +136,9 @@ void make_period_callback(const uint8_t type) {
 		case IMU_PERIOD_TYPE_MAG: {
 			MagneticFieldCallback mfs;
 			com_make_default_header(&mfs, com_info.uid, sizeof(MagneticFieldCallback), FID_MAGNETIC_FIELD);
-			mfs.x = imu_mag_x;
-			mfs.y = imu_mag_y;
-			mfs.z = imu_mag_z;
+			mfs.x = sensor_data.mag_x;
+			mfs.y = sensor_data.mag_y;
+			mfs.z = sensor_data.mag_z;
 
 			send_blocking_with_timeout(&mfs,
 			                           sizeof(MagneticFieldCallback),
@@ -175,9 +149,9 @@ void make_period_callback(const uint8_t type) {
 		case IMU_PERIOD_TYPE_ANG: {
 			AngularVelocityCallback avs;
 			com_make_default_header(&avs, com_info.uid, sizeof(AngularVelocityCallback), FID_ANGULAR_VELOCITY);
-			avs.x = imu_gyr_x;
-			avs.y = imu_gyr_y;
-			avs.z = imu_gyr_z;
+			avs.x = sensor_data.gyr_x;
+			avs.y = sensor_data.gyr_y;
+			avs.z = sensor_data.gyr_z;
 
 			send_blocking_with_timeout(&avs,
 			                           sizeof(AngularVelocityCallback),
@@ -188,16 +162,8 @@ void make_period_callback(const uint8_t type) {
 		case IMU_PERIOD_TYPE_ALL: {
 			AllDataCallback ads;
 			com_make_default_header(&ads, com_info.uid, sizeof(AllDataCallback), FID_ALL_DATA);
-			ads.acc_x       = imu_acc_x;
-			ads.acc_y       = imu_acc_y;
-			ads.acc_z       = imu_acc_z;
-			ads.mag_x       = imu_mag_x;
-			ads.mag_y       = imu_mag_y;
-			ads.mag_z       = imu_mag_z;
-			ads.ang_x       = imu_gyr_x;
-			ads.ang_y       = imu_gyr_y;
-			ads.ang_z       = imu_gyr_z;
-			ads.temperature = imu_gyr_temperature;
+
+			memcpy(&ads.acceleration, &sensor_data, sizeof(SensorData));
 
 			send_blocking_with_timeout(&ads,
 			                           sizeof(AllDataCallback),
@@ -208,9 +174,9 @@ void make_period_callback(const uint8_t type) {
 		case IMU_PERIOD_TYPE_ORI: {
 			OrientationCallback os;
 			com_make_default_header(&os, com_info.uid, sizeof(OrientationCallback), FID_ORIENTATION);
-			os.roll  = imu_roll;
-			os.pitch = imu_pitch;
-			os.yaw   = imu_yaw;
+			os.roll    = sensor_data.eul_roll;
+			os.pitch   = sensor_data.eul_pitch;
+			os.heading = sensor_data.eul_heading;
 
 			send_blocking_with_timeout(&os,
 			                           sizeof(OrientationCallback),
@@ -221,10 +187,10 @@ void make_period_callback(const uint8_t type) {
 		case IMU_PERIOD_TYPE_QUA: {
 			QuaternionCallback qs;
 			com_make_default_header(&qs, com_info.uid, sizeof(QuaternionCallback), FID_QUATERNION);
-			qs.x = imu_qua_x;
-			qs.y = imu_qua_y;
-			qs.z = imu_qua_z;
-			qs.w = imu_qua_w;
+			qs.x = sensor_data.qua_x;
+			qs.y = sensor_data.qua_y;
+			qs.z = sensor_data.qua_z;
+			qs.w = sensor_data.qua_w;
 
 			send_blocking_with_timeout(&qs,
 			                           sizeof(QuaternionCallback),
@@ -318,17 +284,19 @@ void imu_blinkenlights(void) {
 	}
 
 	PWMC_SetDutyCycle(PWM, 0,
-	                  blink_lookup[(BETWEEN(-1000, imu_acc_x, 1000) +
+	                  blink_lookup[(BETWEEN(-1000, sensor_data.acc_x, 1000) +
 	                                1000)/50]);
 	PWMC_SetDutyCycle(PWM, 1,
-	                  blink_lookup[(BETWEEN(-1000, imu_acc_y, 1000) +
+	                  blink_lookup[(BETWEEN(-1000, sensor_data.acc_y, 1000) +
 	                                1000)/50]);
 	PWMC_SetDutyCycle(PWM, 2,
-	                  blink_lookup[40 - (BETWEEN(-1000, imu_acc_z, 1000) +
+	                  blink_lookup[40 - (BETWEEN(-1000, sensor_data.acc_z, 1000) +
 	                               1000)/50]);
 
-	int16_t degree = atan2(2.0*(imu_qua_x*imu_qua_y + imu_qua_w*imu_qua_z),
-	                       1.0 - 2.0*(imu_qua_x*imu_qua_x + imu_qua_z*imu_qua_z))*180/M_PI + 45;
+//	int16_t degree = atan2(2.0*(imu_qua_x*imu_qua_y + imu_qua_w*imu_qua_z),
+//	                       1.0 - 2.0*(imu_qua_x*imu_qua_x + imu_qua_z*imu_qua_z))*180/M_PI + 45;
+
+	int16_t degree = sensor_data.eul_heading;
 	if(degree < 0) {
 		degree += 360;
 	}

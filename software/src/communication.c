@@ -33,32 +33,13 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 
 extern uint32_t imu_period[IMU_PERIOD_NUM];
 extern uint32_t imu_period_counter[IMU_PERIOD_NUM];
 
-extern int16_t imu_acc_x;
-extern int16_t imu_acc_y;
-extern int16_t imu_acc_z;
+extern SensorData sensor_data;
 
-extern int16_t imu_mag_x;
-extern int16_t imu_mag_y;
-extern int16_t imu_mag_z;
-
-extern int16_t imu_gyr_x;
-extern int16_t imu_gyr_y;
-extern int16_t imu_gyr_z;
-
-extern int16_t imu_pitch;
-extern int16_t imu_roll;
-extern int16_t imu_yaw;
-
-extern float imu_qua_x;
-extern float imu_qua_y;
-extern float imu_qua_z;
-extern float imu_qua_w;
-
-extern int16_t imu_gyr_temperature;
 extern bool imu_use_leds;
 
 void get_acceleration(const ComType com, const GetAcceleration *data) {
@@ -66,9 +47,9 @@ void get_acceleration(const ComType com, const GetAcceleration *data) {
 
 	gar.header        = data->header;
 	gar.header.length = sizeof(GetAccelerationReturn);
-	gar.x             = imu_acc_x;
-	gar.y             = imu_acc_y;
-	gar.z             = imu_acc_z;
+	gar.x             = sensor_data.acc_x;
+	gar.y             = sensor_data.acc_y;
+	gar.z             = sensor_data.acc_z;
 
 	send_blocking_with_timeout(&gar, sizeof(GetAccelerationReturn), com);
 }
@@ -78,9 +59,9 @@ void get_magnetic_field(const ComType com, const GetMagneticField *data) {
 
 	gmfr.header        = data->header;
 	gmfr.header.length = sizeof(GetMagneticFieldReturn);
-	gmfr.x             = imu_mag_x;
-	gmfr.y             = imu_mag_y;
-	gmfr.z             = imu_mag_z;
+	gmfr.x             = sensor_data.mag_x;
+	gmfr.y             = sensor_data.mag_y;
+	gmfr.z             = sensor_data.mag_z;
 
 	send_blocking_with_timeout(&gmfr, sizeof(GetMagneticFieldReturn), com);
 }
@@ -90,30 +71,22 @@ void get_angular_velocity(const ComType com, const GetAngularVelocity *data) {
 
 	gavr.header        = data->header;
 	gavr.header.length = sizeof(GetAngularVelocityReturn);
-	gavr.x             = imu_gyr_x;
-	gavr.y             = imu_gyr_y;
-	gavr.z             = imu_gyr_z;
+	gavr.x             = sensor_data.gyr_x;
+	gavr.y             = sensor_data.gyr_y;
+	gavr.z             = sensor_data.gyr_z;
 
 	send_blocking_with_timeout(&gavr, sizeof(GetAngularVelocityReturn), com);
 }
 
-void get_all_data(const ComType com, const GetAllData *data) {
-	GetAllDataReturn gadr;
+void get_temperature(const ComType com, const GetTemperature *data) {
+	GetTemperatureReturn gtr;
 
-	gadr.header        = data->header;
-	gadr.header.length = sizeof(GetAllDataReturn);
-	gadr.acc_x         = imu_acc_x;
-	gadr.acc_y         = imu_acc_y;
-	gadr.acc_z         = imu_acc_z;
-	gadr.mag_x         = imu_mag_x;
-	gadr.mag_y         = imu_mag_y;
-	gadr.mag_z         = imu_mag_z;
-	gadr.ang_x         = imu_gyr_x;
-	gadr.ang_y         = imu_gyr_y;
-	gadr.ang_z         = imu_gyr_z;
-	gadr.temperature   = imu_gyr_temperature;
+	gtr.header        = data->header;
+	gtr.header.length = sizeof(GetTemperatureReturn);
+	gtr.temperature   = sensor_data.temperature;
 
-	send_blocking_with_timeout(&gadr, sizeof(GetAllDataReturn), com);
+
+	send_blocking_with_timeout(&gtr, sizeof(GetTemperatureReturn), com);
 }
 
 void get_orientation(const ComType com, const GetOrientation *data) {
@@ -121,11 +94,19 @@ void get_orientation(const ComType com, const GetOrientation *data) {
 
 	gor.header        = data->header;
 	gor.header.length = sizeof(GetOrientationReturn);
-	gor.roll          = imu_roll;
-	gor.pitch         = imu_pitch;
-	gor.yaw           = imu_yaw;
+	gor.roll          = sensor_data.eul_roll;
+	gor.pitch         = sensor_data.eul_pitch;
+	gor.heading       = sensor_data.eul_heading;
 
 	send_blocking_with_timeout(&gor, sizeof(GetOrientationReturn), com);
+}
+
+void get_linear_acceleration(const ComType com, const GetLinearAcceleration *data) {
+	// TODO
+}
+
+void get_gravity_vector(const ComType com, const GetGravityVector *data) {
+	// TODO
 }
 
 void get_quaternion(const ComType com, const GetQuaternion *data) {
@@ -133,24 +114,25 @@ void get_quaternion(const ComType com, const GetQuaternion *data) {
 
 	gqr.header        = data->header;
 	gqr.header.length = sizeof(GetQuaternionReturn);
-	gqr.x             = imu_qua_x;
-	gqr.y             = imu_qua_y;
-	gqr.z             = imu_qua_z;
-	gqr.w             = imu_qua_w;
+	gqr.x             = sensor_data.qua_x;
+	gqr.y             = sensor_data.qua_y;
+	gqr.z             = sensor_data.qua_z;
+	gqr.w             = sensor_data.qua_w;
 
 	send_blocking_with_timeout(&gqr, sizeof(GetQuaternionReturn), com);
 }
 
-void get_imu_temperature(const ComType com, const GetIMUTemperature *data) {
-	GetIMUTemperatureReturn gtr;
+void get_all_data(const ComType com, const GetAllData *data) {
+	GetAllDataReturn gadr;
 
-	gtr.header        = data->header;
-	gtr.header.length = sizeof(GetIMUTemperatureReturn);
-	gtr.temperature   = imu_gyr_temperature;
+	gadr.header        = data->header;
+	gadr.header.length = sizeof(GetAllDataReturn);
+	memcpy(&gadr.acceleration, &sensor_data, sizeof(SensorData));
 
-
-	send_blocking_with_timeout(&gtr, sizeof(GetIMUTemperatureReturn), com);
+	send_blocking_with_timeout(&gadr, sizeof(GetAllDataReturn), com);
 }
+
+
 
 void leds_on(const ComType com, const LedsOn *data) {
 	imu_leds_on(true);
@@ -247,23 +229,12 @@ void get_angular_velocity_period(const ComType com, const GetAngularVelocityPeri
 	logimui("get_angular_velocity_period: %d\n\r", imu_period[IMU_PERIOD_TYPE_ANG]);
 }
 
-void set_all_data_period(const ComType com, const SetAllDataPeriod *data) {
-	imu_period[IMU_PERIOD_TYPE_ALL] = data->period;
-	imu_period_counter[IMU_PERIOD_TYPE_ALL] = 0;
-	logimui("set_all_data_period: %d\n\r", imu_period[IMU_PERIOD_TYPE_ALL]);
-
-	com_return_setter(com, data);
+void set_temperature_period(const ComType com, const SetTemperaturePeriod *data) {
+	// TODO
 }
 
-void get_all_data_period(const ComType com, const GetAllDataPeriod *data) {
-	GetAllDataPeriodReturn gadpr;
-
-	gadpr.header        = data->header;
-	gadpr.header.length = sizeof(GetAllDataPeriodReturn);
-	gadpr.period        = imu_period[IMU_PERIOD_TYPE_ALL];
-
-	send_blocking_with_timeout(&gadpr, sizeof(GetAllDataPeriodReturn), com);
-	logimui("get_all_data_period: %d\n\r", imu_period[IMU_PERIOD_TYPE_ALL]);
+void get_temperature_period(const ComType com, const GetTemperaturePeriod *data) {
+	// TODO
 }
 
 void set_orientation_period(const ComType com, const SetOrientationPeriod *data) {
@@ -285,6 +256,22 @@ void get_orientation_period(const ComType com, const GetOrientationPeriod *data)
 	logimui("get_orientation_period: %d\n\r", imu_period[IMU_PERIOD_TYPE_ORI]);
 }
 
+void set_linear_acceleration_period(const ComType com, const SetLinearAccelerationPeriod *data) {
+
+}
+
+void get_linear_acceleration_period(const ComType com, const GetLinearAccelerationPeriod *data) {
+
+}
+
+void set_gravity_vector_period(const ComType com, const SetGravityVectorPeriod *data) {
+
+}
+
+void get_gravity_vector_period(const ComType com, const GetGravityVectorPeriod *data) {
+
+}
+
 void set_quaternion_period(const ComType com, const SetQuaternionPeriod *data) {
 	imu_period[IMU_PERIOD_TYPE_QUA] = data->period;
 	imu_period_counter[IMU_PERIOD_TYPE_QUA] = 0;
@@ -303,3 +290,23 @@ void get_quaternion_period(const ComType com, const GetQuaternionPeriod *data) {
 	send_blocking_with_timeout(&gqpr, sizeof(GetQuaternionPeriodReturn), com);
 	logimui("get_quaternion_period: %d\n\r", imu_period[IMU_PERIOD_TYPE_QUA]);
 }
+
+void set_all_data_period(const ComType com, const SetAllDataPeriod *data) {
+	imu_period[IMU_PERIOD_TYPE_ALL] = data->period;
+	imu_period_counter[IMU_PERIOD_TYPE_ALL] = 0;
+	logimui("set_all_data_period: %d\n\r", imu_period[IMU_PERIOD_TYPE_ALL]);
+
+	com_return_setter(com, data);
+}
+
+void get_all_data_period(const ComType com, const GetAllDataPeriod *data) {
+	GetAllDataPeriodReturn gadpr;
+
+	gadpr.header        = data->header;
+	gadpr.header.length = sizeof(GetAllDataPeriodReturn);
+	gadpr.period        = imu_period[IMU_PERIOD_TYPE_ALL];
+
+	send_blocking_with_timeout(&gadpr, sizeof(GetAllDataPeriodReturn), com);
+	logimui("get_all_data_period: %d\n\r", imu_period[IMU_PERIOD_TYPE_ALL]);
+}
+

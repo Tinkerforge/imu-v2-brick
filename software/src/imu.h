@@ -30,11 +30,14 @@
 #define IMU_PERIOD_TYPE_ACC  0
 #define IMU_PERIOD_TYPE_MAG  1
 #define IMU_PERIOD_TYPE_ANG  2
-#define IMU_PERIOD_TYPE_ALL  3
+#define IMU_PERIOD_TYPE_TMP  3
 #define IMU_PERIOD_TYPE_ORI  4
-#define IMU_PERIOD_TYPE_QUA  5
+#define IMU_PERIOD_TYPE_LIN  5
+#define IMU_PERIOD_TYPE_GRV  6
+#define IMU_PERIOD_TYPE_QUA  7
+#define IMU_PERIOD_TYPE_ALL  8
 
-#define IMU_PERIOD_NUM       6
+#define IMU_PERIOD_NUM       9
 
 #define IMU_STARTUP_TIME     650 // see 1.2 (POR time)
 
