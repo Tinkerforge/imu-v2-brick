@@ -32,12 +32,23 @@
 #define IMU_PERIOD_TYPE_ANG  2
 #define IMU_PERIOD_TYPE_TMP  3
 #define IMU_PERIOD_TYPE_ORI  4
-#define IMU_PERIOD_TYPE_LIN  5
+#define IMU_PERIOD_TYPE_LIA  5
 #define IMU_PERIOD_TYPE_GRV  6
 #define IMU_PERIOD_TYPE_QUA  7
 #define IMU_PERIOD_TYPE_ALL  8
 
 #define IMU_PERIOD_NUM       9
+
+#define RANGE_ACCELEROMETER_2G  0
+#define RANGE_ACCELEROMETER_4G  1
+#define RANGE_ACCELEROMETER_8G  2
+#define RANGE_ACCELEROMETER_16G 3
+
+#define RANGE_GYROSCOPE_2000DPS 0
+#define RANGE_GYROSCOPE_1000DPS 1
+#define RANGE_GYROSCOPE_500DPS  2
+#define RANGE_GYROSCOPE_250DPS  3
+#define RANGE_GYROSCOPE_125DPS  4
 
 #define IMU_STARTUP_TIME     650 // see 1.2 (POR time)
 
@@ -213,6 +224,7 @@ void imu_leds_on(const bool on);
 void bmo_read_register(const uint8_t reg, uint8_t *data, const uint8_t length);
 void bmo_write_register(const uint8_t reg, const uint8_t value);
 
+void update_configuration(void);
 void imu_init(void);
 
 #endif

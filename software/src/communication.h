@@ -66,7 +66,7 @@
 #define FID_TEMPERATURE 36
 #define FID_ORIENTATION 37
 #define FID_LINEAR_ACCELERATION 38
-#define FID_GRAVITY 39
+#define FID_GRAVITY_VECTOR 39
 #define FID_QUATERNION 40
 #define FID_ALL_DATA 41
 
@@ -110,7 +110,7 @@
 	{FID_TEMPERATURE, (message_handler_func_t)NULL}, \
 	{FID_ORIENTATION, (message_handler_func_t)NULL}, \
 	{FID_LINEAR_ACCELERATION, (message_handler_func_t)NULL}, \
-	{FID_GRAVITY, (message_handler_func_t)NULL}, \
+	{FID_GRAVITY_VECTOR, (message_handler_func_t)NULL}, \
 	{FID_QUATERNION, (message_handler_func_t)NULL}, \
 	{FID_ALL_DATA, (message_handler_func_t)NULL},
 
@@ -146,7 +146,6 @@ typedef struct {
 	int16_t y;
 	int16_t z;
 } __attribute__((__packed__)) GetAngularVelocityReturn;
-
 
 typedef struct {
 	MessageHeader header;
@@ -239,6 +238,8 @@ typedef struct {
 
 typedef struct {
 	MessageHeader header;
+	uint8_t accelerometer_range;
+	uint8_t gyroscope_range;
 } __attribute__((__packed__)) SetConfiguration;
 
 typedef struct {
@@ -247,6 +248,8 @@ typedef struct {
 
 typedef struct {
 	MessageHeader header;
+	uint8_t accelerometer_range;
+	uint8_t gyroscope_range;
 } __attribute__((__packed__)) GetConfigurationReturn;
 
 typedef struct {
@@ -374,8 +377,6 @@ typedef struct {
 	MessageHeader header;
 	uint32_t period;
 } __attribute__((__packed__)) GetAllDataPeriodReturn;
-
-
 
 typedef struct {
 	MessageHeader header;

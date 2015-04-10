@@ -74,6 +74,9 @@ bool pins_led_is_pwm[] = {true,
                           false,
                           true};
 
+uint8_t accelerometer_range = RANGE_ACCELEROMETER_4G;
+uint8_t gyroscope_range     = RANGE_GYROSCOPE_2000DPS;
+
 SensorData sensor_data = {0};
 uint8_t update_sensor_counter = 0;
 
@@ -81,7 +84,7 @@ void tick_task(const uint8_t tick_type) {
 	static int8_t message_counter = 0;
 
 	if(tick_type == TICK_TASK_TYPE_CALCULATION) {
-		update_sensor_data();
+//		update_sensor_data();
 
 		for(uint8_t i = 0; i < IMU_PERIOD_NUM; i++) {
 			if(imu_period_counter[i] < UINT32_MAX) {
@@ -121,79 +124,116 @@ void make_period_callback(const uint8_t type) {
 
 	switch(type) {
 		case IMU_PERIOD_TYPE_ACC: {
-			AccelerationCallback as;
-			com_make_default_header(&as, com_info.uid, sizeof(AccelerationCallback), FID_ACCELERATION);
-			as.x = sensor_data.acc_x;
-			as.y = sensor_data.acc_y;
-			as.z = sensor_data.acc_z;
+			AccelerationCallback ac;
+			com_make_default_header(&ac, com_info.uid, sizeof(AccelerationCallback), FID_ACCELERATION);
+			ac.x = sensor_data.acc_x;
+			ac.y = sensor_data.acc_y;
+			ac.z = sensor_data.acc_z;
 
-			send_blocking_with_timeout(&as,
+			send_blocking_with_timeout(&ac,
 			                           sizeof(AccelerationCallback),
 			                           com_info.current);
 			break;
 		}
 
 		case IMU_PERIOD_TYPE_MAG: {
-			MagneticFieldCallback mfs;
-			com_make_default_header(&mfs, com_info.uid, sizeof(MagneticFieldCallback), FID_MAGNETIC_FIELD);
-			mfs.x = sensor_data.mag_x;
-			mfs.y = sensor_data.mag_y;
-			mfs.z = sensor_data.mag_z;
+			MagneticFieldCallback mfc;
+			com_make_default_header(&mfc, com_info.uid, sizeof(MagneticFieldCallback), FID_MAGNETIC_FIELD);
+			mfc.x = sensor_data.mag_x;
+			mfc.y = sensor_data.mag_y;
+			mfc.z = sensor_data.mag_z;
 
-			send_blocking_with_timeout(&mfs,
+			send_blocking_with_timeout(&mfc,
 			                           sizeof(MagneticFieldCallback),
 			                           com_info.current);
 			break;
 		}
 
 		case IMU_PERIOD_TYPE_ANG: {
-			AngularVelocityCallback avs;
-			com_make_default_header(&avs, com_info.uid, sizeof(AngularVelocityCallback), FID_ANGULAR_VELOCITY);
-			avs.x = sensor_data.gyr_x;
-			avs.y = sensor_data.gyr_y;
-			avs.z = sensor_data.gyr_z;
+			AngularVelocityCallback avc;
+			com_make_default_header(&avc, com_info.uid, sizeof(AngularVelocityCallback), FID_ANGULAR_VELOCITY);
+			avc.x = sensor_data.gyr_x;
+			avc.y = sensor_data.gyr_y;
+			avc.z = sensor_data.gyr_z;
 
-			send_blocking_with_timeout(&avs,
+			send_blocking_with_timeout(&avc,
 			                           sizeof(AngularVelocityCallback),
 			                           com_info.current);
 			break;
 		}
 
-		case IMU_PERIOD_TYPE_ALL: {
-			AllDataCallback ads;
-			com_make_default_header(&ads, com_info.uid, sizeof(AllDataCallback), FID_ALL_DATA);
+		case IMU_PERIOD_TYPE_TMP: {
+			TemperatureCallback tc;
+			com_make_default_header(&tc, com_info.uid, sizeof(AngularVelocityCallback), FID_TEMPERATURE);
+			tc.temperature = sensor_data.temperature;
 
-			memcpy(&ads.acceleration, &sensor_data, sizeof(SensorData));
-
-			send_blocking_with_timeout(&ads,
-			                           sizeof(AllDataCallback),
+			send_blocking_with_timeout(&tc,
+			                           sizeof(TemperatureCallback),
 			                           com_info.current);
 			break;
 		}
 
 		case IMU_PERIOD_TYPE_ORI: {
-			OrientationCallback os;
-			com_make_default_header(&os, com_info.uid, sizeof(OrientationCallback), FID_ORIENTATION);
-			os.roll    = sensor_data.eul_roll;
-			os.pitch   = sensor_data.eul_pitch;
-			os.heading = sensor_data.eul_heading;
+			OrientationCallback oc;
+			com_make_default_header(&oc, com_info.uid, sizeof(OrientationCallback), FID_ORIENTATION);
+			oc.roll    = sensor_data.eul_roll;
+			oc.pitch   = sensor_data.eul_pitch;
+			oc.heading = sensor_data.eul_heading;
 
-			send_blocking_with_timeout(&os,
+			send_blocking_with_timeout(&oc,
 			                           sizeof(OrientationCallback),
 			                           com_info.current);
 			break;
 		}
 
-		case IMU_PERIOD_TYPE_QUA: {
-			QuaternionCallback qs;
-			com_make_default_header(&qs, com_info.uid, sizeof(QuaternionCallback), FID_QUATERNION);
-			qs.x = sensor_data.qua_x;
-			qs.y = sensor_data.qua_y;
-			qs.z = sensor_data.qua_z;
-			qs.w = sensor_data.qua_w;
+		case IMU_PERIOD_TYPE_LIA: {
+			LinearAccelerationCallback lac;
+			com_make_default_header(&lac, com_info.uid, sizeof(LinearAccelerationCallback), FID_LINEAR_ACCELERATION);
+			lac.x = sensor_data.lia_x;
+			lac.y = sensor_data.lia_y;
+			lac.z = sensor_data.lia_z;
 
-			send_blocking_with_timeout(&qs,
+			send_blocking_with_timeout(&lac,
+			                           sizeof(LinearAccelerationCallback),
+			                           com_info.current);
+			break;
+		}
+
+		case IMU_PERIOD_TYPE_GRV: {
+			GravityVectorCallback gvc;
+			com_make_default_header(&gvc, com_info.uid, sizeof(GravityVectorCallback), FID_GRAVITY_VECTOR);
+			gvc.x = sensor_data.grv_x;
+			gvc.y = sensor_data.grv_y;
+			gvc.z = sensor_data.grv_z;
+
+			send_blocking_with_timeout(&gvc,
+			                           sizeof(GravityVectorCallback),
+			                           com_info.current);
+			break;
+		}
+
+		case IMU_PERIOD_TYPE_QUA: {
+			QuaternionCallback qc;
+			com_make_default_header(&qc, com_info.uid, sizeof(QuaternionCallback), FID_QUATERNION);
+			qc.x = sensor_data.qua_x;
+			qc.y = sensor_data.qua_y;
+			qc.z = sensor_data.qua_z;
+			qc.w = sensor_data.qua_w;
+
+			send_blocking_with_timeout(&qc,
 			                           sizeof(QuaternionCallback),
+			                           com_info.current);
+			break;
+		}
+
+		case IMU_PERIOD_TYPE_ALL: {
+			AllDataCallback adc;
+			com_make_default_header(&adc, com_info.uid, sizeof(AllDataCallback), FID_ALL_DATA);
+
+			memcpy(&adc.acceleration, &sensor_data, sizeof(SensorData));
+
+			send_blocking_with_timeout(&adc,
+			                           sizeof(AllDataCallback),
 			                           com_info.current);
 			break;
 		}
@@ -361,6 +401,15 @@ void bmo_read_register(const uint8_t reg, uint8_t *data, const uint8_t length) {
 	mutex_give(mutex_twi_bricklet);
 }
 
+void update_configuration(void) {
+	// Update ranges, set default for other bits in registers
+	bmo_write_register(REG_PAGE_ID, 1);
+	bmo_write_register(REG_ACC_CONFIG,   0b00001100 | accelerometer_range);
+	bmo_write_register(REG_GYR_CONFIG_0, 0b00111000 | gyroscope_range);
+	bmo_write_register(REG_GYR_CONFIG_1, 0b00000000);
+	bmo_write_register(REG_PAGE_ID, 0);
+}
+
 void imu_init(void) {
 	logimui("IMU init start\n\r");
 	Pin pins_bno[] = {PINS_BNO};
@@ -368,6 +417,7 @@ void imu_init(void) {
 
 	SLEEP_MS(IMU_STARTUP_TIME);
 
+	update_configuration();
 	bmo_write_register(REG_OPR_MODE, 0b00001100); // Enable NDOF, see Table 3-5
 
 	// TODO: Init other stuff
