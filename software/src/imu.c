@@ -475,8 +475,6 @@ bool read_calibration_from_flash_and_save_to_bno055(void) {
 		logimui(" Acc Radius: %d\n\r", imu_calibration_in_flash->acc_radius);
 		logimui(" Mag Radius: %d\n\r", imu_calibration_in_flash->mag_radius);
 		ret = true;
-		bmo_write_register(REG_OPR_MODE, 0b00000000); // Configuration Mode
-		SLEEP_MS(19);
 		bmo_write_registers(REG_ACC_OFFSET_X_LSB, (uint8_t *)IMU_CALIBRATION_ADDRESS, IMU_CALIBRATION_LENGTH);
 	} else {
 		logimui("No calibration found\n\r");
@@ -529,6 +527,10 @@ void imu_init(void) {
 	PIO_Configure(pins_bno, PIO_LISTSIZE(pins_bno));
 
 	imu_startblink();
+
+	bmo_write_register(REG_OPR_MODE, 0b00000000); // Configuration Mode
+	SLEEP_MS(19);
+
 	bmo_write_register(REG_SYS_TRIGGER, 1 << 7); // Use external clock
 	read_calibration_from_flash_and_save_to_bno055();
 
