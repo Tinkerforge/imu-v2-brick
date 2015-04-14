@@ -39,8 +39,6 @@ extern uint32_t imu_period[IMU_PERIOD_NUM];
 extern uint32_t imu_period_counter[IMU_PERIOD_NUM];
 
 extern SensorData sensor_data;
-extern uint8_t accelerometer_range;
-extern uint8_t gyroscope_range;
 extern bool imu_use_leds;
 
 void get_acceleration(const ComType com, const GetAcceleration *data) {
@@ -139,34 +137,6 @@ void get_quaternion(const ComType com, const GetQuaternion *data) {
 }
 
 void get_all_data(const ComType com, const GetAllData *data) {
-	sensor_data.acc_x++;
-	if(sensor_data.acc_x > 100) {
-		sensor_data.acc_x = 0;
-	}
-
-	sensor_data.acc_y = rand();
-	sensor_data.acc_z = rand();
-	sensor_data.mag_x = rand(); // 1µT = 16 LSB
-	sensor_data.mag_y = rand();
-	sensor_data.mag_z = rand();
-	sensor_data.gyr_x = rand(); // 1dps (degree-per-second) = 16 LSB
-	sensor_data.gyr_y = rand();
-	sensor_data.gyr_z = rand();
-	sensor_data.eul_heading = rand(); // 1° = 16 LSB
-	sensor_data.eul_roll = rand();
-	sensor_data.eul_pitch = rand();
-	sensor_data.qua_w = rand(); // 1 Quaternion = 2^14 LSB
-	sensor_data.qua_x = rand();
-	sensor_data.qua_y = rand();
-	sensor_data.qua_z = rand();
-	sensor_data.lia_x = rand(); // 1m/s^2 = 100 LSB
-	sensor_data.lia_y = rand();
-	sensor_data.lia_z = rand();
-	sensor_data.grv_x = rand(); // 1m/s^2 = 100 LSB
-	sensor_data.grv_y = rand();
-	sensor_data.grv_z = rand();
-	sensor_data.temperature = rand(); // 1°C = 1 LSB
-
 	GetAllDataReturn gadr;
 
 	gadr.header        = data->header;
@@ -175,8 +145,6 @@ void get_all_data(const ComType com, const GetAllData *data) {
 
 	send_blocking_with_timeout(&gadr, sizeof(GetAllDataReturn), com);
 }
-
-
 
 void leds_on(const ComType com, const LedsOn *data) {
 	imu_leds_on(true);
@@ -200,29 +168,18 @@ void are_leds_on(const ComType com, const AreLedsOn *data) {
 	send_blocking_with_timeout(&alor, sizeof(AreLedsOnReturn), com);
 }
 
-void set_configuration(const ComType com, const SetConfiguration *data) {
-	if(data->accelerometer_range > RANGE_ACCELEROMETER_16G || data->gyroscope_range > RANGE_GYROSCOPE_125DPS) {
-		com_return_error(data, sizeof(MessageHeader), MESSAGE_ERROR_CODE_INVALID_PARAMETER, com);
-		return;
+void save_calibration(const ComType com, const SaveCalibration *data) {
+	SaveCalibrationReturn scr;
+
+	scr.header               = data->header;
+	scr.header.length        = sizeof(SaveCalibrationReturn);
+	if(read_calibration_from_bno055_and_save_to_flash()) {
+		scr.calibration_done = true;
+	} else {
+		scr.calibration_done = false;
 	}
 
-	accelerometer_range = data->accelerometer_range;
-	gyroscope_range     = data->gyroscope_range;
-
-	update_configuration();
-
-	com_return_setter(com, data);
-}
-
-void get_configuration(const ComType com, const GetConfiguration *data) {
-	GetConfigurationReturn gcr;
-
-	gcr.header              = data->header;
-	gcr.header.length       = sizeof(GetConfigurationReturn);
-	gcr.gyroscope_range     = gyroscope_range;
-	gcr.accelerometer_range = accelerometer_range;
-
-	send_blocking_with_timeout(&gcr, sizeof(GetConfigurationReturn), com);
+	send_blocking_with_timeout(&scr, sizeof(SaveCalibrationReturn), com);
 }
 
 void set_acceleration_period(const ComType com, const SetAccelerationPeriod *data) {

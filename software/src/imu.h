@@ -214,6 +214,27 @@ typedef struct {
 	uint8_t calibration_status;
 } __attribute__((packed)) SensorData;
 
+#define IMU_CALIBRATION_PASSWORD 0xDEADBEEF
+#define IMU_CALIBRATION_LENGTH (sizeof(IMUCalibration) - sizeof(uint32_t))
+#define IMU_CALIBRATION_ADDRESS (END_OF_BRICKLET_MEMORY - 0x400)
+typedef struct {
+	int16_t acc_offset[3];
+	int16_t mag_offset[3];
+	int16_t gyr_offset[3];
+	int16_t acc_radius;
+	int16_t mag_radius;
+	uint32_t password;
+} __attribute__((packed)) IMUCalibration;
+
+typedef struct {
+	const int16_t acc_offset[3];
+	const int16_t mag_offset[3];
+	const int16_t gyr_offset[3];
+	const int16_t acc_radius;
+	const int16_t mag_radius;
+	const uint32_t password;
+} __attribute__((packed)) IMUCalibrationConst;
+
 void tick_task(const uint8_t tick_type);
 void make_period_callback(const uint8_t type);
 
@@ -222,9 +243,11 @@ void update_sensor_data(void);
 void imu_blinkenlights(void);
 void imu_leds_on(const bool on);
 void bmo_read_register(const uint8_t reg, uint8_t *data, const uint8_t length);
-void bmo_write_register(const uint8_t reg, const uint8_t value);
+void bmo_read_registers(const uint8_t reg, uint8_t *data, const uint8_t length);
+void bmo_write_registers(const uint8_t reg, const uint8_t *data, const uint8_t length);
 
-void update_configuration(void);
+bool read_calibration_from_bno055_and_save_to_flash(void);
+bool read_calibration_from_flash_and_save_to_bno055(void);
 void imu_init(void);
 
 #endif

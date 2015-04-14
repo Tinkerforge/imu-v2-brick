@@ -59,6 +59,8 @@ void vApplicationStackOverflowHook(xTaskHandle *pxTask, signed char *pcTaskName)
 }
 
 int main() {
+	imu_leds_on(false);
+
 	const Pin pins_stack[] = {PINS_STACK};
 	PIO_Configure(pins_stack, PIO_LISTSIZE(pins_stack));
 

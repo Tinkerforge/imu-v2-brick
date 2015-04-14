@@ -74,17 +74,22 @@ bool pins_led_is_pwm[] = {true,
                           false,
                           true};
 
-uint8_t accelerometer_range = RANGE_ACCELEROMETER_4G;
-uint8_t gyroscope_range     = RANGE_GYROSCOPE_2000DPS;
-
 SensorData sensor_data = {0};
 uint8_t update_sensor_counter = 0;
+
+uint32_t cal_counter = 0;
+
+const IMUCalibrationConst *imu_calibration_in_flash = (const IMUCalibrationConst*)IMU_CALIBRATION_ADDRESS;
 
 void tick_task(const uint8_t tick_type) {
 	static int8_t message_counter = 0;
 
 	if(tick_type == TICK_TASK_TYPE_CALCULATION) {
-//		update_sensor_data();
+		update_sensor_data();
+
+		if(update_sensor_counter == 5) {
+			imu_blinkenlights();
+		}
 
 		for(uint8_t i = 0; i < IMU_PERIOD_NUM; i++) {
 			if(imu_period_counter[i] < UINT32_MAX) {
@@ -333,46 +338,43 @@ void imu_blinkenlights(void) {
 	                  blink_lookup[40 - (BETWEEN(-1000, sensor_data.acc_z, 1000) +
 	                               1000)/50]);
 
-//	int16_t degree = atan2(2.0*(imu_qua_x*imu_qua_y + imu_qua_w*imu_qua_z),
-//	                       1.0 - 2.0*(imu_qua_x*imu_qua_x + imu_qua_z*imu_qua_z))*180/M_PI + 45;
-
-	int16_t degree = sensor_data.eul_heading;
+	int16_t degree = sensor_data.eul_heading/16;
 	if(degree < 0) {
 		degree += 360;
 	}
 
-	if(degree > 315 || degree <= 45) {
-		uint8_t index = ((degree + 45) % 360) * 40 / 90;
-		TC0->TC_CHANNEL[0].TC_RA = 0;
-		TC0->TC_CHANNEL[1].TC_RA = blink_lookup[index];
+	if(degree < 90) {
+		uint8_t index = degree * 40 / 90;
+		TC0->TC_CHANNEL[0].TC_RA = blink_lookup[40-index];;
+		TC0->TC_CHANNEL[1].TC_RA = 0;
 		TC0->TC_CHANNEL[2].TC_RB = 0;
-		PWMC_SetDutyCycle(PWM, 3, blink_lookup[index]);
-	} else if(degree < 135) {
-		uint8_t index = (degree - 45) * 40 / 90;
-		TC0->TC_CHANNEL[0].TC_RA = 0;
-		TC0->TC_CHANNEL[1].TC_RA = 0;
-		TC0->TC_CHANNEL[2].TC_RB = blink_lookup[40-index];
 		PWMC_SetDutyCycle(PWM, 3, blink_lookup[40-index]);
-	} else if(degree < 225) {
-		uint8_t index = (degree - 135) * 40 / 90;
-		TC0->TC_CHANNEL[0].TC_RA = blink_lookup[40-index];
-		TC0->TC_CHANNEL[1].TC_RA = 0;
-		TC0->TC_CHANNEL[2].TC_RB = blink_lookup[index];
-		PWMC_SetDutyCycle(PWM, 3, 0);
-	} else {
-		uint8_t index = (degree - 225) * 40 / 90;
+	} else if(degree < 180) {
+		uint8_t index = (degree - 90) * 40 / 90;
 		TC0->TC_CHANNEL[0].TC_RA = blink_lookup[index];
 		TC0->TC_CHANNEL[1].TC_RA = blink_lookup[40-index];
 		TC0->TC_CHANNEL[2].TC_RB = 0;
 		PWMC_SetDutyCycle(PWM, 3, 0);
+	} else if(degree < 270) {
+		uint8_t index = (degree - 180) * 40 / 90;
+		TC0->TC_CHANNEL[0].TC_RA = 0;
+		TC0->TC_CHANNEL[1].TC_RA = blink_lookup[index];
+		TC0->TC_CHANNEL[2].TC_RB = blink_lookup[40-index];
+		PWMC_SetDutyCycle(PWM, 3, 0);
+	} else {
+		uint8_t index = (degree - 270) * 40 / 90;
+		TC0->TC_CHANNEL[0].TC_RA = 0;
+		TC0->TC_CHANNEL[1].TC_RA = 0;
+		TC0->TC_CHANNEL[2].TC_RB = blink_lookup[index];
+		PWMC_SetDutyCycle(PWM, 3, blink_lookup[index]);
 	}
 }
 
 void update_sensor_data(void) {
 	update_sensor_counter++;
 	// Can we use interrupt pin instead of counter?
-	if(update_sensor_counter >= 100) {
-		bmo_read_register(REG_ACC_DATA_X_LSB, (uint8_t*)&sensor_data, sizeof(SensorData));
+	if(update_sensor_counter >= 10) {
+		bmo_read_registers(REG_ACC_DATA_X_LSB, (uint8_t*)&sensor_data, sizeof(SensorData));
 		update_sensor_counter = 0;
 	}
 }
@@ -389,7 +391,19 @@ void bmo_write_register(const uint8_t reg, uint8_t const value) {
 	mutex_give(mutex_twi_bricklet);
 }
 
-void bmo_read_register(const uint8_t reg, uint8_t *data, const uint8_t length) {
+void bmo_write_registers(const uint8_t reg, const uint8_t *data, const uint8_t length) {
+	mutex_take(mutex_twi_bricklet, MUTEX_BLOCKING);
+    TWID_Write(&twid,
+    		   BMO055_ADDRESS_HIGH,
+    		   reg,
+               1,
+               (uint8_t *)data,
+               length,
+               NULL);
+	mutex_give(mutex_twi_bricklet);
+}
+
+void bmo_read_registers(const uint8_t reg, uint8_t *data, const uint8_t length) {
 	mutex_take(mutex_twi_bricklet, MUTEX_BLOCKING);
     TWID_Read(&twid,
     		   BMO055_ADDRESS_HIGH,
@@ -401,13 +415,112 @@ void bmo_read_register(const uint8_t reg, uint8_t *data, const uint8_t length) {
 	mutex_give(mutex_twi_bricklet);
 }
 
-void update_configuration(void) {
-	// Update ranges, set default for other bits in registers
-	bmo_write_register(REG_PAGE_ID, 1);
-	bmo_write_register(REG_ACC_CONFIG,   0b00001100 | accelerometer_range);
-	bmo_write_register(REG_GYR_CONFIG_0, 0b00111000 | gyroscope_range);
-	bmo_write_register(REG_GYR_CONFIG_1, 0b00000000);
-	bmo_write_register(REG_PAGE_ID, 0);
+bool read_calibration_from_bno055_and_save_to_flash(void) {
+	if(sensor_data.calibration_status != 0xFF) {
+		return false;
+	}
+
+	bmo_write_register(REG_OPR_MODE, 0b00000000); // Configuration Mode
+	SLEEP_MS(19);
+	IMUCalibration imu_calibration = {{0}};
+	bmo_read_registers(REG_ACC_OFFSET_X_LSB, (uint8_t *)&imu_calibration, IMU_CALIBRATION_LENGTH);
+	imu_calibration.password = IMU_CALIBRATION_PASSWORD;
+	bmo_write_register(REG_OPR_MODE, 0b00001100); // Enable NDOF, see Table 3-5
+	SLEEP_MS(7);
+
+	logimui("Read calibration from BNO055 and save to flash:\n\r");
+	logimui(" Mag Offset: %d %d %d\n\r", imu_calibration.mag_offset[0], imu_calibration.mag_offset[1], imu_calibration.mag_offset[2]);
+	logimui(" Acc Offset: %d %d %d\n\r", imu_calibration.acc_offset[0], imu_calibration.acc_offset[1], imu_calibration.acc_offset[2]);
+	logimui(" Gyr Offset: %d %d %d\n\r", imu_calibration.gyr_offset[0], imu_calibration.gyr_offset[1], imu_calibration.gyr_offset[2]);
+	logimui(" Acc Radius: %d\n\r", imu_calibration.acc_radius);
+	logimui(" Mag Radius: %d\n\r", imu_calibration.mag_radius);
+
+	DISABLE_RESET_BUTTON();
+	__disable_irq();
+
+	// Unlock flash region
+	if(FLASHD_Unlock(IMU_CALIBRATION_ADDRESS,
+	                 END_OF_BRICKLET_MEMORY,
+	                 NULL,
+	                 NULL) != 0) {
+		return false;
+	}
+
+	if(FLASHD_Write(IMU_CALIBRATION_ADDRESS,
+	                &imu_calibration,
+	                sizeof(IMUCalibration)) != 0) {
+		return false;
+	}
+
+	if(FLASHD_Lock(IMU_CALIBRATION_ADDRESS,
+	               END_OF_BRICKLET_MEMORY,
+	               NULL,
+			       NULL) != 0) {
+		return false;
+	}
+
+	__enable_irq();
+    ENABLE_RESET_BUTTON();
+
+	return true;
+}
+
+bool read_calibration_from_flash_and_save_to_bno055(void) {
+	bool ret = false;
+	if(imu_calibration_in_flash->password == IMU_CALIBRATION_PASSWORD) {
+		logimui("Read calibration from flash and save to BNO055:\n\r");
+		logimui(" Mag Offset: %d %d %d\n\r", imu_calibration_in_flash->mag_offset[0], imu_calibration_in_flash->mag_offset[1], imu_calibration_in_flash->mag_offset[2]);
+		logimui(" Acc Offset: %d %d %d\n\r", imu_calibration_in_flash->acc_offset[0], imu_calibration_in_flash->acc_offset[1], imu_calibration_in_flash->acc_offset[2]);
+		logimui(" Gyr Offset: %d %d %d\n\r", imu_calibration_in_flash->gyr_offset[0], imu_calibration_in_flash->gyr_offset[1], imu_calibration_in_flash->gyr_offset[2]);
+		logimui(" Acc Radius: %d\n\r", imu_calibration_in_flash->acc_radius);
+		logimui(" Mag Radius: %d\n\r", imu_calibration_in_flash->mag_radius);
+		ret = true;
+		bmo_write_register(REG_OPR_MODE, 0b00000000); // Configuration Mode
+		SLEEP_MS(19);
+		bmo_write_registers(REG_ACC_OFFSET_X_LSB, (uint8_t *)IMU_CALIBRATION_ADDRESS, IMU_CALIBRATION_LENGTH);
+	} else {
+		logimui("No calibration found\n\r");
+	}
+
+	bmo_write_register(REG_OPR_MODE, 0b00001100); // Enable NDOF, see Table 3-5
+	SLEEP_MS(7);
+
+	return ret;
+}
+
+void imu_startblink(void) {
+	imu_leds_on(true);
+	Pin pins[] = {PINS_IMU_LED};
+	for(uint8_t i = 0; i < 6; i++) {
+		pins[i].type = PIO_OUTPUT_1;
+	}
+
+	PIO_Configure(pins, PIO_LISTSIZE(pins));
+
+	for(uint8_t i = 0; i < 41; i++) {
+		TC0->TC_CHANNEL[0].TC_RA = blink_lookup[i];
+		TC0->TC_CHANNEL[1].TC_RA = blink_lookup[i];
+		TC0->TC_CHANNEL[2].TC_RB = blink_lookup[i];
+		PWMC_SetDutyCycle(PWM, 3, blink_lookup[40-i]);
+		SLEEP_MS(6);
+	}
+	for(uint8_t i = 0; i < 41; i++) {
+		TC0->TC_CHANNEL[0].TC_RA = blink_lookup[40-i];
+		TC0->TC_CHANNEL[1].TC_RA = blink_lookup[40-i];
+		TC0->TC_CHANNEL[2].TC_RB = blink_lookup[40-i];
+		PWMC_SetDutyCycle(PWM, 3, blink_lookup[i]);
+		SLEEP_MS(6);
+
+	}
+	for(uint8_t i = 0; i < 41; i++) {
+		TC0->TC_CHANNEL[0].TC_RA = blink_lookup[i];
+		TC0->TC_CHANNEL[1].TC_RA = blink_lookup[i];
+		TC0->TC_CHANNEL[2].TC_RB = blink_lookup[i];
+		PWMC_SetDutyCycle(PWM, 3, blink_lookup[40-i]);
+		SLEEP_MS(6);
+	}
+
+	imu_leds_on(false);
 }
 
 void imu_init(void) {
@@ -415,12 +528,9 @@ void imu_init(void) {
 	Pin pins_bno[] = {PINS_BNO};
 	PIO_Configure(pins_bno, PIO_LISTSIZE(pins_bno));
 
-	SLEEP_MS(IMU_STARTUP_TIME);
-
-	update_configuration();
-	bmo_write_register(REG_OPR_MODE, 0b00001100); // Enable NDOF, see Table 3-5
-
-	// TODO: Init other stuff
+	imu_startblink();
+	bmo_write_register(REG_SYS_TRIGGER, 1 << 7); // Use external clock
+	read_calibration_from_flash_and_save_to_bno055();
 
 #ifndef PROFILING
 	imu_leds_on(true);
