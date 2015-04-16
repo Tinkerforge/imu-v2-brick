@@ -1,4 +1,4 @@
-IMU 2.0 Brick
+IMU Brick 2.0
 =============
 
 **This Brick is currently Work In Progress.**
