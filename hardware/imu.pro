@@ -1,4 +1,4 @@
-update=Do 26 Mär 2015 15:10:33 CET
+update=Do 23 Apr 2015 16:16:20 CEST
 version=1
 last_client=kicad
 [general]
@@ -8,26 +8,6 @@ version=1
 NetIExt=net
 [cvpcb/libraries]
 EquName1=devcms
-[pcbnew]
-version=1
-PageLayoutDescrFile=
-LastNetListRead=
-UseCmpFile=1
-PadDrill=0
-PadDrillOvalY=0
-PadSizeH=0.25
-PadSizeV=0.875
-PcbTextSizeV=0.29972
-PcbTextSizeH=0.29972
-PcbTextThickness=0.07619999999999999
-ModuleTextSizeV=0.59944
-ModuleTextSizeH=0.59944
-ModuleTextSizeThickness=0.12446
-SolderMaskClearance=0
-SolderMaskMinWidth=0
-DrawSegmentWidth=0.09906
-BoardOutlineThickness=0.09906
-ModuleOutlineThickness=0.01
 [eeschema]
 version=1
 LibDir=kicad-libraries.pretty
@@ -63,3 +43,23 @@ LibName28=atmel
 LibName29=contrib
 LibName30=valves
 LibName31=tinkerforge
+[pcbnew]
+version=1
+PageLayoutDescrFile=
+LastNetListRead=
+UseCmpFile=1
+PadDrill=0
+PadDrillOvalY=0
+PadSizeH=0.25
+PadSizeV=0.875
+PcbTextSizeV=0.29972
+PcbTextSizeH=0.29972
+PcbTextThickness=0.07619999999999999
+ModuleTextSizeV=0.59944
+ModuleTextSizeH=0.59944
+ModuleTextSizeThickness=0.12446
+SolderMaskClearance=0
+SolderMaskMinWidth=0
+DrawSegmentWidth=0.09906
+BoardOutlineThickness=0.09906
+ModuleOutlineThickness=0.01
