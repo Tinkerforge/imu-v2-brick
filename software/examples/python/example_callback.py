@@ -22,13 +22,13 @@ Linear Acceleration x: {:.2f} y: {:.2f} z: {:.2f} m/s²
 Gravity Vector      x: {:.2f} y: {:.2f} z: {:.2f} m/s²
 Temperature:        {} °C
 calibration Status: {}
-'''.format(acceleration[0]/100.0, acceleration[1]/100.0, acceleration[2]/100.0,
-           magnetic_field[0]/16.0, magnetic_field[1]/16.0, magnetic_field[2]/16.0, 
-           angular_velocity[0]/16.0, angular_velocity[1]/16.0, angular_velocity[2]/16.0,
-           euler_angle[0]/16.0, euler_angle[1]/16.0, euler_angle[2]/16.0, 
+'''.format(acceleration[0]/100.0,          acceleration[1]/100.0,          acceleration[2]/100.0,
+           magnetic_field[0]/16.0,         magnetic_field[1]/16.0,         magnetic_field[2]/16.0, 
+           angular_velocity[0]/16.0,       angular_velocity[1]/16.0,       angular_velocity[2]/16.0,
+           euler_angle[0]/16.0,            euler_angle[1]/16.0,            euler_angle[2]/16.0, 
            quaternion[0]/(float(2**14-1)), quaternion[1]/(float(2**14-1)), quaternion[2]/(float(2**14-1)),
-           linear_acceleration[0]/100.0, linear_acceleration[1]/100.0, linear_acceleration[2]/100.0, 
-           gravity_vector[0]/100.0, gravity_vector[1]/100.0, gravity_vector[2]/100.0, 
+           linear_acceleration[0]/100.0,   linear_acceleration[1]/100.0,   linear_acceleration[2]/100.0, 
+           gravity_vector[0]/100.0,        gravity_vector[1]/100.0,        gravity_vector[2]/100.0, 
            temperature, calibration_status)
 
 if __name__ == "__main__":
