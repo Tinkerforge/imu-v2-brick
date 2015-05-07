@@ -8,28 +8,11 @@ UID = "6ww9bv" # Change to your UID
 from tinkerforge.ip_connection import IPConnection
 from tinkerforge.brick_imu_v2 import IMUV2
 
-# All Data callback
-def cb_all_data(acceleration, magnetic_field, angular_velocity, 
-                euler_angle, quaternion, linear_acceleration, 
-                gravity_vector, temperature, calibration_status):
-    print u'''
-Acceleration        x: {:.2f} y: {:.2f} z: {:.2f} m/s²
-Magnetic Field      x: {:.2f} y: {:.2f} z: {:.2f} µT
-Angular Velocity    x: {:.2f} y: {:.2f} z: {:.2f} °/s
-Euler Angles        x: {:.2f} y: {:.2f} z: {:.2f} °
-Quaternion          x: {:.2f} y: {:.2f} z: {:.2f}
-Linear Acceleration x: {:.2f} y: {:.2f} z: {:.2f} m/s²
-Gravity Vector      x: {:.2f} y: {:.2f} z: {:.2f} m/s²
-Temperature:        {} °C
-calibration Status: {}
-'''.format(acceleration[0]/100.0,          acceleration[1]/100.0,          acceleration[2]/100.0,
-           magnetic_field[0]/16.0,         magnetic_field[1]/16.0,         magnetic_field[2]/16.0, 
-           angular_velocity[0]/16.0,       angular_velocity[1]/16.0,       angular_velocity[2]/16.0,
-           euler_angle[0]/16.0,            euler_angle[1]/16.0,            euler_angle[2]/16.0, 
-           quaternion[0]/(float(2**14-1)), quaternion[1]/(float(2**14-1)), quaternion[2]/(float(2**14-1)),
-           linear_acceleration[0]/100.0,   linear_acceleration[1]/100.0,   linear_acceleration[2]/100.0, 
-           gravity_vector[0]/100.0,        gravity_vector[1]/100.0,        gravity_vector[2]/100.0, 
-           temperature, calibration_status)
+# Quaternion callback
+def cb_quaternion(w, x, y, z):
+    qdiv = float(2**14-1)
+    string = "w: {:.02f}, x: {:.02f}, y: {:.02f}, z: {:.02f}"
+    print(string.format(w/qdiv, x/qdiv, y/qdiv, z/qdiv))
 
 if __name__ == "__main__":
     ipcon = IPConnection() # Create IP connection
@@ -39,10 +22,10 @@ if __name__ == "__main__":
     # Don't use device before ipcon is connected
 
     # Set period for quaternion callback to 100ms
-    imu.set_all_data_period(100)
+    imu.set_quaternion_period(100)
 
-    # Register All Data callback
-    imu.register_callback(imu.CALLBACK_ALL_DATA, cb_all_data)
+    # Register quaternion callback
+    imu.register_callback(imu.CALLBACK_QUATERNION, cb_quaternion)
 
     raw_input('Press key to exit\n') # Use input() in Python 3
     ipcon.disconnect()
