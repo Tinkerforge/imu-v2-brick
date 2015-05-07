@@ -30,6 +30,7 @@ LIBS:atmel
 LIBS:contrib
 LIBS:valves
 LIBS:tinkerforge
+LIBS:imu-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -395,7 +396,7 @@ F 1 "ESD5V0D3B-TP" H 7850 1050 40  0000 C CNN
 F 2 "kicad-libraries:SOD-323" H 7850 1150 60  0001 C CNN
 F 3 "~" H 7850 1150 60  0000 C CNN
 	1    7850 1150
-	0    1    1    0   
+	0    -1   -1   0   
 $EndComp
 $Comp
 L GND #PWR034
@@ -472,7 +473,7 @@ F 1 "ESD3V3D3B-TP" H 7850 2100 40  0000 C CNN
 F 2 "kicad-libraries:SOD-323" H 7850 2200 60  0001 C CNN
 F 3 "~" H 7850 2200 60  0000 C CNN
 	1    7850 2200
-	0    1    1    0   
+	0    -1   -1   0   
 $EndComp
 $Comp
 L GND #PWR037
