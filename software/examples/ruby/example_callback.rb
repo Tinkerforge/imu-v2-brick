@@ -22,10 +22,10 @@ imu.set_quaternion_period 100
 # Register quaternion callback
 imu.register_callback(BrickIMUV2::CALLBACK_QUATERNION) do |w, x, y, z|
   qdiv = (1 << 14) - 1
-  puts "w: %.02f, x: %.02f, y: %.02f, z: %.02f\n" % [w.fdiv(qdiv), 
-                                                     x.fdiv(qdiv), 
-													 y.fdiv(qdiv), 
-													 z.fdiv(qdiv)] 
+  puts "w: %.02f, x: %.02f, y: %.02f, z: %.02f\n" % [w.fdiv(qdiv),
+                                                     x.fdiv(qdiv),
+                                                     y.fdiv(qdiv),
+                                                     z.fdiv(qdiv)]
 end
 
 puts 'Press key to exit'

@@ -10,8 +10,9 @@
 // Quaternion callback
 void cb_quaternion(int16_t w, int16_t x, int16_t y, int16_t z, void *user_data) {
 	(void)user_data; // avoid unused parameter warning
+
 	float qdiv = (1 << 14) - 1;
-	
+
 	printf("w: %.02f, x: %.02f, y: %.02f, z: %.02f\n", w/qdiv, x/qdiv, y/qdiv, z/qdiv);
 }
 
@@ -22,7 +23,7 @@ int main() {
 
 	// Create device object
 	IMUV2 imu;
-	imu_v2_create(&imu, UID, &ipcon); 
+	imu_v2_create(&imu, UID, &ipcon);
 
 	// Connect to brickd
 	if(ipcon_connect(&ipcon, HOST, PORT) < 0) {

@@ -11,9 +11,10 @@ use constant UID => '6ww9bv'; # Change to your UID
 sub cb_quaternion
 {
     my ($w, $x, $y, $z) = @_;
+    my $qdiv = (1 << 14) - 1;
 
-	 my $qdiv = (1 << 14) - 1;
-    printf("w: %.02f, x: %.02f, y: %.02f, z: %.02f\n", $w/$qdiv, $x/$qdiv, $y/$qdiv, $z/$qdiv);
+    printf("w: %.02f, x: %.02f, y: %.02f, z: %.02f\n",
+           $w/$qdiv, $x/$qdiv, $y/$qdiv, $z/$qdiv);
 }
 
 my $ipcon = Tinkerforge::IPConnection->new(); # Create IP connection

@@ -14,7 +14,7 @@ class Example
 		System.Console.WriteLine(System.String.Format(s, w/qdiv, x/qdiv, y/qdiv, z/qdiv));
 	}
 
-	static void Main() 
+	static void Main()
 	{
 		IPConnection ipcon = new IPConnection(); // Create IP connection
 		BrickIMUV2 imu = new BrickIMUV2(UID, ipcon); // Create device object

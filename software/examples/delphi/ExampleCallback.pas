@@ -12,9 +12,9 @@ type
     ipcon: TIPConnection;
     imu: TBrickIMUV2;
   public
-    procedure QuaternionCB(sender: TBrickIMUV2; 
-                           const w: SmallInt; const x: SmallInt;
-                           const y: SmallInt; const z: SmallInt);
+    procedure QuaternionCB(sender: TBrickIMUV2;
+                           const w: smallint; const x: smallint;
+                           const y: smallint; const z: smallint);
     procedure Execute;
   end;
 
@@ -28,12 +28,13 @@ var
   qdiv: single;
 
 { Quaternion callback }
-procedure TExample.QuaternionCB(sender: TBrickIMUV2; 
-                                const w: SmallInt; const x: SmallInt;
-                                const y: SmallInt; const z: SmallInt);
+procedure TExample.QuaternionCB(sender: TBrickIMUV2;
+                                const w: smallint; const x: smallint;
+                                const y: smallint; const z: smallint);
 begin
   qdiv := 16383;
-  WriteLn(Format('w: %.2f, x: %.2f, y: %.2f, z: %.2f, ', [w/qdiv, x/qdiv, y/qdiv, z/qdiv]));
+  WriteLn(Format('w: %.2f, x: %.2f, y: %.2f, z: %.2f',
+                 [w/qdiv, x/qdiv, y/qdiv, z/qdiv]));
 end;
 
 procedure TExample.Execute;

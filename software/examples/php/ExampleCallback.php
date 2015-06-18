@@ -13,8 +13,9 @@ const UID = '6ww9bv'; // Change to your UID
 // Quaternion callback
 function cb_quaternion($w, $x, $y, $z)
 {
-	$qdiv = (1 << 14) - 1;
-	$s = sprintf("w: %.02f, x: %.02f, y: %.02f, z: %.02f\n", $w/$qdiv, $x/$qdiv, $y/$qdiv, $z/$qdiv);
+    $qdiv = (1 << 14) - 1;
+    $s = sprintf("w: %.02f, x: %.02f, y: %.02f, z: %.02f\n",
+                 $w/$qdiv, $x/$qdiv, $y/$qdiv, $z/$qdiv);
 
     echo "$s";
 }

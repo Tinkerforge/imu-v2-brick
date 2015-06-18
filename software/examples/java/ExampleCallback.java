@@ -18,10 +18,10 @@ public class ExampleCallback {
 		// Set period for quaternion callback to 100ms
 		imu.setQuaternionPeriod(100);
 
-		// Add and implement quaternion listener 
+		// Add and implement quaternion listener
 		imu.addQuaternionListener(new BrickIMUV2.QuaternionListener() {
 			public void quaternion(short w, short x, short y, short z) {
-				String s = new String("w: %.02f, x: %.02f, y: %.02f, z: %.02f%n");
+				String s = "w: %.02f, x: %.02f, y: %.02f, z: %.02f%n";
 				float qdiv = (1 << 14) - 1;
 				System.out.format(s, w/qdiv, x/qdiv, y/qdiv, z/qdiv);
 			}

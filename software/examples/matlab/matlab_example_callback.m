@@ -13,7 +13,7 @@ function matlab_example_callback()
     % Don't use device before ipcon is connected
 
     % Set Period for quaternion callback to 1s (1000ms)
-    % Note: The callback is only called every second if the 
+    % Note: The callback is only called every second if the
     %       quaternion has changed since the last call!
     imu.setQuaternionPeriod(100);
 
@@ -26,5 +26,5 @@ end
 
 % Callback function for quaternion callback
 function cb_quaternion(e)
-    fprintf('x: %f\ny: %f\nz: %f\nw: %f\n\n', e.x, e.y, e.z, e.w);
+    fprintf('x: %f\ny: %f\nz: %f\nw: %f\n\n', e.x, e.y, e.z, e.w); # FIXME: missing qdiv
 end
