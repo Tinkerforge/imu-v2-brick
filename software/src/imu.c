@@ -372,7 +372,13 @@ void imu_blinkenlights(void) {
 
 void update_sensor_data(void) {
 	update_sensor_counter++;
-	// Can we use interrupt pin instead of counter?
+	// Unfortunately there does not seem to be a way to
+	// get an interrupt from the BMO055 if new data is ready
+
+	// Since the BMO055 has an update rate of 100Hz we just
+	// Read the data every 10ms. This unfortunately means that
+	// we may get a maximum delay of 10ms before the user
+	// gets the data. MEH.
 	if(update_sensor_counter >= 10) {
 		bmo_read_registers(REG_ACC_DATA_X_LSB, (uint8_t*)&sensor_data, sizeof(SensorData));
 		update_sensor_counter = 0;
@@ -508,7 +514,6 @@ void imu_startblink(void) {
 		TC0->TC_CHANNEL[2].TC_RB = blink_lookup[40-i];
 		PWMC_SetDutyCycle(PWM, 3, blink_lookup[i]);
 		SLEEP_MS(6);
-
 	}
 	for(uint8_t i = 0; i < 41; i++) {
 		TC0->TC_CHANNEL[0].TC_RA = blink_lookup[i];

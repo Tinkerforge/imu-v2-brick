@@ -76,9 +76,9 @@
 	{FID_GET_ANGULAR_VELOCITY, (message_handler_func_t)get_angular_velocity}, \
 	{FID_GET_TEMPERATURE, (message_handler_func_t)get_temperature}, \
 	{FID_GET_ORIENTATION, (message_handler_func_t)get_orientation}, \
-	{FID_GET_QUATERNION, (message_handler_func_t)get_quaternion}, \
 	{FID_GET_LINEAR_ACCELERATION, (message_handler_func_t)get_linear_acceleration}, \
 	{FID_GET_GRAVITY_VECTOR, (message_handler_func_t)get_gravity_vector}, \
+	{FID_GET_QUATERNION, (message_handler_func_t)get_quaternion}, \
 	{FID_GET_ALL_DATA, (message_handler_func_t)get_all_data}, \
 	{FID_LEDS_ON, (message_handler_func_t)leds_on}, \
 	{FID_LEDS_OFF, (message_handler_func_t)leds_off}, \
