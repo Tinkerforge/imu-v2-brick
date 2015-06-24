@@ -1,4 +1,4 @@
-var Tinkerforge = require('tinkerforge');
+var Tinkerforge = require('./Tinkerforge.js');
 
 var HOST = 'localhost';
 var PORT = 4223;
@@ -12,24 +12,23 @@ ipcon.connect(HOST, PORT,
         console.log('Error: '+error);
     }
 ); // Connect to brickd
-// Don't use device before ipcon is connected
 
+// Don't use device before ipcon is connected
 ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
     function(connectReason) {
-        // Set period for quaternion callback to 100ms
-        imu.setQuaternionPeriod(100);
-    }
-);
-
-// Register quaternion callback
-imu.on(Tinkerforge.BrickIMUV2.CALLBACK_QUATERNION,
-    // Quaternion callback
-    function(w, x, y, z) {
-        var s =   'w: ' + (w/16383.0).toFixed(2) +
-                ', x: ' + (x/16383.0).toFixed(2) +
-                ', y: ' + (y/16383.0).toFixed(2) +
-                ', z: ' + (z/16383.0).toFixed(2);
-        console.log(s);
+        // Get current color
+        imu.getQuaternion(
+            function(x, y, z, w) {
+                var s =   'w: ' + (w/16383.0).toFixed(2) +
+                        ', x: ' + (x/16383.0).toFixed(2) +
+                        ', y: ' + (y/16383.0).toFixed(2) +
+                        ', z: ' + (z/16383.0).toFixed(2);
+                console.log(s);
+            },
+            function(error) {
+                console.log('Error: '+error);
+            }
+        );
     }
 );
 

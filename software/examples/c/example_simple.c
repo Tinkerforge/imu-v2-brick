@@ -7,14 +7,6 @@
 #define PORT 4223
 #define UID "6ww9bv" // Change to your UID
 
-// Quaternion callback
-void cb_quaternion(int16_t w, int16_t x, int16_t y, int16_t z, void *user_data) {
-	(void)user_data; // avoid unused parameter warning
-
-	printf("w: %.02f, x: %.02f, y: %.02f, z: %.02f\n",
-	       w/16383.0, x/16383.0, y/16383.0, z/16383.0);
-}
-
 int main() {
 	// Create IP connection
 	IPConnection ipcon;
@@ -31,14 +23,15 @@ int main() {
 	}
 	// Don't use device before ipcon is connected
 
-	// Set period for quaternion callback to 100ms
-	imu_v2_set_quaternion_period(&imu, 100);
+	// Get current quaternion
+	int16_t w, x, y, z;
+	if(imu_v2_get_quaternion(&imu, &w, &x, &y, &z) < 0) {
+		fprintf(stderr, "Could not get quaternion, probably timeout\n");
+		exit(1);
+	}
 
-	// Register "quaternion callback" to cb_quaternion
-	imu_v2_register_callback(&imu,
-	                         IMU_V2_CALLBACK_QUATERNION,
-	                         (void *)cb_quaternion,
-	                         NULL);
+	printf("w: %.2f, x: %.2f, y: %.2f, z: %.2f\n",
+	       w/16383.0, x/16383.0, y/16383.0, z/16383.0);
 
 	printf("Press key to exit\n");
 	getchar();

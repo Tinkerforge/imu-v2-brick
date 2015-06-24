@@ -1,4 +1,4 @@
-program ExampleCallback;
+program ExampleSimple;
 
 {$ifdef MSWINDOWS}{$apptype CONSOLE}{$endif}
 {$ifdef FPC}{$mode OBJFPC}{$H+}{$endif}
@@ -12,9 +12,6 @@ type
     ipcon: TIPConnection;
     imu: TBrickIMUV2;
   public
-    procedure QuaternionCB(sender: TBrickIMUV2;
-                           const w: smallint; const x: smallint;
-                           const y: smallint; const z: smallint);
     procedure Execute;
   end;
 
@@ -26,16 +23,8 @@ const
 var
   e: TExample;
 
-{ Quaternion callback }
-procedure TExample.QuaternionCB(sender: TBrickIMUV2;
-                                const w: smallint; const x: smallint;
-                                const y: smallint; const z: smallint);
-begin
-  WriteLn(Format('w: %.2f, x: %.2f, y: %.2f, z: %.2f',
-                 [w/16383.0, x/16383.0, y/16383.0, z/16383.0]));
-end;
-
 procedure TExample.Execute;
+var w, x, y, z: smallint;
 begin
   { Create IP connection }
   ipcon := TIPConnection.Create;
@@ -47,11 +36,10 @@ begin
   ipcon.Connect(HOST, PORT);
   { Don't use device before ipcon is connected }
 
-  { Set period for quaternion callback to 100ms }
-  imu.SetQuaternionPeriod(100);
-
-  { Register "quaternion callback" to procedure QuaternionCB }
-  imu.OnQuaternion := {$ifdef FPC}@{$endif}QuaternionCB;
+  { Get current quaternion }
+  imu.GetQuaternion(w, x, y, z);
+  WriteLn(Format('w: %.2f, x: %.2f, y: %.2f, z: %.2f',
+                 [w/16383.0, x/16383.0, y/16383.0, z/16383.0]));
 
   WriteLn('Press key to exit');
   ReadLn;
