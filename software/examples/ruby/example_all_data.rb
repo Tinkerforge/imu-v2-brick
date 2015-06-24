@@ -17,21 +17,22 @@ ipcon.connect HOST, PORT # Connect to brickd
 # Don't use device before ipcon is connected
 
 # Set period for all data callback to 100ms
-imu.set_quaternion_period 100
+imu.set_all_data_period 100
 
 # Register all data callback
 imu.register_callback(BrickIMUV2::CALLBACK_ALL_DATA) do
   |acceleration, magnetic_field, angular_velocity, euler_angle, quaternion,
    linear_acceleration, gravity_vector, temperature, calibration_status|
-  puts ("Acceleration        x: %.02f y: %.02f z: %.02f m/s²\n" +
-        "Magnetic Field      x: %.02f y: %.02f z: %.02f µT\n" +
-        "Angular Velocity    x: %.02f y: %.02f z: %.02f °/s\n" +
-        "Euler Angle         x: %.02f y: %.02f z: %.02f °\n" +
-        "Quaternion          x: %.02f y: %.02f z: %.02f w: %.02f\n" +
-        "Linear Acceleration x: %.02f y: %.02f z: %.02f m/s²\n" +
-        "Gravity Vector      x: %.02f y: %.02f z: %.02f m/s²\n" +
-        "Temperature         %d °C\n" +
-        "Calibration Status  %u\n\n") %
+  s = "Acceleration        x: %.02f y: %.02f z: %.02f m/s²\n" +
+      "Magnetic Field      x: %.02f y: %.02f z: %.02f µT\n" +
+      "Angular Velocity    x: %.02f y: %.02f z: %.02f °/s\n" +
+      "Euler Angle         x: %.02f y: %.02f z: %.02f °\n" +
+      "Quaternion          x: %.02f y: %.02f z: %.02f w: %.02f\n" +
+      "Linear Acceleration x: %.02f y: %.02f z: %.02f m/s²\n" +
+      "Gravity Vector      x: %.02f y: %.02f z: %.02f m/s²\n" +
+      "Temperature         %d °C\n" +
+      "Calibration Status  %u\n\n"
+  puts s %
        [acceleration[0]/100.0,        acceleration[1]/100.0,        acceleration[2]/100.0,
         magnetic_field[0]/16.0,       magnetic_field[1]/16.0,       magnetic_field[2]/16.0,
         angular_velocity[0]/16.0,     angular_velocity[1]/16.0,     angular_velocity[2]/16.0,
