@@ -24,5 +24,14 @@ end
 % Callback function for quaternion callback
 function cb_quaternion(e)
     fprintf("w: %.2f, x: %.2f, y: %.2f, z: %.2f\n",
-            e.w/16383.0, e.x/16383.0, e.y/16383.0, e.z/16383.0);
+            short2int(e.w)/16383.0, short2int(e.x)/16383.0,
+            short2int(e.y)/16383.0, short2int(e.z)/16383.0);
+end
+
+function int = short2int(short)
+    if compare_versions(version(), "3.8", "<=")
+        int = short.intValue();
+    else
+        int = short;
+    end
 end

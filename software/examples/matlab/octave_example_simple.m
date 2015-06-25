@@ -14,8 +14,17 @@ function octave_example_simple()
     % Get current quaternion
     q = imu.getQuaternion();
     fprintf("w: %.2f, x: %.2f, y: %.2f, z: %.2f\n",
-            q.w/16383.0, q.x/16383.0, q.y/16383.0, q.z/16383.0);
+            short2int(q.w)/16383.0, short2int(q.x)/16383.0,
+            short2int(q.y)/16383.0, short2int(q.z)/16383.0);
 
     input("Press any key to exit...\n", "s");
     ipcon.disconnect();
+end
+
+function int = short2int(short)
+    if compare_versions(version(), "3.8", "<=")
+        int = short.intValue();
+    else
+        int = short;
+    end
 end
