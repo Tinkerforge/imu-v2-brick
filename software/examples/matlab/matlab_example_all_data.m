@@ -25,13 +25,13 @@ end
 % Callback function for all data callback
 function cb_all_data(e)
     fprintf(strcat('Acceleration        x: %.02f y: %.02f z: %.02f m/s²\n',
-                   'Magnetic Field      x: %.02f y: %.02f z: %.02f µT\n'
-                   'Angular Velocity    x: %.02f y: %.02f z: %.02f °/s\n'
-                   'Euler Angle         x: %.02f y: %.02f z: %.02f °\n'
-                   'Quaternion          x: %.02f y: %.02f z: %.02f w: %.02f\n'
-                   'Linear Acceleration x: %.02f y: %.02f z: %.02f m/s²\n'
-                   'Gravity Vector      x: %.02f y: %.02f z: %.02f m/s²\n'
-                   'Temperature         %d °C\n'
+                   'Magnetic Field      x: %.02f y: %.02f z: %.02f µT\n',
+                   'Angular Velocity    x: %.02f y: %.02f z: %.02f °/s\n',
+                   'Euler Angle         x: %.02f y: %.02f z: %.02f °\n',
+                   'Quaternion          x: %.02f y: %.02f z: %.02f w: %.02f\n',
+                   'Linear Acceleration x: %.02f y: %.02f z: %.02f m/s²\n',
+                   'Gravity Vector      x: %.02f y: %.02f z: %.02f m/s²\n',
+                   'Temperature         %d °C\n',
                    'Calibration Status  %u\n\n'),
             e.acceleration[0]/100.0,       e.acceleration[1]/100.0,       e.acceleration[2]/100.0,
             e.magneticField[0]/16.0,       e.magneticField[1]/16.0,       e.magneticField[2]/16.0,
