@@ -14,8 +14,8 @@ function matlab_example_simple()
 
     % Get current quaternion
     q = imu.getQuaternion();
-    fprintf('w: %.2f, x: %.2f, y: %.2f, z: %.2f\n',
-            q.w/16383.0, q.x/16383.0, q.y/16383.0, q.z/16383.0);
+    fprintf('x: %.2f, y: %.2f, z: %.2f, w: %.2f\n', ...
+            q.x/16383.0, q.y/16383.0, q.z/16383.0, q.w/16383.0);
 
     input('Press any key to exit...\n', 's');
     ipcon.disconnect();
