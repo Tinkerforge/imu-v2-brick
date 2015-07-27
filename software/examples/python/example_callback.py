@@ -3,7 +3,7 @@
 
 HOST = "localhost"
 PORT = 4223
-UID = "6ww9bv" # Change to your UID
+UID = "XYZ" # Change to your UID
 
 from tinkerforge.ip_connection import IPConnection
 from tinkerforge.brick_imu_v2 import IMUV2

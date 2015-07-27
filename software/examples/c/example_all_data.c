@@ -5,7 +5,7 @@
 
 #define HOST "localhost"
 #define PORT 4223
-#define UID "6ww9bv" // Change to your UID
+#define UID "XYZ" // Change to your UID
 
 // All data callback
 void cb_all_data(int16_t acceleration[3], int16_t magnetic_field[3],

@@ -5,7 +5,7 @@
 
 #define HOST "localhost"
 #define PORT 4223
-#define UID "6ww9bv" // Change to your UID
+#define UID "XYZ" // Change to your UID
 
 // Quaternion callback
 void cb_quaternion(int16_t w, int16_t x, int16_t y, int16_t z, void *user_data) {

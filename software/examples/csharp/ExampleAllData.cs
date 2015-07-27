@@ -4,7 +4,7 @@ class Example
 {
 	private static string HOST = "localhost";
 	private static int PORT = 4223;
-	private static string UID = "6ww9bv"; // Change to your UID
+	private static string UID = "XYZ"; // Change to your UID
 
 	// All data callback
 	static void AllDataCB(BrickIMUV2 sender, short[] acceleration,
