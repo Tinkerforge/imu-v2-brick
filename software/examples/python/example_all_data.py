@@ -6,7 +6,7 @@ PORT = 4223
 UID = "XYZ" # Change to your UID
 
 from tinkerforge.ip_connection import IPConnection
-from tinkerforge.brick_imu_v2 import IMUV2
+from tinkerforge.brick_imu_v2 import BrickIMUV2
 
 # All data callback
 def cb_all_data(acceleration, magnetic_field, angular_velocity,
@@ -33,7 +33,7 @@ Calibration Status  {}
 
 if __name__ == "__main__":
     ipcon = IPConnection() # Create IP connection
-    imu = IMUV2(UID, ipcon) # Create device object
+    imu = BrickIMUV2(UID, ipcon) # Create device object
 
     ipcon.connect(HOST, PORT) # Connect to brickd
     # Don't use device before ipcon is connected
