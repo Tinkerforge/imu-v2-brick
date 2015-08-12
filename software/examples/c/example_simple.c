@@ -7,7 +7,7 @@
 #define PORT 4223
 #define UID "XYZ" // Change to your UID
 
-int main() {
+int main(void) {
 	// Create IP connection
 	IPConnection ipcon;
 	ipcon_create(&ipcon);
@@ -19,7 +19,7 @@ int main() {
 	// Connect to brickd
 	if(ipcon_connect(&ipcon, HOST, PORT) < 0) {
 		fprintf(stderr, "Could not connect\n");
-		exit(1);
+		return 1;
 	}
 	// Don't use device before ipcon is connected
 
@@ -27,7 +27,7 @@ int main() {
 	int16_t w, x, y, z;
 	if(imu_v2_get_quaternion(&imu, &w, &x, &y, &z) < 0) {
 		fprintf(stderr, "Could not get quaternion, probably timeout\n");
-		exit(1);
+		return 1;
 	}
 
 	printf("w: %.2f, x: %.2f, y: %.2f, z: %.2f\n",
@@ -36,4 +36,5 @@ int main() {
 	printf("Press key to exit\n");
 	getchar();
 	ipcon_destroy(&ipcon); // Calls ipcon_disconnect internally
+	return 0;
 }
