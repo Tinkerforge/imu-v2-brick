@@ -3,7 +3,7 @@ Imports Tinkerforge
 Module ExampleAllData
     Const HOST As String = "localhost"
     Const PORT As Integer = 4223
-    Const UID As String = "6ww9bv" ' Change to your UID
+    Const UID As String = "XYZ" ' Change to your UID
 
     ' All data callback
     Sub AllDataCB(ByVal sender As BrickIMUV2, ByVal acceleration As Short(), _
