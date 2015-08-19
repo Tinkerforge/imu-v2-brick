@@ -379,10 +379,40 @@ void update_sensor_data(void) {
 	// Read the data every 10ms. This unfortunately means that
 	// we may get a maximum delay of 10ms before the user
 	// gets the data. MEH.
-	if(update_sensor_counter >= 10) {
-		bmo_read_registers(REG_ACC_DATA_X_LSB, (uint8_t*)&sensor_data, sizeof(SensorData));
-		update_sensor_counter = 0;
+	switch(update_sensor_counter) {
+		case 0:
+			bmo_read_registers(REG_ACC_DATA_X_LSB, (uint8_t*)&sensor_data.acc_x, sizeof(int16_t)*3);
+			break;
+		case 1:
+			bmo_read_registers(REG_MAG_DATA_X_LSB, (uint8_t*)&sensor_data.mag_x, sizeof(int16_t)*3);
+			break;
+		case 2:
+			bmo_read_registers(REG_GYR_DATA_X_LSB, (uint8_t*)&sensor_data.gyr_x, sizeof(int16_t)*3);
+			break;
+		case 3:
+			bmo_read_registers(REG_EUL_HEADING_LSB, (uint8_t*)&sensor_data.eul_heading, sizeof(int16_t)*3);
+			break;
+		case 4:
+			bmo_read_registers(REG_QUA_DATA_W_LSB, (uint8_t*)&sensor_data.qua_w, sizeof(uint16_t)*4);
+			break;
+		case 5:
+			bmo_read_registers(REG_LIA_DATA_X_LSB, (uint8_t*)&sensor_data.lia_x, sizeof(int16_t)*3);
+			break;
+		case 6:
+			bmo_read_registers(REG_GRV_DATA_X_LSB, (uint8_t*)&sensor_data.grv_x, sizeof(int16_t)*3);
+			break;
+		case 7:
+			bmo_read_registers(REG_TEMP, (uint8_t*)&sensor_data.temperature, sizeof(int8_t)*1);
+			break;
+		case 8:
+			bmo_read_registers(REG_CALIB_STAT, (uint8_t*)&sensor_data.calibration_status, sizeof(uint8_t)*1);
+			break;
+		default: // should always be in case of 9
+			update_sensor_counter = 0;
+			return;
 	}
+
+	update_sensor_counter++;
 }
 
 void bmo_write_register(const uint8_t reg, uint8_t const value) {

@@ -110,7 +110,7 @@
 #define REG_GRV_DATA_Z_LSB   0x32
 #define REG_GRV_DATA_Z_MSB   0x33
 #define REG_TEMP             0x34
-#define REG_CALIB_START      0x35
+#define REG_CALIB_STAT       0x35
 #define REG_ST_RESULT        0x36
 #define REG_INT_STA          0x37
 #define REG_SYS_CLK_STATUS   0x38
