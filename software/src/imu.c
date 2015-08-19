@@ -371,7 +371,6 @@ void imu_blinkenlights(void) {
 }
 
 void update_sensor_data(void) {
-	update_sensor_counter++;
 	// Unfortunately there does not seem to be a way to
 	// get an interrupt from the BMO055 if new data is ready
 
