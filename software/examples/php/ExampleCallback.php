@@ -13,9 +13,8 @@ const UID = '6ww9bv'; // Change to your UID
 // Quaternion callback
 function cb_quaternion($w, $x, $y, $z)
 {
-    $qdiv = (1 << 14) - 1;
     $s = sprintf("w: %.02f, x: %.02f, y: %.02f, z: %.02f\n",
-                 $w/$qdiv, $x/$qdiv, $y/$qdiv, $z/$qdiv);
+                 $w/16383.0, $x/16383.0, $y/16383.0, $z/16383.0);
 
     echo "$s";
 }
@@ -29,7 +28,7 @@ $ipcon->connect(HOST, PORT); // Connect to brickd
 // Set period for quaternion callback to 100ms
 $imu->setQuaternionPeriod(100);
 
-// Register position callback to function cb_position
+// Register quaternion callback to function cb_quaternion
 $imu->registerCallback(BrickIMUV2::CALLBACK_QUATERNION, 'cb_quaternion');
 
 echo "Press ctrl+c to exit\n";

@@ -3,18 +3,13 @@ Imports Tinkerforge
 Module ExampleCallback
     Const HOST As String = "localhost"
     Const PORT As Integer = 4223
-    Const UID As String = "6ww9bv" ' Change to your UID
+    Const UID As String = "XYZ" ' Change to your UID
 
     ' Quaternion callback
     Sub QuaternionCB(ByVal sender As BrickIMUV2, _
                      ByVal w As Short, ByVal x As Short, ByVal y As Short, ByVal z As Short)
-        Dim qdiv As Single
-        qdiv = (1 << 14) - 1
-
-        Dim s As String
-        s = "w: {0:F02}, x: {1:F02}, y: {2:F02}, z: {3:F02}"
-
-        System.Console.WriteLine(System.String.Format(s, w/qdiv, x/qdiv, y/qdiv, z/qdiv))
+        Dim s As String = "w: {0:F02}, x: {1:F02}, y: {2:F02}, z: {3:F02}"
+        System.Console.WriteLine(System.String.Format(s, w/16383.0, x/16383.0, y/16383.0, z/16383.0))
     End Sub
 
     Sub Main()

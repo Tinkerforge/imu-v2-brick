@@ -6,14 +6,6 @@ class Example
 	private static int PORT = 4223;
 	private static string UID = "XYZ"; // Change to your UID
 
-	// Quaternion callback
-	static void QuaternionCB(BrickIMUV2 sender, short w, short x, short y, short z)
-	{
-		string s = "w: {0:F02}, x: {1:F02}, y: {2:F02}, z: {3:F02}";
-		string f = System.String.Format(s, w/16383.0, x/16383.0, y/16383.0, z/16383.0);
-		System.Console.WriteLine(f);
-	}
-
 	static void Main()
 	{
 		IPConnection ipcon = new IPConnection(); // Create IP connection
@@ -22,11 +14,13 @@ class Example
 		ipcon.Connect(HOST, PORT); // Connect to brickd
 		// Don't use device before ipcon is connected
 
-		// Set period for quaternion callback to 100ms
-		imu.SetQuaternionPeriod(100);
+		// Get current quaternion
+		short w, x, y, z;
+		imu.GetQuaternion(out w, out x, out y, out z);
 
-		// Register quaternion callback to QuaternionCB
-		imu.Quaternion += QuaternionCB;
+		string s = "w: {0:F02}, x: {1:F02}, y: {2:F02}, z: {3:F02}";
+		string f = System.String.Format(s, w/16383.0, x/16383.0, y/16383.0, z/16383.0);
+		System.Console.WriteLine(f);
 
 		System.Console.WriteLine("Press enter to exit");
 		System.Console.ReadLine();

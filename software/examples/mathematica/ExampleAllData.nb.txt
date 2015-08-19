@@ -1,0 +1,56 @@
+Needs["NETLink`"]
+LoadNETAssembly["Tinkerforge",NotebookDirectory[]<>"../../.."]
+
+host="localhost"
+port=4223
+uid="6ww9bv"(* Change to your UID *)
+
+(* Create IPConnection and device object *)
+ipcon=NETNew["Tinkerforge.IPConnection"]
+imu=NETNew["Tinkerforge.BrickIMUV2",uid,ipcon]
+ipcon@Connect[host,port]
+
+(* Set period for all data callback to 100ms *)
+imu@SetAllDataPeriod[100]
+
+(* All data callback *)
+AllDataCB[sender_,{acceleration1_,acceleration2_,acceleration3_},
+          {magneticField1_,magneticField2_,magneticField3_},
+          {angularVelocity1_,angularVelocity2_,angularVelocity3_},
+          {eulerAngle1_,eulerAngle2_,eulerAngle3_},
+          {quaternion1_,quaternion2_,quaternion3_,quaternion4_},
+          {linearAcceleration1_,linearAcceleration2_,linearAcceleration3_},
+          {gravityVector1_,gravityVector2_,gravityVector3_},
+          temperature_,calibrationStatus_]:=
+ Print["Acceleration        x: "<>ToString[NumberForm[N[acceleration1/100.0],{10,2}]]<>
+       " y: "<>ToString[NumberForm[N[acceleration2/100.0],{10,2}]]<>
+       " z: "<>ToString[NumberForm[N[acceleration3/100.0],{10,2}]]<>" m/s²\n"<>
+       "Magnetic Field      x: "<>ToString[NumberForm[N[magneticField1/16.0],{10,2}]]<>
+       " y: "<>ToString[NumberForm[N[magneticField2/16.0],{10,2}]]<>
+       " z: "<>ToString[NumberForm[N[magneticField3/16.0],{10,2}]]<>" µT\n"<>
+       "Angular Velocity    x: "<>ToString[NumberForm[N[angularVelocity1/16.0],{10,2}]]<>
+       " y: "<>ToString[NumberForm[N[angularVelocity2/16.0],{10,2}]]<>
+       " z: "<>ToString[NumberForm[N[angularVelocity3/16.0],{10,2}]]<>" °/s\n"<>
+       "Euler Angle         x: "<>ToString[NumberForm[N[eulerAngle1/16.0],{10,2}]]<>
+       " y: "<>ToString[NumberForm[N[eulerAngle2/16.0],{10,2}]]<>
+       " z: "<>ToString[NumberForm[N[eulerAngle3/16.0],{10,2}]]<>" °\n"<>
+       "Quaternion          x: "<>ToString[NumberForm[N[quaternion2/16383.0],{10,2}]]<>
+       " y: "<>ToString[NumberForm[N[quaternion3/16383.0],{10,2}]]<>
+       " z: "<>ToString[NumberForm[N[quaternion4/16383.0],{10,2}]]<>
+       " w: "<>ToString[NumberForm[N[quaternion1/16383.0],{10,2}]]<>"\n"<>
+       "Linear Acceleration x: "<>ToString[NumberForm[N[linearAcceleration1/100.0],{10,2}]]<>
+       " y: "<>ToString[NumberForm[N[linearAcceleration2/100.0],{10,2}]]<>
+       " z: "<>ToString[NumberForm[N[linearAcceleration3/100.0],{10,2}]]<>" m/s²\n"<>
+       "Gravity Vector      x: "<>ToString[NumberForm[N[gravityVector1/100.0],{10,2}]]<>
+       " y: "<>ToString[NumberForm[N[gravityVector2/100.0],{10,2}]]<>
+       " z: "<>ToString[NumberForm[N[gravityVector3/100.0],{10,2}]]<>" m/s²\n"<>
+       "Temperature         "<>ToString[temperature]<>" °C\n"<>
+       "Calibration Status  "<>ToString[calibrationStatus]<>"\n"]
+AddEventHandler[imu@AllData,AllDataCB]
+
+Input["Click OK to exit"]
+
+(* Clean up *)
+ipcon@Disconnect[]
+ReleaseNETObject[imu]
+ReleaseNETObject[ipcon]

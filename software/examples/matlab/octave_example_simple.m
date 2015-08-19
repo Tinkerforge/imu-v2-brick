@@ -1,4 +1,4 @@
-function octave_example_callback()
+function octave_example_simple()
     more off;
 
     HOST = "localhost";
@@ -11,21 +11,14 @@ function octave_example_callback()
     ipcon.connect(HOST, PORT); % Connect to brickd
     % Don't use device before ipcon is connected
 
-    % Set period for quaternion callback to 100ms
-    imu.setQuaternionPeriod(100);
-
-    % Register quaternion callback to function cb_quaternion
-    imu.addQuaternionCallback(@cb_quaternion);
+    % Get current quaternion
+    q = imu.getQuaternion();
+    fprintf("w: %.2f, x: %.2f, y: %.2f, z: %.2f\n",
+            short2int(q.w)/16383.0, short2int(q.x)/16383.0,
+            short2int(q.y)/16383.0, short2int(q.z)/16383.0);
 
     input("Press any key to exit...\n", "s");
     ipcon.disconnect();
-end
-
-% Callback function for quaternion callback
-function cb_quaternion(e)
-    fprintf("w: %.2f, x: %.2f, y: %.2f, z: %.2f\n",
-            short2int(e.w)/16383.0, short2int(e.x)/16383.0,
-            short2int(e.y)/16383.0, short2int(e.z)/16383.0);
 end
 
 function int = short2int(short)

@@ -16,14 +16,10 @@ imu = BrickIMUV2.new UID, ipcon # Create device object
 ipcon.connect HOST, PORT # Connect to brickd
 # Don't use device before ipcon is connected
 
-# Set period for quaternion callback to 100ms
-imu.set_quaternion_period 100
-
-# Register quaternion callback
-imu.register_callback(BrickIMUV2::CALLBACK_QUATERNION) do |w, x, y, z|
-  puts "w: %.02f, x: %.02f, y: %.02f, z: %.02f\n" %
-       [w/16383.0, x/16383.0, y/16383.0, z/16383.0]
-end
+# Get current quaternion (returned as array [w, x, y, z])
+q = imu.get_quaternion
+puts "w: %.02f, x: %.02f, y: %.02f, z: %.02f\n" %
+     [q[0]/16383.0, q[1]/16383.0, q[2]/16383.0, q[3]/16383.0]
 
 puts 'Press key to exit'
 $stdin.gets
