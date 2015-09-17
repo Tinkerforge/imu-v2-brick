@@ -33,7 +33,7 @@ public class ExampleAllData {
 				           "Linear Acceleration x: %.02f y: %.02f z: %.02f m/s²%n" +
 				           "Gravity Vector      x: %.02f y: %.02f z: %.02f m/s²%n" +
 				           "Temperature         %d °C%n" +
-				           "Calibration Status  %d%n%n";
+				           "Calibration Status  %s%n%n";
 				System.out.format(s,
 				                  acceleration[0]/100.0,       acceleration[1]/100.0,       acceleration[2]/100.0,
 				                  magneticField[0]/16.0,       magneticField[1]/16.0,       magneticField[2]/16.0,
@@ -42,7 +42,7 @@ public class ExampleAllData {
 				                  quaternion[1]/16383.0,       quaternion[2]/16383.0,       quaternion[3]/16383.0,       quaternion[0]/16383.0,
 				                  linearAcceleration[0]/100.0, linearAcceleration[1]/100.0, linearAcceleration[2]/100.0,
 				                  gravityVector[0]/100.0,      gravityVector[1]/100.0,      gravityVector[2]/100.0,
-				                  temperature, calibrationStatus);
+				                  temperature, Integer.toBinaryString(calibrationStatus));
 			}
 		});
 

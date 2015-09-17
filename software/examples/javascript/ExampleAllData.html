@@ -73,7 +73,7 @@
                                                    ' y: ' + (gravityVector[1]/100.0).toFixed(2) +
                                                    ' z: ' + (gravityVector[2]/100.0).toFixed(2) + ' m/s²\n' +
                                 'Temperature         ' + temperature + ' °C\n' +
-                                'Calibration Status  ' + calibrationStatus + '\n\n';
+                                'Calibration Status  ' + calibrationStatus.toString(2) + '\n\n';
                         textArea.value += s;
                         textArea.scrollTop = textArea.scrollHeight;
                     }

@@ -49,7 +49,7 @@ imu.on(Tinkerforge.BrickIMUV2.CALLBACK_ALL_DATA,
                                    ' y: ' + (gravityVector[1]/100.0).toFixed(2) +
                                    ' z: ' + (gravityVector[2]/100.0).toFixed(2) + ' m/s²\n' +
                 'Temperature         ' + temperature + ' °C\n' +
-                'Calibration Status  ' + calibrationStatus + '\n';
+                'Calibration Status  ' + calibrationStatus.toString(2) + '\n';
         console.log(s);
     }
 );

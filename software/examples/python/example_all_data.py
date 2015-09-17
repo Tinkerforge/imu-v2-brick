@@ -21,7 +21,7 @@ Quaternion          x: {:.2f} y: {:.2f} z: {:.2f} w: {:.2f}
 Linear Acceleration x: {:.2f} y: {:.2f} z: {:.2f} m/s²
 Gravity Vector      x: {:.2f} y: {:.2f} z: {:.2f} m/s²
 Temperature         {} °C
-Calibration Status  {}
+Calibration Status  {:08b}
 '''.format(acceleration[0]/100.0,        acceleration[1]/100.0,        acceleration[2]/100.0,
            magnetic_field[0]/16.0,       magnetic_field[1]/16.0,       magnetic_field[2]/16.0,
            angular_velocity[0]/16.0,     angular_velocity[1]/16.0,     angular_velocity[2]/16.0,

@@ -22,7 +22,7 @@ sub cb_all_data
            "Linear Acceleration x: %.02f y: %.02f z: %.02f m/s²\n" .
            "Gravity Vector      x: %.02f y: %.02f z: %.02f m/s²\n" .
            "Temperature         %d °C\n" .
-           "Calibration Status  %u\n\n",
+           "Calibration Status  %08b\n\n",
            @{$acceleration}[0]/100.0,        @{$acceleration}[1]/100.0,        @{$acceleration}[2]/100.0,
            @{$magnetic_field}[0]/16.0,       @{$magnetic_field}[1]/16.0,       @{$magnetic_field}[2]/16.0,
            @{$angular_velocity}[0]/16.0,     @{$angular_velocity}[1]/16.0,     @{$angular_velocity}[2]/16.0,

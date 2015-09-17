@@ -39,7 +39,7 @@ function cb_all_data(e)
                    "Linear Acceleration x: %.02f y: %.02f z: %.02f m/s²\n",
                    "Gravity Vector      x: %.02f y: %.02f z: %.02f m/s²\n",
                    "Temperature         %d °C\n",
-                   "Calibration Status  %u\n\n"),
+                   "Calibration Status  %s\n\n"),
             short2int(acceleration(1))/100.0,       short2int(acceleration(2))/100.0,       short2int(acceleration(3))/100.0,
             short2int(magneticField(1))/16.0,       short2int(magneticField(2))/16.0,       short2int(magneticField(3))/16.0,
             short2int(angularVelocity(1))/16.0,     short2int(angularVelocity(2))/16.0,     short2int(angularVelocity(3))/16.0,
@@ -47,7 +47,7 @@ function cb_all_data(e)
             short2int(quaternion(2))/16383.0,       short2int(quaternion(3))/16383.0,       short2int(quaternion(4))/16383.0,       short2int(quaternion(1))/16383.0,
             short2int(linearAcceleration(1))/100.0, short2int(linearAcceleration(2))/100.0, short2int(linearAcceleration(3))/100.0,
             short2int(gravityVector(1))/100.0,      short2int(gravityVector(2))/100.0,      short2int(gravityVector(3))/100.0,
-            byte2int(e.temperature), short2int(e.calibrationStatus));
+            byte2int(e.temperature), dec2bin(short2int(e.calibrationStatus)));
 end
 
 function int = short2int(short)

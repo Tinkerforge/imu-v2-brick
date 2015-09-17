@@ -3,10 +3,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[         0,          0]
-NotebookDataLength[     15274,        357]
-NotebookOptionsPosition[     14838,        336]
-NotebookOutlinePosition[     15177,        351]
-CellTagsIndexPosition[     15134,        348]
+NotebookDataLength[     15453,        362]
+NotebookOptionsPosition[     15017,        341]
+NotebookOutlinePosition[     15356,        356]
+CellTagsIndexPosition[     15313,        353]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -47,15 +47,16 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{"ipcon", "@", 
    RowBox[{"Connect", "[", 
-    RowBox[{"host", ",", "port"}], "]"}]}], "\n", "\[IndentingNewLine]", 
+    RowBox[{"host", ",", "port"}], "]"}]}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
   RowBox[{"(*", " ", 
    RowBox[{
    "Set", " ", "period", " ", "for", " ", "all", " ", "data", " ", "callback",
-     " ", "to", " ", "100", "ms"}], " ", "*)"}]}], "\[IndentingNewLine]", 
+     " ", "to", " ", "100", "ms"}], " ", "*)"}]}], "\n", 
  RowBox[{
   RowBox[{"imu", "@", 
-   RowBox[{"SetAllDataPeriod", "[", "100", "]"}]}], "\n", 
-  "\[IndentingNewLine]", 
+   RowBox[{"SetAllDataPeriod", "[", "100", "]"}]}], "\[IndentingNewLine]", 
+  "\n", 
   RowBox[{"(*", " ", 
    RowBox[{"All", " ", "data", " ", "callback"}], " ", "*)"}]}], "\n", 
  RowBox[{
@@ -278,8 +279,12 @@ Cell[BoxData[{
     RowBox[{"ToString", "[", "temperature", "]"}], "<>", 
     "\"\< \[Degree]C\\n\>\"", "<>", "\[IndentingNewLine]", "       ", 
     "\"\<Calibration Status  \>\"", "<>", 
-    RowBox[{"ToString", "[", "calibrationStatus", "]"}], "<>", 
-    "\"\<\\n\>\""}], "]"}]}], "\[IndentingNewLine]", 
+    RowBox[{"StringJoin", "[", 
+     RowBox[{"Map", "[", 
+      RowBox[{"ToString", ",", 
+       RowBox[{"IntegerDigits", "[", 
+        RowBox[{"calibrationStatus", ",", "2", ",", "8"}], "]"}]}], "]"}], 
+     "]"}], "<>", "\"\<\\n\>\""}], "]"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"AddEventHandler", "[", 
    RowBox[{
@@ -332,10 +337,10 @@ Cell[BoxData[{
    3.644062805130817*^9}, {3.6440631192797623`*^9, 3.644063284060068*^9}, {
    3.644063317844557*^9, 3.644063326510621*^9}, {3.644063417370319*^9, 
    3.644063469729463*^9}, {3.644119973624866*^9, 3.644119974413495*^9}, {
-   3.64412251226331*^9, 3.644122518242433*^9}}]
+   3.64412251226331*^9, 3.644122518242433*^9}, 3.651491404931396*^9}]
 },
 WindowSize->{1537, 866},
-WindowMargins->{{Automatic, 142}, {73, Automatic}},
+WindowMargins->{{Automatic, 141}, {72, Automatic}},
 FrontEndVersion->"9.0 for Linux x86 (64-bit) (November 20, 2012)",
 StyleDefinitions->"Default.nb"
 ]
@@ -351,7 +356,7 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[400, 13, 748, 13, 55, "Input"],
-Cell[1151, 28, 13683, 306, 1177, "Input"]
+Cell[1151, 28, 13862, 311, 1177, "Input"]
 }
 ]
 *)

@@ -45,7 +45,7 @@ AllDataCB[sender_,{acceleration1_,acceleration2_,acceleration3_},
        " y: "<>ToString[NumberForm[N[gravityVector2/100.0],{10,2}]]<>
        " z: "<>ToString[NumberForm[N[gravityVector3/100.0],{10,2}]]<>" m/s²\n"<>
        "Temperature         "<>ToString[temperature]<>" °C\n"<>
-       "Calibration Status  "<>ToString[calibrationStatus]<>"\n"]
+       "Calibration Status  "<>StringJoin[Map[ToString,IntegerDigits[calibrationStatus,2,8]]]<>"\n"]
 AddEventHandler[imu@AllData,AllDataCB]
 
 Input["Click OK to exit"]

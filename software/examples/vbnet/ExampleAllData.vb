@@ -1,3 +1,4 @@
+Imports System
 Imports Tinkerforge
 
 Module ExampleAllData
@@ -27,8 +28,8 @@ Module ExampleAllData
                              quaternion(1)/16383.0,       quaternion(2)/16383.0,       quaternion(3)/16383.0,       quaternion(0)/16383.0, _
                              linearAcceleration(0)/100.0, linearAcceleration(1)/100.0, linearAcceleration(2)/100.0, _
                              gravityVector(0)/100.0,      gravityVector(1)/100.0,      gravityVector(2)/100.0, _
-                             temperature, calibrationStatus}
-        System.Console.WriteLine(System.String.Format(s, o))
+                             temperature, Convert.ToString(calibrationStatus, 2)}
+        Console.WriteLine(String.Format(s, o))
     End Sub
 
     Sub Main()

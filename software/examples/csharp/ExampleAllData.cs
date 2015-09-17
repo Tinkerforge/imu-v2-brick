@@ -1,3 +1,4 @@
+using System;
 using Tinkerforge;
 
 class Example
@@ -29,8 +30,8 @@ class Example
 		              quaternion[1]/16383.0,       quaternion[2]/16383.0,       quaternion[3]/16383.0,       quaternion[0]/16383.0,
 		              linearAcceleration[0]/100.0, linearAcceleration[1]/100.0, linearAcceleration[2]/100.0,
 		              gravityVector[0]/100.0,      gravityVector[1]/100.0,      gravityVector[2]/100.0,
-		              temperature, calibrationStatus};
-		System.Console.WriteLine(System.String.Format(s, o));
+		              temperature, Convert.ToString(calibrationStatus, 2)};
+		Console.WriteLine(String.Format(s, o));
 	}
 
 	static void Main()
