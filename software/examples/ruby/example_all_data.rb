@@ -8,16 +8,13 @@ include Tinkerforge
 
 HOST = 'localhost'
 PORT = 4223
-UID = 'XYZ' # Change to your UID
+UID = 'XXYYZZ' # Change to your UID
 
 ipcon = IPConnection.new # Create IP connection
 imu = BrickIMUV2.new UID, ipcon # Create device object
 
 ipcon.connect HOST, PORT # Connect to brickd
 # Don't use device before ipcon is connected
-
-# Set period for all data callback to 100ms
-imu.set_all_data_period 100
 
 # Register all data callback
 imu.register_callback(BrickIMUV2::CALLBACK_ALL_DATA) do
@@ -40,8 +37,14 @@ imu.register_callback(BrickIMUV2::CALLBACK_ALL_DATA) do
         quaternion[1]/16383.0,        quaternion[2]/16383.0,        quaternion[3]/16383.0,        quaternion[0]/16383.0,
         linear_acceleration[0]/100.0, linear_acceleration[1]/100.0, linear_acceleration[2]/100.0,
         gravity_vector[0]/100.0,      gravity_vector[1]/100.0,      gravity_vector[2]/100.0,
-        temperature, calibration_status]
+        temperature,
+        calibration_status]
 end
+
+# Set period for all data callback to 0.1s (100ms)
+# Note: The all data callback is only called every 0.1 seconds
+#       if the all data has changed since the last call!
+imu.set_all_data_period 100
 
 puts 'Press key to exit'
 $stdin.gets

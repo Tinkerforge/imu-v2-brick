@@ -4,9 +4,9 @@ Imports Tinkerforge
 Module ExampleAllData
     Const HOST As String = "localhost"
     Const PORT As Integer = 4223
-    Const UID As String = "XYZ" ' Change to your UID
+    Const UID As String = "XXYYZZ" ' Change to your UID
 
-    ' All data callback
+    ' Callback subroutine for all data callback
     Sub AllDataCB(ByVal sender As BrickIMUV2, ByVal acceleration As Short(), _
                   ByVal magneticField As Short(), ByVal angularVelocity As Short(), _
                   ByVal eulerAngle As Short(), ByVal quaternion As Short(), _
@@ -28,7 +28,8 @@ Module ExampleAllData
                              quaternion(1)/16383.0,       quaternion(2)/16383.0,       quaternion(3)/16383.0,       quaternion(0)/16383.0, _
                              linearAcceleration(0)/100.0, linearAcceleration(1)/100.0, linearAcceleration(2)/100.0, _
                              gravityVector(0)/100.0,      gravityVector(1)/100.0,      gravityVector(2)/100.0, _
-                             temperature, Convert.ToString(calibrationStatus, 2)}
+                             temperature,
+                             Convert.ToString(calibrationStatus, 2)}
         Console.WriteLine(String.Format(s, o))
     End Sub
 
@@ -39,14 +40,16 @@ Module ExampleAllData
         ipcon.Connect(HOST, PORT) ' Connect to brickd
         ' Don't use device before ipcon is connected
 
-        ' Set period for all data callback to 100ms
-        imu.SetAllDataPeriod(100)
-
-        ' Register all data callback to QuaternionCB
+        ' Register all data callback to subroutine AllDataCB
         AddHandler imu.AllData, AddressOf AllDataCB
 
-        System.Console.WriteLine("Press key to exit")
-        System.Console.ReadLine()
+        ' Set period for all data callback to 0.1s (100ms)
+        ' Note: The all data callback is only called every 0.1 seconds
+        '       if the all data has changed since the last call!
+        imu.SetAllDataPeriod(100)
+
+        Console.WriteLine("Press key to exit")
+        Console.ReadLine()
         ipcon.Disconnect()
     End Sub
 End Module

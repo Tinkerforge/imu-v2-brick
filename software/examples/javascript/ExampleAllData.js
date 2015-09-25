@@ -2,30 +2,32 @@ var Tinkerforge = require('tinkerforge');
 
 var HOST = 'localhost';
 var PORT = 4223;
-var UID = '6ww9bv'; // Change to your UID
+var UID = 'XXYYZZ'; // Change to your UID
 
 var ipcon = new Tinkerforge.IPConnection(); // Create IP connection
 var imu = new Tinkerforge.BrickIMUV2(UID, ipcon); // Create device object
 
 ipcon.connect(HOST, PORT,
-    function(error) {
-        console.log('Error: '+error);
+    function (error) {
+        console.log('Error: ' + error);
     }
 ); // Connect to brickd
 // Don't use device before ipcon is connected
 
 ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
-    function(connectReason) {
-        // Set period for all data callback to 100ms
+    function (connectReason) {
+        // Set period for all data callback to 0.1s (100ms)
+        // Note: The all data callback is only called every 0.1 seconds
+        //       if the all data has changed since the last call!
         imu.setAllDataPeriod(100);
     }
 );
 
 // Register all data callback
 imu.on(Tinkerforge.BrickIMUV2.CALLBACK_ALL_DATA,
-    // All data callback
-    function(acceleration, magneticField, angularVelocity, eulerAngle, quaternion,
-             linearAcceleration, gravityVector, temperature, calibrationStatus) {
+    // Callback function for all data callback
+    function (acceleration, magneticField, angularVelocity, eulerAngle, quaternion,
+              linearAcceleration, gravityVector, temperature, calibrationStatus) {
         var s = 'Acceleration        x: ' + (acceleration[0]/100.0).toFixed(2) +
                                    ' y: ' + (acceleration[1]/100.0).toFixed(2) +
                                    ' z: ' + (acceleration[2]/100.0).toFixed(2) + ' m/s²\n' +
@@ -54,9 +56,9 @@ imu.on(Tinkerforge.BrickIMUV2.CALLBACK_ALL_DATA,
     }
 );
 
-console.log("Press any key to exit ...");
+console.log('Press key to exit');
 process.stdin.on('data',
-    function(data) {
+    function (data) {
         ipcon.disconnect();
         process.exit(0);
     }

@@ -1,8 +1,7 @@
 #!/bin/sh
-# connects to localhost:4223 by default, use --host and --port to change it
+# Connects to localhost:4223 by default, use --host and --port to change this
 
-# change to your UID
-uid=6ww9bv
+uid=XXYYZZ # Change to your UID
 
-# get current quaternion
+# Get current quaternion
 tinkerforge call imu-v2-brick $uid get-quaternion

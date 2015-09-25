@@ -1,9 +1,10 @@
+Imports System
 Imports Tinkerforge
 
 Module ExampleSimple
     Const HOST As String = "localhost"
     Const PORT As Integer = 4223
-    Const UID As String = "XYZ" ' Change to your UID
+    Const UID As String = "XXYYZZ" ' Change to your UID
 
     Sub Main()
         Dim ipcon As New IPConnection() ' Create IP connection
@@ -17,13 +18,14 @@ Module ExampleSimple
         Dim x As Short
         Dim y As Short
         Dim z As Short
+
         imu.GetQuaternion(w, x, y, z)
 
         Dim s As String = "w: {0:F02}, x: {1:F02}, y: {2:F02}, z: {3:F02}"
-        System.Console.WriteLine(System.String.Format(s, w/16383.0, x/16383.0, y/16383.0, z/16383.0))
+        Console.WriteLine(String.Format(s, w/16383.0, x/16383.0, y/16383.0, z/16383.0))
 
-        System.Console.WriteLine("Press key to exit")
-        System.Console.ReadLine()
+        Console.WriteLine("Press key to exit")
+        Console.ReadLine()
         ipcon.Disconnect()
     End Sub
 End Module

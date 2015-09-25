@@ -28,12 +28,12 @@ type
 const
   HOST = 'localhost';
   PORT = 4223;
-  UID = 'XYZ'; { Change to your UID }
+  UID = 'XXYYZZ'; { Change to your UID }
 
 var
   e: TExample;
 
-{ Quaternion callback }
+{ Callback procedure for all data callback }
 procedure TExample.AllDataCB(sender: TBrickIMUV2;
                              const acceleration: TArray0To2OfInt16;
                              const magneticField: TArray0To2OfInt16;
@@ -53,7 +53,7 @@ begin
                  'Linear Acceleration x: %.02f y: %.02f z: %.02f m/s²'#10 +
                  'Gravity Vector      x: %.02f y: %.02f z: %.02f m/s²'#10 +
                  'Temperature         %d °C'#10 +
-                 'Calibration Status  %u'#10,
+                 'Calibration Status  %d'#10,
                  [acceleration[0]/100.0,       acceleration[1]/100.0,       acceleration[2]/100.0,
                   magneticField[0]/16.0,       magneticField[1]/16.0,       magneticField[2]/16.0,
                   angularVelocity[0]/16.0,     angularVelocity[1]/16.0,     angularVelocity[2]/16.0,
@@ -61,7 +61,8 @@ begin
                   quaternion[1]/16383.0,       quaternion[2]/16383.0,       quaternion[3]/16383.0,       quaternion[0]/16383.0,
                   linearAcceleration[0]/100.0, linearAcceleration[1]/100.0, linearAcceleration[2]/100.0,
                   gravityVector[0]/100.0,      gravityVector[1]/100.0,      gravityVector[2]/100.0,
-                  temperature, calibrationStatus]));
+                  temperature,
+                  calibrationStatus]));
 end;
 
 procedure TExample.Execute;
@@ -76,11 +77,13 @@ begin
   ipcon.Connect(HOST, PORT);
   { Don't use device before ipcon is connected }
 
-  { Set period for all data callback to 100ms }
-  imu.SetAllDataPeriod(100);
-
-  { Register "all data callback" to procedure AllDataCB }
+  { Register all data callback to procedure AllDataCB }
   imu.OnAllData := {$ifdef FPC}@{$endif}AllDataCB;
+
+  { Set period for all data callback to 0.1s (100ms)
+    Note: The all data callback is only called every 0.1 seconds
+          if the all data has changed since the last call! }
+  imu.SetAllDataPeriod(100);
 
   WriteLn('Press key to exit');
   ReadLn;

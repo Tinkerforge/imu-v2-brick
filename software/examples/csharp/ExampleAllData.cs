@@ -5,9 +5,9 @@ class Example
 {
 	private static string HOST = "localhost";
 	private static int PORT = 4223;
-	private static string UID = "XYZ"; // Change to your UID
+	private static string UID = "XXYYZZ"; // Change to your UID
 
-	// All data callback
+	// Callback function for all data callback
 	static void AllDataCB(BrickIMUV2 sender, short[] acceleration,
 	                      short[] magneticField, short[] angularVelocity,
 	                      short[] eulerAngle, short[] quaternion,
@@ -30,7 +30,8 @@ class Example
 		              quaternion[1]/16383.0,       quaternion[2]/16383.0,       quaternion[3]/16383.0,       quaternion[0]/16383.0,
 		              linearAcceleration[0]/100.0, linearAcceleration[1]/100.0, linearAcceleration[2]/100.0,
 		              gravityVector[0]/100.0,      gravityVector[1]/100.0,      gravityVector[2]/100.0,
-		              temperature, Convert.ToString(calibrationStatus, 2)};
+		              temperature,
+		              Convert.ToString(calibrationStatus, 2)};
 		Console.WriteLine(String.Format(s, o));
 	}
 
@@ -42,14 +43,16 @@ class Example
 		ipcon.Connect(HOST, PORT); // Connect to brickd
 		// Don't use device before ipcon is connected
 
-		// Set period for all data callback to 100ms
-		imu.SetAllDataPeriod(100);
-
-		// Register all data callback to AllDataCB
+		// Register all data callback to function AllDataCB
 		imu.AllData += AllDataCB;
 
-		System.Console.WriteLine("Press enter to exit");
-		System.Console.ReadLine();
+		// Set period for all data callback to 0.1s (100ms)
+		// Note: The all data callback is only called every 0.1 seconds
+		//       if the all data has changed since the last call!
+		imu.SetAllDataPeriod(100);
+
+		Console.WriteLine("Press enter to exit");
+		Console.ReadLine();
 		ipcon.Disconnect();
 	}
 }

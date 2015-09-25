@@ -3,10 +3,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[         0,          0]
-NotebookDataLength[     15453,        362]
-NotebookOptionsPosition[     15017,        341]
-NotebookOutlinePosition[     15356,        356]
-CellTagsIndexPosition[     15313,        353]
+NotebookDataLength[     15566,        376]
+NotebookOptionsPosition[     15130,        355]
+NotebookOutlinePosition[     15469,        370]
+CellTagsIndexPosition[     15426,        367]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -27,69 +27,61 @@ Cell[BoxData[{
    3.644063309610529*^9, 3.644063313961523*^9}}],
 
 Cell[BoxData[{
- RowBox[{"host", "=", "\"\<localhost\>\""}], "\[IndentingNewLine]", 
- RowBox[{"port", "=", "4223"}], "\[IndentingNewLine]", 
+ RowBox[{"host", "=", "\"\<localhost\>\""}], "\n", 
+ RowBox[{"port", "=", "4223"}], "\n", 
  RowBox[{
-  RowBox[{"uid", "=", "\"\<6ww9bv\>\""}], 
-  RowBox[{"(*", " ", 
-   RowBox[{"Change", " ", "to", " ", "your", " ", "UID"}], " ", "*)"}], 
+  RowBox[{"uid", "=", "\"\<XXYYZZ\>\""}], 
+  RowBox[{"(*", 
+   RowBox[{"Change", " ", "to", " ", "your", " ", "UID"}], "*)"}], 
   "\[IndentingNewLine]", "\[IndentingNewLine]", 
-  RowBox[{"(*", " ", 
+  RowBox[{"(*", 
    RowBox[{
    "Create", " ", "IPConnection", " ", "and", " ", "device", " ", "object"}], 
-   " ", "*)"}]}], "\[IndentingNewLine]", 
+   "*)"}]}], "\n", 
  RowBox[{"ipcon", "=", 
   RowBox[{"NETNew", "[", "\"\<Tinkerforge.IPConnection\>\"", "]"}]}], "\n", 
  RowBox[{"imu", "=", 
   RowBox[{"NETNew", "[", 
    RowBox[{"\"\<Tinkerforge.BrickIMUV2\>\"", ",", "uid", ",", "ipcon"}], 
-   "]"}]}], "\[IndentingNewLine]", 
+   "]"}]}], "\n", 
  RowBox[{
   RowBox[{"ipcon", "@", 
    RowBox[{"Connect", "[", 
     RowBox[{"host", ",", "port"}], "]"}]}], "\[IndentingNewLine]", 
   "\[IndentingNewLine]", 
-  RowBox[{"(*", " ", 
+  RowBox[{"(*", 
    RowBox[{
-   "Set", " ", "period", " ", "for", " ", "all", " ", "data", " ", "callback",
-     " ", "to", " ", "100", "ms"}], " ", "*)"}]}], "\n", 
- RowBox[{
-  RowBox[{"imu", "@", 
-   RowBox[{"SetAllDataPeriod", "[", "100", "]"}]}], "\[IndentingNewLine]", 
-  "\n", 
-  RowBox[{"(*", " ", 
-   RowBox[{"All", " ", "data", " ", "callback"}], " ", "*)"}]}], "\n", 
+   "Callback", " ", "function", " ", "for", " ", "all", " ", "data", " ", 
+    "callback"}], "*)"}]}], "\n", 
  RowBox[{
   RowBox[{"AllDataCB", "[", 
    RowBox[{"sender_", ",", 
     RowBox[{"{", 
      RowBox[{"acceleration1_", ",", "acceleration2_", ",", "acceleration3_"}],
-      "}"}], ",", "\[IndentingNewLine]", "          ", 
+      "}"}], ",", "\[IndentingNewLine]", 
     RowBox[{"{", 
      RowBox[{
      "magneticField1_", ",", "magneticField2_", ",", "magneticField3_"}], 
-     "}"}], ",", "\[IndentingNewLine]", "          ", 
+     "}"}], ",", "\[IndentingNewLine]", 
     RowBox[{"{", 
      RowBox[{
      "angularVelocity1_", ",", "angularVelocity2_", ",", 
-      "angularVelocity3_"}], "}"}], ",", "\[IndentingNewLine]", "          ", 
-    
+      "angularVelocity3_"}], "}"}], ",", "\[IndentingNewLine]", 
     RowBox[{"{", 
      RowBox[{"eulerAngle1_", ",", "eulerAngle2_", ",", "eulerAngle3_"}], 
-     "}"}], ",", "\[IndentingNewLine]", "          ", 
+     "}"}], ",", "\[IndentingNewLine]", 
     RowBox[{"{", 
      RowBox[{
      "quaternion1_", ",", "quaternion2_", ",", "quaternion3_", ",", 
-      "quaternion4_"}], "}"}], ",", "\[IndentingNewLine]", "          ", 
+      "quaternion4_"}], "}"}], ",", "\[IndentingNewLine]", 
     RowBox[{"{", 
      RowBox[{
      "linearAcceleration1_", ",", "linearAcceleration2_", ",", 
       "linearAcceleration3_"}], "}"}], ",", "\[IndentingNewLine]", 
-    "          ", 
     RowBox[{"{", 
      RowBox[{
      "gravityVector1_", ",", "gravityVector2_", ",", "gravityVector3_"}], 
-     "}"}], ",", "\[IndentingNewLine]", "          ", "temperature_", ",", 
+     "}"}], ",", "\[IndentingNewLine]", "temperature_", ",", 
     "calibrationStatus_"}], "]"}], ":=", "\[IndentingNewLine]", 
   RowBox[{"Print", "[", 
    RowBox[{"\"\<Acceleration        x: \>\"", "<>", 
@@ -100,7 +92,7 @@ Cell[BoxData[{
         RowBox[{"acceleration1", "/", "100.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", 
-    "\[IndentingNewLine]", "       ", "\"\< y: \>\"", "<>", 
+    "\[IndentingNewLine]", "\"\< y: \>\"", "<>", 
     RowBox[{"ToString", "[", 
      RowBox[{"NumberForm", "[", 
       RowBox[{
@@ -108,7 +100,7 @@ Cell[BoxData[{
         RowBox[{"acceleration2", "/", "100.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", 
-    "\[IndentingNewLine]", "       ", "\"\< z: \>\"", "<>", 
+    "\[IndentingNewLine]", "\"\< z: \>\"", "<>", 
     RowBox[{"ToString", "[", 
      RowBox[{"NumberForm", "[", 
       RowBox[{
@@ -116,7 +108,7 @@ Cell[BoxData[{
         RowBox[{"acceleration3", "/", "100.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", 
-    "\"\< m/s\.b2\\n\>\"", "<>", "\[IndentingNewLine]", "       ", 
+    "\"\< m/s\.b2\\n\>\"", "<>", "\[IndentingNewLine]", 
     "\"\<Magnetic Field      x: \>\"", "<>", 
     RowBox[{"ToString", "[", 
      RowBox[{"NumberForm", "[", 
@@ -125,7 +117,7 @@ Cell[BoxData[{
         RowBox[{"magneticField1", "/", "16.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", 
-    "\[IndentingNewLine]", "       ", "\"\< y: \>\"", "<>", 
+    "\[IndentingNewLine]", "\"\< y: \>\"", "<>", 
     RowBox[{"ToString", "[", 
      RowBox[{"NumberForm", "[", 
       RowBox[{
@@ -133,7 +125,7 @@ Cell[BoxData[{
         RowBox[{"magneticField2", "/", "16.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", 
-    "\[IndentingNewLine]", "       ", "\"\< z: \>\"", "<>", 
+    "\[IndentingNewLine]", "\"\< z: \>\"", "<>", 
     RowBox[{"ToString", "[", 
      RowBox[{"NumberForm", "[", 
       RowBox[{
@@ -141,7 +133,7 @@ Cell[BoxData[{
         RowBox[{"magneticField3", "/", "16.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", 
-    "\"\< \[Micro]T\\n\>\"", "<>", "\[IndentingNewLine]", "       ", 
+    "\"\< \[Micro]T\\n\>\"", "<>", "\[IndentingNewLine]", 
     "\"\<Angular Velocity    x: \>\"", "<>", 
     RowBox[{"ToString", "[", 
      RowBox[{"NumberForm", "[", 
@@ -150,7 +142,7 @@ Cell[BoxData[{
         RowBox[{"angularVelocity1", "/", "16.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", 
-    "\[IndentingNewLine]", "       ", "\"\< y: \>\"", "<>", 
+    "\[IndentingNewLine]", "\"\< y: \>\"", "<>", 
     RowBox[{"ToString", "[", 
      RowBox[{"NumberForm", "[", 
       RowBox[{
@@ -158,7 +150,7 @@ Cell[BoxData[{
         RowBox[{"angularVelocity2", "/", "16.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", 
-    "\[IndentingNewLine]", "       ", "\"\< z: \>\"", "<>", 
+    "\[IndentingNewLine]", "\"\< z: \>\"", "<>", 
     RowBox[{"ToString", "[", 
      RowBox[{"NumberForm", "[", 
       RowBox[{
@@ -166,7 +158,7 @@ Cell[BoxData[{
         RowBox[{"angularVelocity3", "/", "16.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", 
-    "\"\< \[Degree]/s\\n\>\"", "<>", "\[IndentingNewLine]", "       ", 
+    "\"\< \[Degree]/s\\n\>\"", "<>", "\[IndentingNewLine]", 
     "\"\<Euler Angle         x: \>\"", "<>", 
     RowBox[{"ToString", "[", 
      RowBox[{"NumberForm", "[", 
@@ -175,7 +167,7 @@ Cell[BoxData[{
         RowBox[{"eulerAngle1", "/", "16.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", 
-    "\[IndentingNewLine]", "       ", "\"\< y: \>\"", "<>", 
+    "\[IndentingNewLine]", "\"\< y: \>\"", "<>", 
     RowBox[{"ToString", "[", 
      RowBox[{"NumberForm", "[", 
       RowBox[{
@@ -183,7 +175,7 @@ Cell[BoxData[{
         RowBox[{"eulerAngle2", "/", "16.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", 
-    "\[IndentingNewLine]", "       ", "\"\< z: \>\"", "<>", 
+    "\[IndentingNewLine]", "\"\< z: \>\"", "<>", 
     RowBox[{"ToString", "[", 
      RowBox[{"NumberForm", "[", 
       RowBox[{
@@ -191,7 +183,7 @@ Cell[BoxData[{
         RowBox[{"eulerAngle3", "/", "16.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", 
-    "\"\< \[Degree]\\n\>\"", "<>", "\[IndentingNewLine]", "       ", 
+    "\"\< \[Degree]\\n\>\"", "<>", "\[IndentingNewLine]", 
     "\"\<Quaternion          x: \>\"", "<>", 
     RowBox[{"ToString", "[", 
      RowBox[{"NumberForm", "[", 
@@ -200,7 +192,7 @@ Cell[BoxData[{
         RowBox[{"quaternion2", "/", "16383.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", 
-    "\[IndentingNewLine]", "       ", "\"\< y: \>\"", "<>", 
+    "\[IndentingNewLine]", "\"\< y: \>\"", "<>", 
     RowBox[{"ToString", "[", 
      RowBox[{"NumberForm", "[", 
       RowBox[{
@@ -208,7 +200,7 @@ Cell[BoxData[{
         RowBox[{"quaternion3", "/", "16383.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", 
-    "\[IndentingNewLine]", "       ", "\"\< z: \>\"", "<>", 
+    "\[IndentingNewLine]", "\"\< z: \>\"", "<>", 
     RowBox[{"ToString", "[", 
      RowBox[{"NumberForm", "[", 
       RowBox[{
@@ -216,7 +208,7 @@ Cell[BoxData[{
         RowBox[{"quaternion4", "/", "16383.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", 
-    "\[IndentingNewLine]", "       ", "\"\< w: \>\"", "<>", 
+    "\[IndentingNewLine]", "\"\< w: \>\"", "<>", 
     RowBox[{"ToString", "[", 
      RowBox[{"NumberForm", "[", 
       RowBox[{
@@ -224,8 +216,7 @@ Cell[BoxData[{
         RowBox[{"quaternion1", "/", "16383.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", "\"\<\\n\>\"", 
-    "<>", "\[IndentingNewLine]", "       ", "\"\<Linear Acceleration x: \>\"",
-     "<>", 
+    "<>", "\[IndentingNewLine]", "\"\<Linear Acceleration x: \>\"", "<>", 
     RowBox[{"ToString", "[", 
      RowBox[{"NumberForm", "[", 
       RowBox[{
@@ -233,7 +224,7 @@ Cell[BoxData[{
         RowBox[{"linearAcceleration1", "/", "100.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", 
-    "\[IndentingNewLine]", "       ", "\"\< y: \>\"", "<>", 
+    "\[IndentingNewLine]", "\"\< y: \>\"", "<>", 
     RowBox[{"ToString", "[", 
      RowBox[{"NumberForm", "[", 
       RowBox[{
@@ -241,7 +232,7 @@ Cell[BoxData[{
         RowBox[{"linearAcceleration2", "/", "100.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", 
-    "\[IndentingNewLine]", "       ", "\"\< z: \>\"", "<>", 
+    "\[IndentingNewLine]", "\"\< z: \>\"", "<>", 
     RowBox[{"ToString", "[", 
      RowBox[{"NumberForm", "[", 
       RowBox[{
@@ -249,7 +240,7 @@ Cell[BoxData[{
         RowBox[{"linearAcceleration3", "/", "100.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", 
-    "\"\< m/s\.b2\\n\>\"", "<>", "\[IndentingNewLine]", "       ", 
+    "\"\< m/s\.b2\\n\>\"", "<>", "\[IndentingNewLine]", 
     "\"\<Gravity Vector      x: \>\"", "<>", 
     RowBox[{"ToString", "[", 
      RowBox[{"NumberForm", "[", 
@@ -258,7 +249,7 @@ Cell[BoxData[{
         RowBox[{"gravityVector1", "/", "100.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", 
-    "\[IndentingNewLine]", "       ", "\"\< y: \>\"", "<>", 
+    "\[IndentingNewLine]", "\"\< y: \>\"", "<>", 
     RowBox[{"ToString", "[", 
      RowBox[{"NumberForm", "[", 
       RowBox[{
@@ -266,7 +257,7 @@ Cell[BoxData[{
         RowBox[{"gravityVector2", "/", "100.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", 
-    "\[IndentingNewLine]", "       ", "\"\< z: \>\"", "<>", 
+    "\[IndentingNewLine]", "\"\< z: \>\"", "<>", 
     RowBox[{"ToString", "[", 
      RowBox[{"NumberForm", "[", 
       RowBox[{
@@ -274,30 +265,51 @@ Cell[BoxData[{
         RowBox[{"gravityVector3", "/", "100.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", 
-    "\"\< m/s\.b2\\n\>\"", "<>", "\[IndentingNewLine]", "       ", 
+    "\"\< m/s\.b2\\n\>\"", "<>", "\[IndentingNewLine]", 
     "\"\<Temperature         \>\"", "<>", 
     RowBox[{"ToString", "[", "temperature", "]"}], "<>", 
-    "\"\< \[Degree]C\\n\>\"", "<>", "\[IndentingNewLine]", "       ", 
+    "\"\< \[Degree]C\\n\>\"", "<>", "\[IndentingNewLine]", 
     "\"\<Calibration Status  \>\"", "<>", 
     RowBox[{"StringJoin", "[", 
      RowBox[{"Map", "[", 
       RowBox[{"ToString", ",", 
        RowBox[{"IntegerDigits", "[", 
         RowBox[{"calibrationStatus", ",", "2", ",", "8"}], "]"}]}], "]"}], 
-     "]"}], "<>", "\"\<\\n\>\""}], "]"}]}], "\[IndentingNewLine]", 
+     "]"}], "<>", "\"\<\\n\>\""}], "]"}]}], "\n", 
  RowBox[{
   RowBox[{"AddEventHandler", "[", 
    RowBox[{
     RowBox[{"imu", "@", "AllData"}], ",", "AllDataCB"}], "]"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"Input", "[", "\"\<Click OK to exit\>\"", "]"}], 
   "\[IndentingNewLine]", "\[IndentingNewLine]", 
-  RowBox[{"(*", " ", 
-   RowBox[{"Clean", " ", "up"}], " ", "*)"}]}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+   "Set", " ", "period", " ", "for", " ", "all", " ", "data", " ", "callback",
+     " ", "to", " ", "0.1", "s", " ", 
+    RowBox[{"(", 
+     RowBox[{"100", "ms"}], ")"}]}], "*)"}], "\n", 
+  RowBox[{"(*", 
+   RowBox[{"Note", ":", 
+    RowBox[{
+    "The", " ", "all", " ", "data", " ", "callback", " ", "is", " ", "only", 
+     " ", "called", " ", "every", " ", "0.1", " ", "seconds"}]}], "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+   "if", " ", "the", " ", "all", " ", "data", " ", "has", " ", "changed", " ",
+     "since", " ", "the", " ", "last", " ", 
+    RowBox[{"call", "!"}]}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"imu", "@", 
+   RowBox[{"SetAllDataPeriod", "[", "100", "]"}]}], 
+  "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{"Input", "[", "\"\<Click OK to exit\>\"", "]"}], "\n", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"Clean", " ", "up"}], "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{"ipcon", "@", 
-  RowBox[{"Disconnect", "[", "]"}]}], "\[IndentingNewLine]", 
- RowBox[{"ReleaseNETObject", "[", "imu", "]"}], "\[IndentingNewLine]", 
+  RowBox[{"Disconnect", "[", "]"}]}], "\n", 
+ RowBox[{"ReleaseNETObject", "[", "imu", "]"}], "\n", 
  RowBox[{"ReleaseNETObject", "[", "ipcon", "]"}]}], "Input",
  CellChangeTimes->{{3.600075175574196*^9, 3.600075177574486*^9}, {
    3.600075518821967*^9, 3.60007554243471*^9}, {3.600075580562348*^9, 
@@ -337,10 +349,12 @@ Cell[BoxData[{
    3.644062805130817*^9}, {3.6440631192797623`*^9, 3.644063284060068*^9}, {
    3.644063317844557*^9, 3.644063326510621*^9}, {3.644063417370319*^9, 
    3.644063469729463*^9}, {3.644119973624866*^9, 3.644119974413495*^9}, {
-   3.64412251226331*^9, 3.644122518242433*^9}, 3.651491404931396*^9}]
+   3.64412251226331*^9, 3.644122518242433*^9}, 3.651491404931396*^9, {
+   3.6521596417717648`*^9, 3.652159735078506*^9}, {3.652161672661936*^9, 
+   3.6521616860418253`*^9}}]
 },
-WindowSize->{1537, 866},
-WindowMargins->{{Automatic, 141}, {72, Automatic}},
+WindowSize->{1685, 957},
+WindowMargins->{{104, Automatic}, {24, Automatic}},
 FrontEndVersion->"9.0 for Linux x86 (64-bit) (November 20, 2012)",
 StyleDefinitions->"Default.nb"
 ]
@@ -356,7 +370,7 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[400, 13, 748, 13, 55, "Input"],
-Cell[1151, 28, 13862, 311, 1177, "Input"]
+Cell[1151, 28, 13975, 325, 1221, "Input"]
 }
 ]
 *)

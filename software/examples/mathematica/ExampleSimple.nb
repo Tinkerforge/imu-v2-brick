@@ -3,10 +3,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[         0,          0]
-NotebookDataLength[      6463,        153]
-NotebookOptionsPosition[      6029,        132]
-NotebookOutlinePosition[      6368,        147]
-CellTagsIndexPosition[      6325,        144]
+NotebookDataLength[      6299,        152]
+NotebookOptionsPosition[      5865,        131]
+NotebookOutlinePosition[      6204,        146]
+CellTagsIndexPosition[      6161,        143]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -27,41 +27,39 @@ Cell[BoxData[{
    3.6440614130599947`*^9, {3.6440614493037453`*^9, 3.644061452098782*^9}}],
 
 Cell[BoxData[{
- RowBox[{"host", "=", "\"\<localhost\>\""}], "\[IndentingNewLine]", 
- RowBox[{"port", "=", "4223"}], "\[IndentingNewLine]", 
+ RowBox[{"host", "=", "\"\<localhost\>\""}], "\n", 
+ RowBox[{"port", "=", "4223"}], "\n", 
  RowBox[{
-  RowBox[{"uid", "=", "\"\<6ww9bv\>\""}], 
-  RowBox[{"(*", " ", 
-   RowBox[{"Change", " ", "to", " ", "your", " ", "UID"}], " ", "*)"}], 
-  "\[IndentingNewLine]", "\[IndentingNewLine]", 
-  RowBox[{"(*", " ", 
+  RowBox[{"uid", "=", "\"\<XXYYZZ\>\""}], 
+  RowBox[{"(*", 
+   RowBox[{"Change", " ", "to", " ", "your", " ", "UID"}], "*)"}], "\n", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
    RowBox[{
    "Create", " ", "IPConnection", " ", "and", " ", "device", " ", "object"}], 
-   " ", "*)"}]}], "\[IndentingNewLine]", 
+   "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{"ipcon", "=", 
   RowBox[{"NETNew", "[", "\"\<Tinkerforge.IPConnection\>\"", "]"}]}], "\n", 
  RowBox[{"imu", "=", 
   RowBox[{"NETNew", "[", 
    RowBox[{"\"\<Tinkerforge.BrickIMUV2\>\"", ",", "uid", ",", "ipcon"}], 
-   "]"}]}], "\[IndentingNewLine]", 
+   "]"}]}], "\n", 
  RowBox[{
   RowBox[{"ipcon", "@", 
    RowBox[{"Connect", "[", 
-    RowBox[{"host", ",", "port"}], "]"}]}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{"host", ",", "port"}], "]"}]}], "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{"w", "=", "0"}], ";", 
    RowBox[{"x", "=", "0"}], ";", 
    RowBox[{"y", "=", "0"}], ";", 
-   RowBox[{"z", "=", "0"}]}], "\n", "\n", 
-  RowBox[{"(*", " ", 
-   RowBox[{"Get", " ", "current", " ", "quaternion"}], " ", 
+   RowBox[{"z", "=", "0"}]}], "\n", "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"Get", " ", "current", " ", "quaternion"}], 
    "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{"imu", "@", 
   RowBox[{"GetQuaternion", "[", 
-   RowBox[{"w", ",", "x", ",", "y", ",", "z"}], 
-   "]"}]}], "\[IndentingNewLine]", 
+   RowBox[{"w", ",", "x", ",", "y", ",", "z"}], "]"}]}], "\n", 
  RowBox[{
   RowBox[{"Print", "[", 
    RowBox[{"\"\<w: \>\"", "<>", 
@@ -72,7 +70,7 @@ Cell[BoxData[{
         RowBox[{"w", "/", "16383.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", 
-    "\[IndentingNewLine]", "       ", "\"\<, x: \>\"", "<>", 
+    "\[IndentingNewLine]", "\"\<, x: \>\"", "<>", 
     RowBox[{"ToString", "[", 
      RowBox[{"NumberForm", "[", 
       RowBox[{
@@ -80,7 +78,7 @@ Cell[BoxData[{
         RowBox[{"x", "/", "16383.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", 
-    "\[IndentingNewLine]", "       ", "\"\<, y: \>\"", "<>", 
+    "\[IndentingNewLine]", "\"\<, y: \>\"", "<>", 
     RowBox[{"ToString", "[", 
      RowBox[{"NumberForm", "[", 
       RowBox[{
@@ -88,20 +86,20 @@ Cell[BoxData[{
         RowBox[{"y", "/", "16383.0"}], "]"}], ",", 
        RowBox[{"{", 
         RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}], "<>", 
-    "\[IndentingNewLine]", "       ", "\"\<, z: \>\"", "<>", 
+    "\[IndentingNewLine]", "\"\<, z: \>\"", "<>", 
     RowBox[{"ToString", "[", 
      RowBox[{"NumberForm", "[", 
       RowBox[{
        RowBox[{"N", "[", 
         RowBox[{"z", "/", "16383.0"}], "]"}], ",", 
        RowBox[{"{", 
-        RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}]}], "]"}], 
-  "\[IndentingNewLine]", "\[IndentingNewLine]", 
-  RowBox[{"(*", " ", 
-   RowBox[{"Clean", " ", "up"}], " ", "*)"}]}], "\[IndentingNewLine]", 
+        RowBox[{"10", ",", "2"}], "}"}]}], "]"}], "]"}]}], "]"}], "\n", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"Clean", " ", "up"}], "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{"ipcon", "@", 
-  RowBox[{"Disconnect", "[", "]"}]}], "\[IndentingNewLine]", 
- RowBox[{"ReleaseNETObject", "[", "imu", "]"}], "\[IndentingNewLine]", 
+  RowBox[{"Disconnect", "[", "]"}]}], "\n", 
+ RowBox[{"ReleaseNETObject", "[", "imu", "]"}], "\n", 
  RowBox[{"ReleaseNETObject", "[", "ipcon", "]"}]}], "Input",
  CellChangeTimes->{{3.600075175574196*^9, 3.600075177574486*^9}, {
    3.600075518821967*^9, 3.60007554243471*^9}, {3.600075580562348*^9, 
@@ -128,10 +126,11 @@ Cell[BoxData[{
    3.643537626590209*^9, 3.643537683422666*^9}, {3.6435377465746717`*^9, 
    3.643537747120421*^9}, {3.6440611571121187`*^9, 3.644061196712894*^9}, {
    3.644061424040658*^9, 3.644061454737501*^9}, {3.644063389976357*^9, 
-   3.644063390867671*^9}, {3.644122692151361*^9, 3.644122696243524*^9}}]
+   3.644063390867671*^9}, {3.644122692151361*^9, 3.644122696243524*^9}, {
+   3.6521595843267117`*^9, 3.652159592132168*^9}}]
 },
 WindowSize->{1521, 867},
-WindowMargins->{{Automatic, 164}, {85, Automatic}},
+WindowMargins->{{Automatic, 163}, {84, Automatic}},
 FrontEndVersion->"9.0 for Linux x86 (64-bit) (November 20, 2012)",
 StyleDefinitions->"Default.nb"
 ]
@@ -147,7 +146,7 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[400, 13, 778, 13, 55, "Input"],
-Cell[1181, 28, 4844, 102, 495, "Input"]
+Cell[1181, 28, 4680, 101, 495, "Input"]
 }
 ]
 *)

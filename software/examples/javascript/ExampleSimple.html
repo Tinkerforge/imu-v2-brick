@@ -6,7 +6,7 @@
     </head>
     <body>
         <div style="text-align:center;">
-            <h1>Color Bricklet Simple Example</h1>
+            <h1>IMU Brick 2.0 Simple Example</h1>
             <p>
                 <input value="localhost" id="host" type="text" size="20">:
                 <input value="4280" id="port" type="text" size="5">,
@@ -26,33 +26,32 @@
                 textArea.value = "";
                 var HOST = document.getElementById("host").value;
                 var PORT = parseInt(document.getElementById("port").value);
-                var UID  = document.getElementById("uid").value;
+                var UID = document.getElementById("uid").value;
                 if(ipcon !== undefined) {
                     ipcon.disconnect();
                 }
-                ipcon = new Tinkerforge.IPConnection();// Create IP connection
-                var imu = new Tinkerforge.BrickIMUV2(UID, ipcon);// Create device object
+                ipcon = new Tinkerforge.IPConnection(); // Create IP connection
+                var imu = new Tinkerforge.BrickIMUV2(UID, ipcon); // Create device object
                 ipcon.connect(HOST, PORT,
                     function(error) {
-                        textArea.value += 'Error: '+error+ '\n';
+                        textArea.value += 'Error: ' + error + '\n';
                     }
-                );// Connect to brickd
-
+                ); // Connect to brickd
                 // Don't use device before ipcon is connected
+
                 ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
-                    function(connectReason) {
+                    function (connectReason) {
                         // Get current quaternion
                         imu.getQuaternion(
-                            function(x, y, z, w) {
+                            function (w, x, y, z) {
                                 var s =   'w: ' + (w/16383.0).toFixed(2) +
                                         ', x: ' + (x/16383.0).toFixed(2) +
                                         ', y: ' + (y/16383.0).toFixed(2) +
                                         ', z: ' + (z/16383.0).toFixed(2) + '\n';
                                 textArea.value += s;
-                                textArea.scrollTop = textArea.scrollHeight;
                             },
-                            function(error) {
-                                textArea.value += 'Error: '+error+'\n';
+                            function (error) {
+                                textArea.value += 'Error: ' + error + '\n';
                             }
                         );
                     }

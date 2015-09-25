@@ -4,10 +4,10 @@ import com.tinkerforge.BrickIMUV2;
 public class ExampleAllData {
 	private static final String HOST = "localhost";
 	private static final int PORT = 4223;
-	private static final String UID = "XYZ"; // Change to your UID
+	private static final String UID = "XXYYZZ"; // Change to your UID
 
-	// Note: To make the example code cleaner we do not handle exceptions. Exceptions you
-	//       might normally want to catch are described in the documentation
+	// Note: To make the example code cleaner we do not handle exceptions. Exceptions
+	//       you might normally want to catch are described in the documentation
 	public static void main(String args[]) throws Exception {
 		IPConnection ipcon = new IPConnection(); // Create IP connection
 		BrickIMUV2 imu = new BrickIMUV2(UID, ipcon); // Create device object
@@ -15,10 +15,7 @@ public class ExampleAllData {
 		ipcon.connect(HOST, PORT); // Connect to brickd
 		// Don't use device before ipcon is connected
 
-		// Set period for all data callback to 100ms
-		imu.setAllDataPeriod(100);
-
-		// Add and implement all data listener
+		// Add all data listener
 		imu.addAllDataListener(new BrickIMUV2.AllDataListener() {
 			public void allData(short[] acceleration, short[] magneticField,
 			                    short[] angularVelocity, short[] eulerAngle,
@@ -42,9 +39,15 @@ public class ExampleAllData {
 				                  quaternion[1]/16383.0,       quaternion[2]/16383.0,       quaternion[3]/16383.0,       quaternion[0]/16383.0,
 				                  linearAcceleration[0]/100.0, linearAcceleration[1]/100.0, linearAcceleration[2]/100.0,
 				                  gravityVector[0]/100.0,      gravityVector[1]/100.0,      gravityVector[2]/100.0,
-				                  temperature, Integer.toBinaryString(calibrationStatus));
+				                  temperature,
+				                  Integer.toBinaryString(calibrationStatus));
 			}
 		});
+
+		// Set period for all data callback to 0.1s (100ms)
+		// Note: The all data callback is only called every 0.1 seconds
+		//       if the all data has changed since the last call!
+		imu.setAllDataPeriod(100);
 
 		System.out.println("Press key to exit"); System.in.read();
 		ipcon.disconnect();

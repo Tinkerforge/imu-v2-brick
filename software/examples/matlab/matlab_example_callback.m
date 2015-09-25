@@ -4,7 +4,7 @@ function matlab_example_callback()
 
     HOST = 'localhost';
     PORT = 4223;
-    UID = '6ww9bv'; % Change to your UID
+    UID = 'XXYYZZ'; % Change to your UID
 
     ipcon = IPConnection(); % Create IP connection
     imu = BrickIMUV2(UID, ipcon); % Create device object
@@ -12,13 +12,15 @@ function matlab_example_callback()
     ipcon.connect(HOST, PORT); % Connect to brickd
     % Don't use device before ipcon is connected
 
-    % Set period for quaternion callback to 100ms
-    imu.setQuaternionPeriod(100);
-
     % Register quaternion callback to function cb_quaternion
     set(imu, 'QuaternionCallback', @(h, e) cb_quaternion(e));
 
-    input('Press any key to exit...\n', 's');
+    % Set period for quaternion callback to 0.1s (100ms)
+    % Note: The quaternion callback is only called every 0.1 seconds
+    %       if the quaternion has changed since the last call!
+    imu.setQuaternionPeriod(100);
+
+    input('Press key to exit\n', 's');
     ipcon.disconnect();
 end
 

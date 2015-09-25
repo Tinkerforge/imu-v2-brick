@@ -3,17 +3,14 @@ LoadNETAssembly["Tinkerforge",NotebookDirectory[]<>"../../.."]
 
 host="localhost"
 port=4223
-uid="6ww9bv"(* Change to your UID *)
+uid="XXYYZZ"(*Change to your UID*)
 
-(* Create IPConnection and device object *)
+(*Create IPConnection and device object*)
 ipcon=NETNew["Tinkerforge.IPConnection"]
 imu=NETNew["Tinkerforge.BrickIMUV2",uid,ipcon]
 ipcon@Connect[host,port]
 
-(* Set period for all data callback to 100ms *)
-imu@SetAllDataPeriod[100]
-
-(* All data callback *)
+(*Callback function for all data callback*)
 AllDataCB[sender_,{acceleration1_,acceleration2_,acceleration3_},
           {magneticField1_,magneticField2_,magneticField3_},
           {angularVelocity1_,angularVelocity2_,angularVelocity3_},
@@ -48,9 +45,14 @@ AllDataCB[sender_,{acceleration1_,acceleration2_,acceleration3_},
        "Calibration Status  "<>StringJoin[Map[ToString,IntegerDigits[calibrationStatus,2,8]]]<>"\n"]
 AddEventHandler[imu@AllData,AllDataCB]
 
+(*Set period for all data callback to 0.1s (100ms)*)
+(*Note: The all data callback is only called every 0.1 seconds*)
+(*if the all data has changed since the last call!*)
+imu@SetAllDataPeriod[100]
+
 Input["Click OK to exit"]
 
-(* Clean up *)
+(*Clean up*)
 ipcon@Disconnect[]
 ReleaseNETObject[imu]
 ReleaseNETObject[ipcon]

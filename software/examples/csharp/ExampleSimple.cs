@@ -1,10 +1,11 @@
+using System;
 using Tinkerforge;
 
 class Example
 {
 	private static string HOST = "localhost";
 	private static int PORT = 4223;
-	private static string UID = "XYZ"; // Change to your UID
+	private static string UID = "XXYYZZ"; // Change to your UID
 
 	static void Main()
 	{
@@ -19,11 +20,11 @@ class Example
 		imu.GetQuaternion(out w, out x, out y, out z);
 
 		string s = "w: {0:F02}, x: {1:F02}, y: {2:F02}, z: {3:F02}";
-		string f = System.String.Format(s, w/16383.0, x/16383.0, y/16383.0, z/16383.0);
-		System.Console.WriteLine(f);
+		string f = String.Format(s, w/16383.0, x/16383.0, y/16383.0, z/16383.0);
+		Console.WriteLine(f);
 
-		System.Console.WriteLine("Press enter to exit");
-		System.Console.ReadLine();
+		Console.WriteLine("Press enter to exit");
+		Console.ReadLine();
 		ipcon.Disconnect();
 	}
 }

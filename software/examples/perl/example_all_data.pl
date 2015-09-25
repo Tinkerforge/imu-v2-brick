@@ -5,9 +5,9 @@ use Tinkerforge::BrickIMUV2;
 
 use constant HOST => 'localhost';
 use constant PORT => 4223;
-use constant UID => 'XYZ'; # Change to your UID
+use constant UID => 'XXYYZZ'; # Change to your UID
 
-# All data callback
+# Callback subroutine for all data callback
 sub cb_all_data
 {
     my ($acceleration, $magnetic_field, $angular_velocity, $euler_angle,
@@ -30,7 +30,8 @@ sub cb_all_data
            @{$quaternion}[1]/16383.0,        @{$quaternion}[2]/16383.0,        @{$quaternion}[3]/16383.0,        @{$quaternion}[0]/16383.0,
            @{$linear_acceleration}[0]/100.0, @{$linear_acceleration}[1]/100.0, @{$linear_acceleration}[2]/100.0,
            @{$gravity_vector}[0]/100.0,      @{$gravity_vector}[1]/100.0,      @{$gravity_vector}[2]/100.0,
-           $temperature, $calibration_status);
+           $temperature,
+           $calibration_status);
 }
 
 my $ipcon = Tinkerforge::IPConnection->new(); # Create IP connection
@@ -39,12 +40,14 @@ my $imu = Tinkerforge::BrickIMUV2->new(&UID, $ipcon); # Create device object
 $ipcon->connect(&HOST, &PORT); # Connect to brickd
 # Don't use device before ipcon is connected
 
-# Set period for all data callback to 100ms
-$imu->set_all_data_period(100);
-
-# Register quaternion callback
+# Register all data callback to subroutine cb_all_data
 $imu->register_callback($imu->CALLBACK_ALL_DATA, 'cb_all_data');
 
-print "Press any key to exit...\n";
+# Set period for all data callback to 0.1s (100ms)
+# Note: The all data callback is only called every 0.1 seconds
+#       if the all data has changed since the last call!
+$imu->set_all_data_period(100);
+
+print "Press key to exit\n";
 <STDIN>;
 $ipcon->disconnect();

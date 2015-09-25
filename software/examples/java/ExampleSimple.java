@@ -5,10 +5,10 @@ import com.tinkerforge.BrickIMUV2.Quaternion;
 public class ExampleSimple {
 	private static final String HOST = "localhost";
 	private static final int PORT = 4223;
-	private static final String UID = "XYZ"; // Change to your UID
+	private static final String UID = "XXYYZZ"; // Change to your UID
 
-	// Note: To make the example code cleaner we do not handle exceptions. Exceptions you
-	//       might normally want to catch are described in the documentation
+	// Note: To make the example code cleaner we do not handle exceptions. Exceptions
+	//       you might normally want to catch are described in the documentation
 	public static void main(String args[]) throws Exception {
 		IPConnection ipcon = new IPConnection(); // Create IP connection
 		BrickIMUV2 imu = new BrickIMUV2(UID, ipcon); // Create device object

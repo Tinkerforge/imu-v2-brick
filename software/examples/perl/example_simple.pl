@@ -5,7 +5,7 @@ use Tinkerforge::BrickIMUV2;
 
 use constant HOST => 'localhost';
 use constant PORT => 4223;
-use constant UID => 'XYZ'; # Change to your UID
+use constant UID => 'XXYYZZ'; # Change to your UID
 
 my $ipcon = Tinkerforge::IPConnection->new(); # Create IP connection
 my $imu = Tinkerforge::BrickIMUV2->new(&UID, $ipcon); # Create device object
@@ -18,6 +18,6 @@ my ($w, $x, $y, $z) = $imu->get_quaternion();
 printf("w: %.02f, x: %.02f, y: %.02f, z: %.02f\n",
        $w/16383.0, $x/16383.0, $y/16383.0, $z/16383.0);
 
-print "Press any key to exit...\n";
+print "Press key to exit\n";
 <STDIN>;
 $ipcon->disconnect();

@@ -8,12 +8,12 @@ use Tinkerforge\BrickIMUV2;
 
 const HOST = 'localhost';
 const PORT = 4223;
-const UID = '6ww9bv'; // Change to your UID
+const UID = 'XXYYZZ'; // Change to your UID
 
-// All data callback
-function cb_all_data($acceleration, $magnetic_field, $angular_velocity,
-                     $euler_angle, $quaternion, $linear_acceleration,
-                     $gravity_vector, $temperature, $calibration_status)
+// Callback function for all data callback
+function cb_allData($acceleration, $magnetic_field, $angular_velocity,
+                    $euler_angle, $quaternion, $linear_acceleration,
+                    $gravity_vector, $temperature, $calibration_status)
 {
     $s = sprintf("Acceleration        x: %.02f y: %.02f z: %.02f m/s²\n" .
                  "Magnetic Field      x: %.02f y: %.02f z: %.02f µT\n" .
@@ -31,7 +31,8 @@ function cb_all_data($acceleration, $magnetic_field, $angular_velocity,
                  $quaternion[1]/16383.0,        $quaternion[2]/16383.0,        $quaternion[3]/16383.0,        $quaternion[0]/16383.0,
                  $linear_acceleration[0]/100.0, $linear_acceleration[1]/100.0, $linear_acceleration[2]/100.0,
                  $gravity_vector[0]/100.0,      $gravity_vector[1]/100.0,      $gravity_vector[2]/100.0,
-                 $temperature, $calibration_status);
+                 $temperature,
+                 $calibration_status);
 
     echo "$s";
 }
@@ -42,11 +43,13 @@ $imu = new BrickIMUV2(UID, $ipcon); // Create device object
 $ipcon->connect(HOST, PORT); // Connect to brickd
 // Don't use device before ipcon is connected
 
-// Set period for All data callback to 100ms
-$imu->setAllDataPeriod(100);
+// Register all data callback to function cb_allData
+$imu->registerCallback(BrickIMUV2::CALLBACK_ALL_DATA, 'cb_allData');
 
-// Register all data callback to function cb_quaternion
-$imu->registerCallback(BrickIMUV2::CALLBACK_ALL_DATA, 'cb_all_data');
+// Set period for all data callback to 0.1s (100ms)
+// Note: The all data callback is only called every 0.1 seconds
+//       if the all data has changed since the last call!
+$imu->setAllDataPeriod(100);
 
 echo "Press ctrl+c to exit\n";
 $ipcon->dispatchCallbacks(-1); // Dispatch callbacks forever

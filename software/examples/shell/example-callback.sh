@@ -1,11 +1,16 @@
 #!/bin/sh
-# connects to localhost:4223 by default, use --host and --port to change it
+# Connects to localhost:4223 by default, use --host and --port to change this
 
-# change to your UID
-uid=6ww9bv
+uid=XXYYZZ # Change to your UID
 
-# set period for quaternion callback to 100ms
+# Handle incoming quaternion callbacks
+tinkerforge dispatch imu-v2-brick $uid quaternion &
+
+# Set period for quaternion callback to 0.1s (100ms)
+# Note: The quaternion callback is only called every 0.1 seconds
+#       if the quaternion has changed since the last call!
 tinkerforge call imu-v2-brick $uid set-quaternion-period 100
 
-# handle incoming quaternion callbacks
-tinkerforge dispatch imu-v2-brick $uid quaternion
+echo "Press key to exit"; read dummy
+
+kill -- -$$ # Stop callback dispatch in background

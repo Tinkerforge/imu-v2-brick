@@ -4,7 +4,7 @@ function matlab_example_all_data()
 
     HOST = 'localhost';
     PORT = 4223;
-    UID = '6ww9bv'; % Change to your UID
+    UID = 'XXYYZZ'; % Change to your UID
 
     ipcon = IPConnection(); % Create IP connection
     imu = BrickIMUV2(UID, ipcon); % Create device object
@@ -12,14 +12,15 @@ function matlab_example_all_data()
     ipcon.connect(HOST, PORT); % Connect to brickd
     % Don't use device before ipcon is connected
 
-    % Set period for all data callback to 100ms
-    imu.setAllDataPeriod(100);
-
     % Register all data callback to function cb_all_data
-
     set(imu, 'AllDataCallback', @(h, e) cb_all_data(e));
 
-    input('Press any key to exit...\n', 's');
+    % Set period for all data callback to 0.1s (100ms)
+    % Note: The all data callback is only called every 0.1 seconds
+    %       if the all data has changed since the last call!
+    imu.setAllDataPeriod(100);
+
+    input('Press key to exit\n', 's');
     ipcon.disconnect();
 end
 
@@ -41,5 +42,6 @@ function cb_all_data(e)
             e.quaternion(2)/16383.0,       e.quaternion(3)/16383.0,       e.quaternion(4)/16383.0,       e.quaternion(1)/16383.0, ...
             e.linearAcceleration(1)/100.0, e.linearAcceleration(2)/100.0, e.linearAcceleration(3)/100.0, ...
             e.gravityVector(1)/100.0,      e.gravityVector(2)/100.0,      e.gravityVector(3)/100.0, ...
-            e.temperature, dec2bin(e.calibrationStatus));
+            e.temperature,
+            dec2bin(e.calibrationStatus));
 end

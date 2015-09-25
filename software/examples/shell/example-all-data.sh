@@ -1,11 +1,16 @@
 #!/bin/sh
-# connects to localhost:4223 by default, use --host and --port to change it
+# Connects to localhost:4223 by default, use --host and --port to change this
 
-# change to your UID
-uid=6ww9bv
+uid=XXYYZZ # Change to your UID
 
-# set period for all data callback to 100ms
+# Handle incoming all data callbacks
+tinkerforge dispatch imu-v2-brick $uid all-data &
+
+# Set period for all data callback to 0.1s (100ms)
+# Note: The all data callback is only called every 0.1 seconds
+#       if the all data has changed since the last call!
 tinkerforge call imu-v2-brick $uid set-all-data-period 100
 
-# handle incoming all data callbacks
-tinkerforge dispatch imu-v2-brick $uid all-data
+echo "Press key to exit"; read dummy
+
+kill -- -$$ # Stop callback dispatch in background
