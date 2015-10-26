@@ -178,19 +178,6 @@ void make_period_callback(const uint8_t type) {
 			break;
 		}
 
-		case IMU_PERIOD_TYPE_ORI: {
-			OrientationCallback oc;
-			com_make_default_header(&oc, com_info.uid, sizeof(OrientationCallback), FID_ORIENTATION);
-			oc.roll    = sensor_data.eul_roll;
-			oc.pitch   = sensor_data.eul_pitch;
-			oc.heading = sensor_data.eul_heading;
-
-			send_blocking_with_timeout(&oc,
-			                           sizeof(OrientationCallback),
-			                           com_info.current);
-			break;
-		}
-
 		case IMU_PERIOD_TYPE_LIA: {
 			LinearAccelerationCallback lac;
 			com_make_default_header(&lac, com_info.uid, sizeof(LinearAccelerationCallback), FID_LINEAR_ACCELERATION);
@@ -213,6 +200,20 @@ void make_period_callback(const uint8_t type) {
 
 			send_blocking_with_timeout(&gvc,
 			                           sizeof(GravityVectorCallback),
+			                           com_info.current);
+			break;
+		}
+
+
+		case IMU_PERIOD_TYPE_ORI: {
+			OrientationCallback oc;
+			com_make_default_header(&oc, com_info.uid, sizeof(OrientationCallback), FID_ORIENTATION);
+			oc.roll    = sensor_data.eul_roll;
+			oc.pitch   = sensor_data.eul_pitch;
+			oc.heading = sensor_data.eul_heading;
+
+			send_blocking_with_timeout(&oc,
+			                           sizeof(OrientationCallback),
 			                           com_info.current);
 			break;
 		}
