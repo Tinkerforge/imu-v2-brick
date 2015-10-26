@@ -63,9 +63,9 @@
 #define FID_MAGNETIC_FIELD 33
 #define FID_ANGULAR_VELOCITY 34
 #define FID_TEMPERATURE 35
-#define FID_ORIENTATION 36
-#define FID_LINEAR_ACCELERATION 37
-#define FID_GRAVITY_VECTOR 38
+#define FID_LINEAR_ACCELERATION 36
+#define FID_GRAVITY_VECTOR 37
+#define FID_ORIENTATION 38
 #define FID_QUATERNION 39
 #define FID_ALL_DATA 40
 
@@ -106,9 +106,9 @@
 	{FID_MAGNETIC_FIELD, (message_handler_func_t)NULL}, \
 	{FID_ANGULAR_VELOCITY, (message_handler_func_t)NULL}, \
 	{FID_TEMPERATURE, (message_handler_func_t)NULL}, \
-	{FID_ORIENTATION, (message_handler_func_t)NULL}, \
 	{FID_LINEAR_ACCELERATION, (message_handler_func_t)NULL}, \
 	{FID_GRAVITY_VECTOR, (message_handler_func_t)NULL}, \
+	{FID_ORIENTATION, (message_handler_func_t)NULL}, \
 	{FID_QUATERNION, (message_handler_func_t)NULL}, \
 	{FID_ALL_DATA, (message_handler_func_t)NULL},
 
