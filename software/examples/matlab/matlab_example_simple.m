@@ -7,7 +7,7 @@ function matlab_example_simple()
     UID = 'XXYYZZ'; % Change to your UID
 
     ipcon = IPConnection(); % Create IP connection
-    imu = BrickIMUV2(UID, ipcon); % Create device object
+    imu = handle(BrickIMUV2(UID, ipcon), 'CallbackProperties'); % Create device object
 
     ipcon.connect(HOST, PORT); % Connect to brickd
     % Don't use device before ipcon is connected
