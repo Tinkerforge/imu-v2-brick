@@ -452,7 +452,8 @@ void bmo_read_registers(const uint8_t reg, uint8_t *data, const uint8_t length) 
 }
 
 bool read_calibration_from_bno055_and_save_to_flash(void) {
-	if(sensor_data.calibration_status != 0xFF) {
+	// TODO: Saving of calibration state currently only works in SAM3S processor family
+	if(sensor_data.calibration_status != 0xFF || !IS_SAM3()) {
 		return false;
 	}
 
