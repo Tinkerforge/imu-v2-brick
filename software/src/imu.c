@@ -372,6 +372,17 @@ void imu_blinkenlights(void) {
 }
 
 void update_sensor_data(void) {
+	// The SPI stack communication seems to interfere with the I2C
+	// communication with the BNO055 resulting in data corruption.
+	// This only happens if getters (e.g. the all-data getter) are
+	// called with a high frequency (e.g. 100Hz) as this increases
+	// SPI stack message throughput quite a lot.
+	//
+	// Disabling IRQs during the I2C communication avoids the problems,
+	// but also impacts the SPI stack communication throughput. Anyway,
+	// currently disabling IRQs is the best and simplest workaround.
+	__disable_irq();
+
 	// Unfortunately there does not seem to be a way to
 	// get an interrupt from the BMO055 if new data is ready
 
@@ -408,10 +419,12 @@ void update_sensor_data(void) {
 			bmo_read_registers(REG_CALIB_STAT, (uint8_t*)&sensor_data.calibration_status, sizeof(uint8_t)*1);
 			break;
 		default: // should always be in case of 9
+			__enable_irq();
 			update_sensor_counter = 0;
 			return;
 	}
 
+	__enable_irq();
 	update_sensor_counter++;
 }
 

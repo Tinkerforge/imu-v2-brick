@@ -3,3 +3,6 @@
 
 2015-10-26: 2.0.1 (0f0d6cd)
 - Fix wrong order of callbacks
+
+2016-02-09: 2.0.2 (<unknown>)
+- Fix possible data corruption if getters are called with high frequency
