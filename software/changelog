@@ -7,7 +7,7 @@
 2016-02-09: 2.0.2 (63cf4a5)
 - Fix possible data corruption if getters are called with high frequency
 
-2016-02-25: 2.0.3
-- Use DMA for I2C communication with BNO055
-- This allows for better SPI stack communication throughput, since
-  we don't have to disable the interrupts for the whole communication
+2016-02-25: 2.0.3 (292542c)
+- Use DMA for I2C communication with BNO055. This allows for better SPI stack
+  communication throughput, since we don't have to disable the interrupts for
+  the whole communication
