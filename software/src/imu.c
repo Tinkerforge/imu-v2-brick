@@ -52,6 +52,8 @@ uint32_t imu_period_counter[IMU_PERIOD_NUM] = {0};
 bool imu_use_leds = false;
 bool imu_use_orientation = true;
 bool imu_mode_update = true;
+bool imu_waiting_for_dma = false;
+uint8_t imu_waiting_for_dma_counter = 0;
 
 Async imu_async;
 extern Twid twid;
@@ -74,6 +76,7 @@ bool pins_led_is_pwm[] = {true,
                           false,
                           true};
 
+uint8_t sensor_data_tmp[sizeof(uint16_t)*4]; // Maximum size of data read in one piece is sizeof(uint16_t)*4
 SensorData sensor_data = {0};
 uint8_t update_sensor_counter = 0;
 
@@ -371,17 +374,71 @@ void imu_blinkenlights(void) {
 	}
 }
 
-void update_sensor_data(void) {
-	// The SPI stack communication seems to interfere with the I2C
-	// communication with the BNO055 resulting in data corruption.
-	// This only happens if getters (e.g. the all-data getter) are
-	// called with a high frequency (e.g. 100Hz) as this increases
-	// SPI stack message throughput quite a lot.
-	//
-	// Disabling IRQs during the I2C communication avoids the problems,
-	// but also impacts the SPI stack communication throughput. Anyway,
-	// currently disabling IRQs is the best and simplest workaround.
+void update_sensor_data_callback(Async *a) {
+	// We disable irq during copying of data, otherwise we may get an interrupt
+	// right in the middle of the memcpy and the data is corrupted
 	__disable_irq();
+	switch(update_sensor_counter) {
+		case 0:
+			memcpy((uint8_t*)&sensor_data.acc_x, sensor_data_tmp, sizeof(int16_t)*3);
+			break;
+		case 1:
+			memcpy((uint8_t*)&sensor_data.mag_x, sensor_data_tmp, sizeof(int16_t)*3);
+			break;
+		case 2:
+			memcpy((uint8_t*)&sensor_data.gyr_x, sensor_data_tmp, sizeof(int16_t)*3);
+			break;
+		case 3:
+			memcpy((uint8_t*)&sensor_data.eul_heading, sensor_data_tmp, sizeof(int16_t)*3);
+			break;
+		case 4:
+			memcpy((uint8_t*)&sensor_data.qua_w, sensor_data_tmp, sizeof(uint16_t)*4);
+			break;
+		case 5:
+			memcpy((uint8_t*)&sensor_data.lia_x, sensor_data_tmp, sizeof(int16_t)*3);
+			break;
+		case 6:
+			memcpy((uint8_t*)&sensor_data.grv_x, sensor_data_tmp, sizeof(int16_t)*3);
+			break;
+		case 7:
+			memcpy((uint8_t*)&sensor_data.temperature, sensor_data_tmp, sizeof(int8_t)*1);
+			break;
+		case 8:
+			memcpy((uint8_t*)&sensor_data.calibration_status, sensor_data_tmp, sizeof(uint8_t)*1);
+			break;
+		default: // should always be in case of 9
+			break;
+	}
+	__enable_irq();
+
+	update_sensor_counter++;
+	if(update_sensor_counter == 9) {
+		update_sensor_counter = 0;
+	}
+
+	// We give the I2C mutex back and we allow a new dma request
+	imu_waiting_for_dma = false;
+	mutex_give(mutex_twi_bricklet);
+}
+
+void update_sensor_data(void) {
+	if(imu_waiting_for_dma) {
+		// The communication should only take approximately 0.5ms, if it takes
+		// much longer we have to assume that for some reason the DMA callback
+		// did not come.
+		imu_waiting_for_dma_counter++;
+		if(imu_waiting_for_dma_counter > 15) {
+			twid.pTransfer = NULL;
+			imu_waiting_for_dma_counter = 0;
+			imu_waiting_for_dma = false;
+		} else {
+			return;
+		}
+	}
+
+	// Make sure that we can't start two DMA requests at a time
+	imu_waiting_for_dma = true;
+	imu_waiting_for_dma_counter = 0;
 
 	// Unfortunately there does not seem to be a way to
 	// get an interrupt from the BMO055 if new data is ready
@@ -392,40 +449,35 @@ void update_sensor_data(void) {
 	// gets the data. MEH.
 	switch(update_sensor_counter) {
 		case 0:
-			bmo_read_registers(REG_ACC_DATA_X_LSB, (uint8_t*)&sensor_data.acc_x, sizeof(int16_t)*3);
+			bmo_read_registers_dma(REG_ACC_DATA_X_LSB, sensor_data_tmp, sizeof(int16_t)*3, update_sensor_data_callback);
 			break;
 		case 1:
-			bmo_read_registers(REG_MAG_DATA_X_LSB, (uint8_t*)&sensor_data.mag_x, sizeof(int16_t)*3);
+			bmo_read_registers_dma(REG_MAG_DATA_X_LSB, sensor_data_tmp, sizeof(int16_t)*3, update_sensor_data_callback);
 			break;
 		case 2:
-			bmo_read_registers(REG_GYR_DATA_X_LSB, (uint8_t*)&sensor_data.gyr_x, sizeof(int16_t)*3);
+			bmo_read_registers_dma(REG_GYR_DATA_X_LSB, sensor_data_tmp, sizeof(int16_t)*3, update_sensor_data_callback);
 			break;
 		case 3:
-			bmo_read_registers(REG_EUL_HEADING_LSB, (uint8_t*)&sensor_data.eul_heading, sizeof(int16_t)*3);
+			bmo_read_registers_dma(REG_EUL_HEADING_LSB, sensor_data_tmp, sizeof(int16_t)*3, update_sensor_data_callback);
 			break;
 		case 4:
-			bmo_read_registers(REG_QUA_DATA_W_LSB, (uint8_t*)&sensor_data.qua_w, sizeof(uint16_t)*4);
+			bmo_read_registers_dma(REG_QUA_DATA_W_LSB, sensor_data_tmp, sizeof(uint16_t)*4, update_sensor_data_callback);
 			break;
 		case 5:
-			bmo_read_registers(REG_LIA_DATA_X_LSB, (uint8_t*)&sensor_data.lia_x, sizeof(int16_t)*3);
+			bmo_read_registers_dma(REG_LIA_DATA_X_LSB, sensor_data_tmp, sizeof(int16_t)*3, update_sensor_data_callback);
 			break;
 		case 6:
-			bmo_read_registers(REG_GRV_DATA_X_LSB, (uint8_t*)&sensor_data.grv_x, sizeof(int16_t)*3);
+			bmo_read_registers_dma(REG_GRV_DATA_X_LSB, sensor_data_tmp, sizeof(int16_t)*3, update_sensor_data_callback);
 			break;
 		case 7:
-			bmo_read_registers(REG_TEMP, (uint8_t*)&sensor_data.temperature, sizeof(int8_t)*1);
+			bmo_read_registers_dma(REG_TEMP, sensor_data_tmp, sizeof(int8_t)*1, update_sensor_data_callback);
 			break;
 		case 8:
-			bmo_read_registers(REG_CALIB_STAT, (uint8_t*)&sensor_data.calibration_status, sizeof(uint8_t)*1);
+			bmo_read_registers_dma(REG_CALIB_STAT, sensor_data_tmp, sizeof(uint8_t)*1, update_sensor_data_callback);
 			break;
 		default: // should always be in case of 9
-			__enable_irq();
-			update_sensor_counter = 0;
 			return;
 	}
-
-	__enable_irq();
-	update_sensor_counter++;
 }
 
 void bmo_write_register(const uint8_t reg, uint8_t const value) {
@@ -455,13 +507,26 @@ void bmo_write_registers(const uint8_t reg, const uint8_t *data, const uint8_t l
 void bmo_read_registers(const uint8_t reg, uint8_t *data, const uint8_t length) {
 	mutex_take(mutex_twi_bricklet, MUTEX_BLOCKING);
     TWID_Read(&twid,
-    		   BMO055_ADDRESS_HIGH,
-    		   reg,
-               1,
-               data,
-               length,
-               NULL);
+    		  BMO055_ADDRESS_HIGH,
+    		  reg,
+              1,
+              data,
+              length,
+              NULL);
 	mutex_give(mutex_twi_bricklet);
+}
+
+void bmo_read_registers_dma(const uint8_t reg, uint8_t *data, const uint8_t length, void *callback) {
+	mutex_take(mutex_twi_bricklet, MUTEX_BLOCKING);
+	imu_async.callback = callback;
+
+    TWID_Read(&twid,
+    		  BMO055_ADDRESS_HIGH,
+    		  reg,
+              1,
+              data,
+              length,
+              &imu_async);
 }
 
 bool read_calibration_from_bno055_and_save_to_flash(void) {

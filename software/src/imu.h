@@ -244,6 +244,7 @@ void imu_blinkenlights(void);
 void imu_leds_on(const bool on);
 void bmo_read_register(const uint8_t reg, uint8_t *data, const uint8_t length);
 void bmo_read_registers(const uint8_t reg, uint8_t *data, const uint8_t length);
+void bmo_read_registers_dma(const uint8_t reg, uint8_t *data, const uint8_t length, void *callback);
 void bmo_write_registers(const uint8_t reg, const uint8_t *data, const uint8_t length);
 
 bool read_calibration_from_bno055_and_save_to_flash(void);
