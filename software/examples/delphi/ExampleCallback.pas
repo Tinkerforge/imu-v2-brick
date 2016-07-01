@@ -12,8 +12,7 @@ type
     ipcon: TIPConnection;
     imu: TBrickIMUV2;
   public
-    procedure QuaternionCB(sender: TBrickIMUV2;
-                           const w: smallint; const x: smallint;
+    procedure QuaternionCB(sender: TBrickIMUV2; const w: smallint; const x: smallint;
                            const y: smallint; const z: smallint);
     procedure Execute;
   end;
@@ -21,14 +20,13 @@ type
 const
   HOST = 'localhost';
   PORT = 4223;
-  UID = 'XXYYZZ'; { Change to your UID }
+  UID = 'XXYYZZ'; { Change XXYYZZ to the UID of your IMU Brick 2.0 }
 
 var
   e: TExample;
 
 { Callback procedure for quaternion callback }
-procedure TExample.QuaternionCB(sender: TBrickIMUV2;
-                                const w: smallint; const x: smallint;
+procedure TExample.QuaternionCB(sender: TBrickIMUV2; const w: smallint; const x: smallint;
                                 const y: smallint; const z: smallint);
 begin
   WriteLn(Format('w: %.2f, x: %.2f, y: %.2f, z: %.2f',

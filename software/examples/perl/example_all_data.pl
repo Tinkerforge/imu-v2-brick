@@ -5,7 +5,7 @@ use Tinkerforge::BrickIMUV2;
 
 use constant HOST => 'localhost';
 use constant PORT => 4223;
-use constant UID => 'XXYYZZ'; # Change to your UID
+use constant UID => 'XXYYZZ'; # Change XXYYZZ to the UID of your IMU Brick 2.0
 
 # Callback subroutine for all data callback
 sub cb_all_data

@@ -5,7 +5,7 @@
 
 #define HOST "localhost"
 #define PORT 4223
-#define UID "XXYYZZ" // Change to your UID
+#define UID "XXYYZZ" // Change XXYYZZ to the UID of your IMU Brick 2.0
 
 // Callback function for all data callback
 void cb_all_data(int16_t acceleration[3], int16_t magnetic_field[3],

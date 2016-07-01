@@ -5,7 +5,7 @@ use Tinkerforge::BrickIMUV2;
 
 use constant HOST => 'localhost';
 use constant PORT => 4223;
-use constant UID => 'XXYYZZ'; # Change to your UID
+use constant UID => 'XXYYZZ'; # Change XXYYZZ to the UID of your IMU Brick 2.0
 
 my $ipcon = Tinkerforge::IPConnection->new(); # Create IP connection
 my $imu = Tinkerforge::BrickIMUV2->new(&UID, $ipcon); # Create device object

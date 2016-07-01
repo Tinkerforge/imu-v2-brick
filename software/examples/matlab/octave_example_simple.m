@@ -3,7 +3,7 @@ function octave_example_simple()
 
     HOST = "localhost";
     PORT = 4223;
-    UID = "XXYYZZ"; % Change to your UID
+    UID = "XXYYZZ"; % Change XXYYZZ to the UID of your IMU Brick 2.0
 
     ipcon = java_new("com.tinkerforge.IPConnection"); % Create IP connection
     imu = java_new("com.tinkerforge.BrickIMUV2", UID, ipcon); % Create device object

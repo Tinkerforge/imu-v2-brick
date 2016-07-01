@@ -8,7 +8,7 @@ include Tinkerforge
 
 HOST = 'localhost'
 PORT = 4223
-UID = 'XXYYZZ' # Change to your UID
+UID = 'XXYYZZ' # Change XXYYZZ to the UID of your IMU Brick 2.0
 
 ipcon = IPConnection.new # Create IP connection
 imu = BrickIMUV2.new UID, ipcon # Create device object

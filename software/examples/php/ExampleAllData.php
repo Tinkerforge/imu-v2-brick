@@ -8,7 +8,7 @@ use Tinkerforge\BrickIMUV2;
 
 const HOST = 'localhost';
 const PORT = 4223;
-const UID = 'XXYYZZ'; // Change to your UID
+const UID = 'XXYYZZ'; // Change XXYYZZ to the UID of your IMU Brick 2.0
 
 // Callback function for all data callback
 function cb_allData($acceleration, $magnetic_field, $angular_velocity,

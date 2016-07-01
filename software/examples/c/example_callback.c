@@ -5,7 +5,7 @@
 
 #define HOST "localhost"
 #define PORT 4223
-#define UID "XXYYZZ" // Change to your UID
+#define UID "XXYYZZ" // Change XXYYZZ to the UID of your IMU Brick 2.0
 
 // Callback function for quaternion callback
 void cb_quaternion(int16_t w, int16_t x, int16_t y, int16_t z, void *user_data) {

@@ -8,7 +8,7 @@ use Tinkerforge\BrickIMUV2;
 
 const HOST = 'localhost';
 const PORT = 4223;
-const UID = 'XXYYZZ'; // Change to your UID
+const UID = 'XXYYZZ'; // Change XXYYZZ to the UID of your IMU Brick 2.0
 
 $ipcon = new IPConnection(); // Create IP connection
 $imu = new BrickIMUV2(UID, $ipcon); // Create device object
