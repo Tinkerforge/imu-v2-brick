@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:tinkerforge
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -10,7 +11,6 @@ LIBS:cmos4000
 LIBS:adc-dac
 LIBS:memory
 LIBS:xilinx
-LIBS:special
 LIBS:microcontrollers
 LIBS:dsp
 LIBS:microchip
@@ -29,7 +29,6 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:tinkerforge
 LIBS:imu-cache
 EELAYER 25 0
 EELAYER END
@@ -545,10 +544,10 @@ U 1 1 4C3ED8E1
 P 4750 1500
 F 0 "D1" H 4750 1600 50  0000 C CNN
 F 1 "blue" H 4750 1400 50  0000 C CNN
-F 2 "kicad-libraries:D0603" H 4750 1500 60  0001 C CNN
-F 3 "" H 4750 1500 60  0001 C CNN
+F 2 "kicad-libraries:D0603" H 4750 1500 50  0001 C CNN
+F 3 "" H 4750 1500 50  0000 C CNN
 	1    4750 1500
-	-1   0    0    -1  
+	-1   0    0    1   
 $EndComp
 $Comp
 L LED D2
