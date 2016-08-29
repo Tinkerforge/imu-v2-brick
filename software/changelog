@@ -12,5 +12,5 @@
   communication throughput, since we don't have to disable the interrupts for
   the whole communication
 
-2016-29-08: 2.0.4 (?)
+2016-08-29: 2.0.4 (d1e2be2)
 - Make sure to use all chunks when writing firmware
