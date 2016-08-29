@@ -11,3 +11,6 @@
 - Use DMA for I2C communication with BNO055. This allows for better SPI stack
   communication throughput, since we don't have to disable the interrupts for
   the whole communication
+
+2016-29-08: 2.0.4 (?)
+- Make sure to use all chunks when writing firmware
