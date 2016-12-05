@@ -71,6 +71,8 @@ SET(SOURCES
 	"${PROJECT_SOURCE_DIR}/src/bricklib/utility/trace.c"
 	"${PROJECT_SOURCE_DIR}/src/bricklib/utility/sqrt.c"
 	"${PROJECT_SOURCE_DIR}/src/bricklib/utility/mutex.c"
+	"${PROJECT_SOURCE_DIR}/src/bricklib/utility/ringbuffer.c"
+	"${PROJECT_SOURCE_DIR}/src/bricklib/utility/system_timer.c"
 	"${PROJECT_SOURCE_DIR}/src/bricklib/com/com_messages.c"
 	"${PROJECT_SOURCE_DIR}/src/bricklib/com/i2c/i2c_clear_bus.c"
 	"${PROJECT_SOURCE_DIR}/src/bricklib/com/i2c/i2c_eeprom/i2c_eeprom_common.c"
@@ -84,6 +86,7 @@ SET(SOURCES
 	"${PROJECT_SOURCE_DIR}/src/bricklib/com/com_common.c"
 	"${PROJECT_SOURCE_DIR}/src/bricklib/bricklet/bricklet_communication.c"
 	"${PROJECT_SOURCE_DIR}/src/bricklib/bricklet/bricklet_init.c"
+	"${PROJECT_SOURCE_DIR}/src/bricklib/bricklet/bricklet_co_mcu.c"
 	"${PROJECT_SOURCE_DIR}/src/main.c"
 	"${PROJECT_SOURCE_DIR}/src/imu.c"
 )
