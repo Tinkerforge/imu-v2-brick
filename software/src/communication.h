@@ -69,6 +69,7 @@
 #define FID_QUATERNION 39
 #define FID_ALL_DATA 40
 
+#define COM_MESSAGE_USER_LAST_FID 40
 
 #define COM_MESSAGES_USER \
 	{FID_GET_ACCELERATION, (message_handler_func_t)get_acceleration}, \
