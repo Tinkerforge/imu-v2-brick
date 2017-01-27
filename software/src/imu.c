@@ -713,10 +713,6 @@ void imu_update_sensor_configuration(void) {
 	};
 
 	bmo_write_registers(REG_ACC_CONFIG, config, 4);
-	/*bmo_write_register(REG_ACC_CONFIG,   config[0]);
-	bmo_write_register(REG_MAG_CONFIG,   config[1]);
-	bmo_write_register(REG_GYR_CONFIG_0, config[2]);
-	bmo_write_register(REG_GYR_CONFIG_1, config[3]);*/
 
 	// Change page id back
 	bmo_write_register(REG_PAGE_ID, 0);
