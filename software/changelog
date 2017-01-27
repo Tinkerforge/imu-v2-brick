@@ -14,3 +14,6 @@
 
 2016-08-29: 2.0.4 (d1e2be2)
 - Make sure to use all chunks when writing Bricklet plugin (through bricklib)
+
+2017-01-27: 2.0.5 (TBD)
+- Add support for fusion mode and sensor configuration

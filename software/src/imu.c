@@ -80,6 +80,15 @@ uint8_t sensor_data_tmp[sizeof(uint16_t)*4]; // Maximum size of data read in one
 SensorData sensor_data = {0};
 uint8_t update_sensor_counter = 0;
 
+
+uint8_t imu_magnetometer_rate       = IMU_MAGNETOMETER_RATE_20HZ;
+uint8_t imu_gyroscope_range         = IMU_GYROSCOPE_RANGE_2000DPS;
+uint8_t imu_gyroscope_bandwidth     = IMU_GYROSCOPE_BANDWIDTH_32HZ;
+uint8_t imu_accelerometer_range     = IMU_ACCELEROMETER_RANGE_4G;
+uint8_t imu_accelerometer_bandwidth = IMU_ACCELEROMETER_BANDWIDTH_62_5HZ;
+uint8_t imu_sensor_fusion_mode      = IMU_SENSOR_FUSION_ON;
+uint8_t imu_update                  = 0;
+
 uint32_t cal_counter = 0;
 
 const IMUCalibrationConst *imu_calibration_in_flash = (const IMUCalibrationConst*)IMU_CALIBRATION_ADDRESS;
@@ -412,8 +421,16 @@ void update_sensor_data_callback(Async *a) {
 	__enable_irq();
 
 	update_sensor_counter++;
-	if(update_sensor_counter == 9) {
-		update_sensor_counter = 0;
+	if(imu_sensor_fusion_mode == IMU_SENSOR_FUSION_ON) {
+		if(update_sensor_counter == 9) {
+			update_sensor_counter = 0;
+		}
+	} else {
+		if(update_sensor_counter == 3) {
+			update_sensor_counter = 7; // Read temperature after acc, mag and gyr data
+		} else if( update_sensor_counter > 3) {
+			update_sensor_counter = 0; // Go back to beginning after reading temperature
+		}
 	}
 
 	// We give the I2C mutex back and we allow a new dma request
@@ -439,6 +456,23 @@ void update_sensor_data(void) {
 	// Make sure that we can't start two DMA requests at a time
 	imu_waiting_for_dma = true;
 	imu_waiting_for_dma_counter = 0;
+
+	// First we take a look for configuration updates
+	if(imu_update != 0) {
+		if(imu_update & IMU_UPDATE_SENSOR_CONFIGURATION) {
+			imu_update_sensor_configuration();
+			imu_update &= ~IMU_UPDATE_SENSOR_CONFIGURATION;
+		} else if(imu_update & IMU_UPDATE_SENSOR_FUSION_MODE) {
+			imu_update_sensor_fusion_mode();
+			imu_update &= ~IMU_UPDATE_SENSOR_FUSION_MODE;
+		} else {
+			// Unknown update!
+			// We delete it to not end up in an endless loop
+			imu_update = 0;
+		}
+
+		return;
+	}
 
 	// Unfortunately there does not seem to be a way to
 	// get an interrupt from the BMO055 if new data is ready
@@ -482,13 +516,13 @@ void update_sensor_data(void) {
 
 void bmo_write_register(const uint8_t reg, uint8_t const value) {
 	mutex_take(mutex_twi_bricklet, MUTEX_BLOCKING);
-    TWID_Write(&twid,
-    		   BMO055_ADDRESS_HIGH,
-    		   reg,
-               1,
-               (uint8_t *)&value,
-               1,
-               NULL);
+	TWID_Write(&twid,
+	           BMO055_ADDRESS_HIGH,
+	           reg,
+	           1,
+	           (uint8_t *)&value,
+	           1,
+	           NULL);
 	mutex_give(mutex_twi_bricklet);
 }
 
@@ -520,13 +554,13 @@ void bmo_read_registers_dma(const uint8_t reg, uint8_t *data, const uint8_t leng
 	mutex_take(mutex_twi_bricklet, MUTEX_BLOCKING);
 	imu_async.callback = callback;
 
-    TWID_Read(&twid,
-    		  BMO055_ADDRESS_HIGH,
-    		  reg,
-              1,
-              data,
-              length,
-              &imu_async);
+	TWID_Read(&twid,
+	          BMO055_ADDRESS_HIGH,
+	          reg,
+	          1,
+	          data,
+	          length,
+	          &imu_async);
 }
 
 bool read_calibration_from_bno055_and_save_to_flash(void) {
@@ -633,6 +667,63 @@ void imu_startblink(void) {
 	}
 
 	imu_leds_on(false);
+}
+
+void imu_update_sensor_fusion_mode(void) {
+	// First we go to config mode
+	bmo_write_register(REG_OPR_MODE, 0b000);
+	SLEEP_MS(19);
+
+	// If sensor fusion is turned off, we zero all of the now non-updated data
+	if(imu_sensor_fusion_mode == IMU_SENSOR_FUSION_OFF) {
+		sensor_data.eul_heading        = 0;
+		sensor_data.eul_roll           = 0;
+		sensor_data.eul_pitch          = 0;
+		sensor_data.qua_w              = 0;
+		sensor_data.qua_x              = 0;
+		sensor_data.qua_y              = 0;
+		sensor_data.qua_z              = 0;
+		sensor_data.lia_x              = 0;
+		sensor_data.lia_y              = 0;
+		sensor_data.lia_z              = 0;
+		sensor_data.grv_x              = 0;
+		sensor_data.grv_y              = 0;
+		sensor_data.grv_z              = 0;
+		sensor_data.calibration_status = 0;
+	}
+
+	// NDOF if fusion mode on, otherwise AMG
+	bmo_write_register(REG_OPR_MODE, imu_sensor_fusion_mode ? 0b1100 : 0b0111);
+	SLEEP_MS(7);
+}
+
+void imu_update_sensor_configuration(void) {
+	// First we go to config mode
+	bmo_write_register(REG_OPR_MODE, 0b000);
+	SLEEP_MS(19);
+
+	// Change page id to 1 to change sensor configurations
+	bmo_write_register(REG_PAGE_ID, 1);
+
+	const uint8_t config[4] = {
+		((imu_accelerometer_range & 0b11) << 0) | ((imu_accelerometer_bandwidth & 0b111) << 2) | (0b000 << 5), // ACC
+		((imu_magnetometer_rate & 0b111) << 0) | (0b01 << 3) | (0b11 << 5),                                    // MAG
+		((imu_gyroscope_range & 0b111) << 0) | ((imu_gyroscope_bandwidth & 0b111) << 3),                       // GYR 1
+		(0b000 << 0)                                                                                           // GYR 2
+	};
+
+	bmo_write_registers(REG_ACC_CONFIG, config, 4);
+	/*bmo_write_register(REG_ACC_CONFIG,   config[0]);
+	bmo_write_register(REG_MAG_CONFIG,   config[1]);
+	bmo_write_register(REG_GYR_CONFIG_0, config[2]);
+	bmo_write_register(REG_GYR_CONFIG_1, config[3]);*/
+
+	// Change page id back
+	bmo_write_register(REG_PAGE_ID, 0);
+
+	// NDOF if fusion mode on, otherwise AMG
+	bmo_write_register(REG_OPR_MODE, imu_sensor_fusion_mode ? 0b1100 : 0b0111);
+	SLEEP_MS(7);
 }
 
 void imu_init(void) {

@@ -68,8 +68,12 @@
 #define FID_ORIENTATION 38
 #define FID_QUATERNION 39
 #define FID_ALL_DATA 40
+#define FID_SET_SENSOR_CONFIGURATION 41
+#define FID_GET_SENSOR_CONFIGURATION 42
+#define FID_SET_SENSOR_FUSION_MODE 43
+#define FID_GET_SENSOR_FUSION_MODE 44
 
-#define COM_MESSAGE_USER_LAST_FID 40
+#define COM_MESSAGE_USER_LAST_FID 44
 
 #define COM_MESSAGES_USER \
 	{FID_GET_ACCELERATION, (message_handler_func_t)get_acceleration}, \
@@ -111,7 +115,11 @@
 	{FID_GRAVITY_VECTOR, (message_handler_func_t)NULL}, \
 	{FID_ORIENTATION, (message_handler_func_t)NULL}, \
 	{FID_QUATERNION, (message_handler_func_t)NULL}, \
-	{FID_ALL_DATA, (message_handler_func_t)NULL},
+	{FID_ALL_DATA, (message_handler_func_t)NULL}, \
+	{FID_SET_SENSOR_CONFIGURATION, (message_handler_func_t)set_sensor_configuration}, \
+	{FID_GET_SENSOR_CONFIGURATION, (message_handler_func_t)get_sensor_configuration}, \
+	{FID_SET_SENSOR_FUSION_MODE, (message_handler_func_t)set_sensor_fusion_mode}, \
+	{FID_GET_SENSOR_FUSION_MODE, (message_handler_func_t)get_sensor_fusion_mode},
 
 typedef struct {
 	MessageHeader header;
@@ -438,6 +446,43 @@ typedef struct {
 	uint8_t calibration_status;
 } __attribute__((__packed__)) AllDataCallback;
 
+typedef struct {
+	MessageHeader header;
+	uint8_t magnetometer_rate;
+	uint8_t gyroscope_range;
+	uint8_t gyroscope_bandwidth;
+	uint8_t accelerometer_range;
+	uint8_t accelerometer_bandwidth;
+} __attribute__((__packed__)) SetSensorConfiguration;
+
+typedef struct {
+	MessageHeader header;
+} __attribute__((__packed__)) GetSensorConfiguration;
+
+typedef struct {
+	MessageHeader header;
+	uint8_t magnetometer_rate;
+	uint8_t gyroscope_range;
+	uint8_t gyroscope_bandwidth;
+	uint8_t accelerometer_range;
+	uint8_t accelerometer_bandwidth;
+} __attribute__((__packed__)) GetSensorConfigurationReturn;
+
+typedef struct {
+	MessageHeader header;
+	uint8_t mode;
+} __attribute__((__packed__)) SetSensorFusionMode;
+
+typedef struct {
+	MessageHeader header;
+} __attribute__((__packed__)) GetSensorFusionMode;
+
+typedef struct {
+	MessageHeader header;
+	uint8_t mode;
+} __attribute__((__packed__)) GetSensorFusionModeReturn;
+
+
 void get_acceleration(const ComType com, const GetAcceleration *data);
 void get_magnetic_field(const ComType com, const GetMagneticField *data);
 void get_angular_velocity(const ComType com, const GetAngularVelocity *data);
@@ -469,5 +514,8 @@ void set_quaternion_period(const ComType com, const SetQuaternionPeriod *data);
 void get_quaternion_period(const ComType com, const GetQuaternionPeriod *data);
 void set_all_data_period(const ComType com, const SetAllDataPeriod *data);
 void get_all_data_period(const ComType com, const GetAllDataPeriod *data);
-
+void set_sensor_configuration(const ComType com, const SetSensorConfiguration *data);
+void get_sensor_configuration(const ComType com, const GetSensorConfiguration *data);
+void set_sensor_fusion_mode(const ComType com, const SetSensorFusionMode *data);
+void get_sensor_fusion_mode(const ComType com, const GetSensorFusionMode *data);
 #endif

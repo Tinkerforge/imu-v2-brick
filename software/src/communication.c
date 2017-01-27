@@ -41,6 +41,14 @@ extern uint32_t imu_period_counter[IMU_PERIOD_NUM];
 extern SensorData sensor_data;
 extern bool imu_use_leds;
 
+extern uint8_t imu_magnetometer_rate;
+extern uint8_t imu_gyroscope_range;
+extern uint8_t imu_gyroscope_bandwidth;
+extern uint8_t imu_accelerometer_range;
+extern uint8_t imu_accelerometer_bandwidth;
+extern uint8_t imu_sensor_fusion_mode;
+extern uint8_t imu_update;
+
 void get_acceleration(const ComType com, const GetAcceleration *data) {
 	GetAccelerationReturn gar;
 
@@ -353,3 +361,73 @@ void get_all_data_period(const ComType com, const GetAllDataPeriod *data) {
 	logimui("get_all_data_period: %d\n\r", imu_period[IMU_PERIOD_TYPE_ALL]);
 }
 
+void set_sensor_configuration(const ComType com, const SetSensorConfiguration *data) {
+	if((data->magnetometer_rate > IMU_MAGNETOMETER_RATE_30HZ) ||
+	   (data->gyroscope_range > IMU_GYROSCOPE_RANGE_125DPS) ||
+	   (data->gyroscope_bandwidth > IMU_GYROSCOPE_BANDWIDTH_32HZ) ||
+	   (data->accelerometer_range > IMU_ACCELEROMETER_RANGE_16G) ||
+	   (data->accelerometer_bandwidth > IMU_ACCELEROMETER_BANDWIDTH_1000HZ)) {
+		com_return_error(data, sizeof(MessageHeader), MESSAGE_ERROR_CODE_INVALID_PARAMETER, com);
+		return;
+	}
+
+	imu_magnetometer_rate       = data->magnetometer_rate;
+	imu_gyroscope_range         = data->gyroscope_range;
+	imu_gyroscope_bandwidth     = data->gyroscope_bandwidth;
+	imu_accelerometer_range     = data->accelerometer_range;
+	imu_accelerometer_bandwidth = data->accelerometer_bandwidth;
+
+	imu_update |= IMU_UPDATE_SENSOR_CONFIGURATION;
+
+	com_return_setter(com, data);
+	logimui("set_sensor_configuration: mr: %d, gr: %d, gb: %d, ar: %d, ab: %d\n\r",
+			imu_magnetometer_rate,
+			imu_gyroscope_range,
+			imu_gyroscope_bandwidth,
+			imu_accelerometer_range,
+			imu_accelerometer_bandwidth);
+}
+
+void get_sensor_configuration(const ComType com, const GetSensorConfiguration *data) {
+	GetSensorConfigurationReturn gscr;
+
+	gscr.header                  = data->header;
+	gscr.header.length           = sizeof(GetSensorConfigurationReturn);
+	gscr.magnetometer_rate       = imu_magnetometer_rate;
+	gscr.gyroscope_range         = imu_gyroscope_range;
+	gscr.gyroscope_bandwidth     = imu_gyroscope_bandwidth;
+	gscr.accelerometer_range     = imu_accelerometer_range;
+	gscr.accelerometer_bandwidth = imu_accelerometer_bandwidth;
+
+	send_blocking_with_timeout(&gscr, sizeof(GetSensorConfigurationReturn), com);
+	logimui("get_sensor_configuration: mr: %d, gr: %d, gb: %d, ar: %d, ab: %d\n\r",
+			imu_magnetometer_rate,
+			imu_gyroscope_range,
+			imu_gyroscope_bandwidth,
+			imu_accelerometer_range,
+			imu_accelerometer_bandwidth);
+}
+
+void set_sensor_fusion_mode(const ComType com, const SetSensorFusionMode *data) {
+	if(data->mode > IMU_SENSOR_FUSION_ON) {
+		com_return_error(data, sizeof(MessageHeader), MESSAGE_ERROR_CODE_INVALID_PARAMETER, com);
+		return;
+	}
+
+	imu_sensor_fusion_mode = data->mode;
+	imu_update |= IMU_UPDATE_SENSOR_FUSION_MODE;
+
+	com_return_setter(com, data);
+	logimui("set_sensor_fusion_mode: %d\n\r", imu_sensor_fusion_mode);
+}
+
+void get_sensor_fusion_mode(const ComType com, const GetSensorFusionMode *data) {
+	GetSensorFusionModeReturn gsfmr;
+
+	gsfmr.header        = data->header;
+	gsfmr.header.length = sizeof(GetSensorFusionModeReturn);
+	gsfmr.mode          = imu_sensor_fusion_mode;
+
+	send_blocking_with_timeout(&gsfmr, sizeof(GetSensorFusionModeReturn), com);
+	logimui("get_sensor_fusion_mode: %d\n\r", imu_sensor_fusion_mode);
+}

@@ -27,6 +27,52 @@
 
 #include "bricklib/drivers/twi/twid.h"
 
+// Sensor configuration constants
+#define IMU_UPDATE_SENSOR_CONFIGURATION     (1 << 0)
+#define IMU_UPDATE_SENSOR_FUSION_MODE       (1 << 1)
+
+#define IMU_MAGNETOMETER_RATE_2HZ           0
+#define IMU_MAGNETOMETER_RATE_6HZ           1
+#define IMU_MAGNETOMETER_RATE_8HZ           2
+#define IMU_MAGNETOMETER_RATE_10HZ          3
+#define IMU_MAGNETOMETER_RATE_15HZ          4
+#define IMU_MAGNETOMETER_RATE_20HZ          5
+#define IMU_MAGNETOMETER_RATE_25HZ          6
+#define IMU_MAGNETOMETER_RATE_30HZ          7
+
+#define IMU_GYROSCOPE_RANGE_2000DPS         0
+#define IMU_GYROSCOPE_RANGE_1000DPS         1
+#define IMU_GYROSCOPE_RANGE_500DPS          2
+#define IMU_GYROSCOPE_RANGE_250DPS          3
+#define IMU_GYROSCOPE_RANGE_125DPS          4
+
+#define IMU_GYROSCOPE_BANDWIDTH_523HZ       0
+#define IMU_GYROSCOPE_BANDWIDTH_230HZ       1
+#define IMU_GYROSCOPE_BANDWIDTH_116HZ       2
+#define IMU_GYROSCOPE_BANDWIDTH_47HZ        3
+#define IMU_GYROSCOPE_BANDWIDTH_23HZ        4
+#define IMU_GYROSCOPE_BANDWIDTH_12HZ        5
+#define IMU_GYROSCOPE_BANDWIDTH_64HZ        6
+#define IMU_GYROSCOPE_BANDWIDTH_32HZ        7
+
+#define IMU_ACCELEROMETER_RANGE_2G          0
+#define IMU_ACCELEROMETER_RANGE_4G          1
+#define IMU_ACCELEROMETER_RANGE_8G          2
+#define IMU_ACCELEROMETER_RANGE_16G         3
+
+#define IMU_ACCELEROMETER_BANDWIDTH_7_81HZ  0
+#define IMU_ACCELEROMETER_BANDWIDTH_15_63HZ 1
+#define IMU_ACCELEROMETER_BANDWIDTH_31_25HZ 2
+#define IMU_ACCELEROMETER_BANDWIDTH_62_5HZ  3
+#define IMU_ACCELEROMETER_BANDWIDTH_125HZ   4
+#define IMU_ACCELEROMETER_BANDWIDTH_250HZ   5
+#define IMU_ACCELEROMETER_BANDWIDTH_500HZ   6
+#define IMU_ACCELEROMETER_BANDWIDTH_1000HZ  7
+
+#define IMU_SENSOR_FUSION_OFF               0
+#define IMU_SENSOR_FUSION_ON                1
+
+
 #define IMU_PERIOD_TYPE_ACC  0
 #define IMU_PERIOD_TYPE_MAG  1
 #define IMU_PERIOD_TYPE_ANG  2
@@ -38,17 +84,6 @@
 #define IMU_PERIOD_TYPE_ALL  8
 
 #define IMU_PERIOD_NUM       9
-
-#define RANGE_ACCELEROMETER_2G  0
-#define RANGE_ACCELEROMETER_4G  1
-#define RANGE_ACCELEROMETER_8G  2
-#define RANGE_ACCELEROMETER_16G 3
-
-#define RANGE_GYROSCOPE_2000DPS 0
-#define RANGE_GYROSCOPE_1000DPS 1
-#define RANGE_GYROSCOPE_500DPS  2
-#define RANGE_GYROSCOPE_250DPS  3
-#define RANGE_GYROSCOPE_125DPS  4
 
 #define IMU_STARTUP_TIME     650 // see 1.2 (POR time)
 
@@ -249,6 +284,8 @@ void bmo_write_registers(const uint8_t reg, const uint8_t *data, const uint8_t l
 
 bool read_calibration_from_bno055_and_save_to_flash(void);
 bool read_calibration_from_flash_and_save_to_bno055(void);
+void imu_update_sensor_fusion_mode(void);
+void imu_update_sensor_configuration(void);
 void imu_init(void);
 
 #endif
