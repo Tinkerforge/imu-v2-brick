@@ -47,8 +47,6 @@ $ipcon->connect(HOST, PORT); // Connect to brickd
 $imu->registerCallback(BrickIMUV2::CALLBACK_ALL_DATA, 'cb_allData');
 
 // Set period for all data callback to 0.1s (100ms)
-// Note: The all data callback is only called every 0.1 seconds
-//       if the all data has changed since the last call!
 $imu->setAllDataPeriod(100);
 
 echo "Press ctrl+c to exit\n";

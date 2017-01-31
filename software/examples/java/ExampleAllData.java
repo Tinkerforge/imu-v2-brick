@@ -47,8 +47,6 @@ public class ExampleAllData {
 		});
 
 		// Set period for all data callback to 0.1s (100ms)
-		// Note: The all data callback is only called every 0.1 seconds
-		//       if the all data has changed since the last call!
 		imu.setAllDataPeriod(100);
 
 		System.out.println("Press key to exit"); System.in.read();

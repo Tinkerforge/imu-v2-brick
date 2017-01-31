@@ -3,10 +3,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[         0,          0]
-NotebookDataLength[      7529,        179]
-NotebookOptionsPosition[      7102,        158]
-NotebookOutlinePosition[      7434,        173]
-CellTagsIndexPosition[      7391,        170]
+NotebookDataLength[      7138,        170]
+NotebookOptionsPosition[      6711,        149]
+NotebookOutlinePosition[      7043,        164]
+CellTagsIndexPosition[      7000,        161]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -32,12 +32,12 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{"uid", "=", "\"\<XXYYZZ\>\""}], 
   RowBox[{"(*", 
-   RowBox[{"Change", " ", "to", " ", "your", " ", "UID"}], "*)"}], "\n", 
-  "\[IndentingNewLine]", 
+   RowBox[{"Change", " ", "to", " ", "your", " ", "UID"}], "*)"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
   RowBox[{"(*", 
    RowBox[{
    "Create", " ", "IPConnection", " ", "and", " ", "device", " ", "object"}], 
-   "*)"}]}], "\[IndentingNewLine]", 
+   "*)"}]}], "\n", 
  RowBox[{"ipcon", "=", 
   RowBox[{"NETNew", "[", "\"\<Tinkerforge.IPConnection\>\"", "]"}]}], "\n", 
  RowBox[{"imu", "=", 
@@ -47,11 +47,12 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{"ipcon", "@", 
    RowBox[{"Connect", "[", 
-    RowBox[{"host", ",", "port"}], "]"}]}], "\n", "\[IndentingNewLine]", 
+    RowBox[{"host", ",", "port"}], "]"}]}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
   RowBox[{"(*", 
    RowBox[{
    "Callback", " ", "function", " ", "for", " ", "quaternion", " ", 
-    "callback"}], "*)"}]}], "\[IndentingNewLine]", 
+    "callback"}], "*)"}]}], "\n", 
  RowBox[{
   RowBox[{"QuaternionCB", "[", 
    RowBox[{"sender_", ",", "w_", ",", "x_", ",", "y_", ",", "z_"}], "]"}], ":=",
@@ -99,26 +100,16 @@ Cell[BoxData[{
    "Set", " ", "period", " ", "for", " ", "quaternion", " ", "callback", " ", 
     "to", " ", "0.1", "s", " ", 
     RowBox[{"(", 
-     RowBox[{"100", "ms"}], ")"}]}], "*)"}], "\[IndentingNewLine]", 
-  RowBox[{"(*", 
-   RowBox[{"Note", ":", 
-    RowBox[{
-    "The", " ", "quaternion", " ", "callback", " ", "is", " ", "only", " ", 
-     "called", " ", "every", " ", "0.1", " ", "seconds"}]}], "*)"}], "\n", 
-  RowBox[{"(*", 
-   RowBox[{
-   "if", " ", "the", " ", "quaternion", " ", "has", " ", "changed", " ", 
-    "since", " ", "the", " ", "last", " ", 
-    RowBox[{"call", "!"}]}], "*)"}]}], "\[IndentingNewLine]", 
+     RowBox[{"100", "ms"}], ")"}]}], "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"imu", "@", 
    RowBox[{"SetQuaternionPeriod", "[", "100", "]"}]}], 
   "\[IndentingNewLine]"}], "\n", 
  RowBox[{
-  RowBox[{"Input", "[", "\"\<Click OK to exit\>\"", "]"}], 
-  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"Input", "[", "\"\<Click OK to exit\>\"", "]"}], "\n", 
+  "\[IndentingNewLine]", 
   RowBox[{"(*", 
-   RowBox[{"Clean", " ", "up"}], "*)"}]}], "\n", 
+   RowBox[{"Clean", " ", "up"}], "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{"ipcon", "@", 
   RowBox[{"Disconnect", "[", "]"}]}], "\n", 
  RowBox[{"ReleaseNETObject", "[", "imu", "]"}], "\n", 
@@ -154,10 +145,10 @@ Cell[BoxData[{
    3.644060624819319*^9}, {3.6440606939483833`*^9, 3.644060811613452*^9}, {
    3.644060881417274*^9, 3.644060907031499*^9}, {3.6440612275523567`*^9, 
    3.644061229140922*^9}, {3.644122635229965*^9, 3.64412264709575*^9}, {
-   3.652159606939967*^9, 3.652159614606875*^9}}]
+   3.652159606939967*^9, 3.652159614606875*^9}, 3.694867107872056*^9}]
 },
 WindowSize->{1521, 867},
-WindowMargins->{{330, 67}, {50, Automatic}},
+WindowMargins->{{329, 68}, {49, Automatic}},
 FrontEndVersion->"9.0 for Linux x86 (64-bit) (November 20, 2012)",
 StyleDefinitions->"Default.nb"
 ]
@@ -173,7 +164,7 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[400, 13, 748, 13, 55, "Input"],
-Cell[1151, 28, 5947, 128, 627, "Input"]
+Cell[1151, 28, 5556, 119, 583, "Input"]
 }
 ]
 *)

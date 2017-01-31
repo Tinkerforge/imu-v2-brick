@@ -43,8 +43,6 @@ if __name__ == "__main__":
     imu.register_callback(imu.CALLBACK_ALL_DATA, cb_all_data)
 
     # Set period for all data callback to 0.1s (100ms)
-    # Note: The all data callback is only called every 0.1 seconds
-    #       if the all data has changed since the last call!
     imu.set_all_data_period(100)
 
     raw_input("Press key to exit\n") # Use input() in Python 3

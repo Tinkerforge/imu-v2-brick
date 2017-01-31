@@ -16,8 +16,6 @@ function matlab_example_all_data()
     set(imu, 'AllDataCallback', @(h, e) cb_all_data(e));
 
     % Set period for all data callback to 0.1s (100ms)
-    % Note: The all data callback is only called every 0.1 seconds
-    %       if the all data has changed since the last call!
     imu.setAllDataPeriod(100);
 
     input('Press key to exit\n', 's');

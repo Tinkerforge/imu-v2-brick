@@ -58,8 +58,6 @@ int main(void) {
 	                         NULL);
 
 	// Set period for all data callback to 0.1s (100ms)
-	// Note: The all data callback is only called every 0.1 seconds
-	//       if the all data has changed since the last call!
 	imu_v2_set_all_data_period(&imu, 100);
 
 	printf("Press key to exit\n");

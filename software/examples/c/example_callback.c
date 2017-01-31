@@ -38,8 +38,6 @@ int main(void) {
 	                         NULL);
 
 	// Set period for quaternion callback to 0.1s (100ms)
-	// Note: The quaternion callback is only called every 0.1 seconds
-	//       if the quaternion has changed since the last call!
 	imu_v2_set_quaternion_period(&imu, 100);
 
 	printf("Press key to exit\n");

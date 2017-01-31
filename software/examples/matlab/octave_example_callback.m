@@ -15,8 +15,6 @@ function octave_example_callback()
     imu.addQuaternionCallback(@cb_quaternion);
 
     % Set period for quaternion callback to 0.1s (100ms)
-    % Note: The quaternion callback is only called every 0.1 seconds
-    %       if the quaternion has changed since the last call!
     imu.setQuaternionPeriod(100);
 
     input("Press key to exit\n", "s");

@@ -27,8 +27,6 @@ class Example
 		imu.Quaternion += QuaternionCB;
 
 		// Set period for quaternion callback to 0.1s (100ms)
-		// Note: The quaternion callback is only called every 0.1 seconds
-		//       if the quaternion has changed since the last call!
 		imu.SetQuaternionPeriod(100);
 
 		Console.WriteLine("Press enter to exit");
