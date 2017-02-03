@@ -18,5 +18,5 @@
 2017-01-27: 2.0.5 (860e604)
 - Add support for fusion mode and sensor configuration
 
-2017-02-03: 2.0.6 ()
+2017-02-03: 2.0.6 (8fee65a)
 - Add support for fusion mode without magnetometer
