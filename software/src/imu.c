@@ -421,15 +421,34 @@ void update_sensor_data_callback(Async *a) {
 	__enable_irq();
 
 	update_sensor_counter++;
-	if(imu_sensor_fusion_mode == IMU_SENSOR_FUSION_ON) {
-		if(update_sensor_counter == 9) {
-			update_sensor_counter = 0;
+	switch(imu_sensor_fusion_mode) {
+		case IMU_SENSOR_FUSION_OFF: {
+			if(update_sensor_counter == 3) {
+				update_sensor_counter = 7; // Read temperature after acc, mag and gyr data
+			} else if(update_sensor_counter > 3) {
+				update_sensor_counter = 0; // Go back to beginning after reading temperature
+			}
+
+			break;
 		}
-	} else {
-		if(update_sensor_counter == 3) {
-			update_sensor_counter = 7; // Read temperature after acc, mag and gyr data
-		} else if( update_sensor_counter > 3) {
-			update_sensor_counter = 0; // Go back to beginning after reading temperature
+
+		case IMU_SENSOR_FUSION_ON: {
+			if(update_sensor_counter == 9) {
+				update_sensor_counter = 0;
+			}
+
+			break;
+		}
+
+		case IMU_SENSOR_FUSION_ON_WO_MAG: {
+			if(update_sensor_counter == 1) {
+				update_sensor_counter = 2;
+			}
+			if(update_sensor_counter == 9) {
+				update_sensor_counter = 0;
+			}
+
+			break;
 		}
 	}
 
@@ -675,25 +694,41 @@ void imu_update_sensor_fusion_mode(void) {
 	SLEEP_MS(19);
 
 	// If sensor fusion is turned off, we zero all of the now non-updated data
-	if(imu_sensor_fusion_mode == IMU_SENSOR_FUSION_OFF) {
-		sensor_data.eul_heading        = 0;
-		sensor_data.eul_roll           = 0;
-		sensor_data.eul_pitch          = 0;
-		sensor_data.qua_w              = 0;
-		sensor_data.qua_x              = 0;
-		sensor_data.qua_y              = 0;
-		sensor_data.qua_z              = 0;
-		sensor_data.lia_x              = 0;
-		sensor_data.lia_y              = 0;
-		sensor_data.lia_z              = 0;
-		sensor_data.grv_x              = 0;
-		sensor_data.grv_y              = 0;
-		sensor_data.grv_z              = 0;
-		sensor_data.calibration_status = 0;
+	switch(imu_sensor_fusion_mode) {
+		case IMU_SENSOR_FUSION_OFF: {
+			sensor_data.eul_heading        = 0;
+			sensor_data.eul_roll           = 0;
+			sensor_data.eul_pitch          = 0;
+			sensor_data.qua_w              = 0;
+			sensor_data.qua_x              = 0;
+			sensor_data.qua_y              = 0;
+			sensor_data.qua_z              = 0;
+			sensor_data.lia_x              = 0;
+			sensor_data.lia_y              = 0;
+			sensor_data.lia_z              = 0;
+			sensor_data.grv_x              = 0;
+			sensor_data.grv_y              = 0;
+			sensor_data.grv_z              = 0;
+			sensor_data.calibration_status = 0;
+
+			bmo_write_register(REG_OPR_MODE, 0b0111);
+			break;
+		}
+		case IMU_SENSOR_FUSION_ON: {
+			bmo_write_register(REG_OPR_MODE, 0b1100);
+			break;
+		}
+		case IMU_SENSOR_FUSION_ON_WO_MAG: {
+			sensor_data.mag_x              = 0;
+			sensor_data.mag_y              = 0;
+			sensor_data.mag_z              = 0;
+
+			bmo_write_register(REG_OPR_MODE, 0b1000);
+			break;
+		}
 	}
 
 	// NDOF if fusion mode on, otherwise AMG
-	bmo_write_register(REG_OPR_MODE, imu_sensor_fusion_mode ? 0b1100 : 0b0111);
 	SLEEP_MS(7);
 }
 
