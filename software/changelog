@@ -21,7 +21,7 @@
 2017-02-03: 2.0.6 (8fee65a)
 - Add support for fusion mode without magnetometer
 
-2017-03-16: 2.0.7 (TBD)
+2017-03-16: 2.0.7 (15ffdcb)
 - Move I2C mutex handling outside of interrupt.
-  This fixes a race condition with the Accelerometer Bricklet (and potentially other
-  Bricklets that use I2C),
+  This fixes a race condition with the Accelerometer Bricklet (and 
+  potentially other Bricklets that use I2C).
