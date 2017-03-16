@@ -53,6 +53,7 @@ bool imu_use_leds = false;
 bool imu_use_orientation = true;
 bool imu_mode_update = true;
 bool imu_waiting_for_dma = false;
+bool imu_mutex_taken = false;
 uint8_t imu_waiting_for_dma_counter = 0;
 
 Async imu_async;
@@ -95,6 +96,24 @@ const IMUCalibrationConst *imu_calibration_in_flash = (const IMUCalibrationConst
 
 void tick_task(const uint8_t tick_type) {
 	static int8_t message_counter = 0;
+
+	// Check if dma transfer ended in calculation and message task
+	// If a bricklet takes the mutex in the calculation task, we can still
+	// handle it here in the message task.
+	// Unfortunately FreeRTOS does not allow to give the mutex back in the interrupt.
+	if(!imu_waiting_for_dma && imu_mutex_taken) {
+		// We give the I2C mutex back and we allow a new dma request
+		mutex_give(mutex_twi_bricklet);
+		imu_mutex_taken = false;
+
+		// Copy data from last DMA transfer before we start a new one
+		update_sensor_data_save();
+		if(tick_type == TICK_TASK_TYPE_CALCULATION) {
+			// If we are in the calculation task, we return here so a bricklet
+			// can properly take the i2c mutex if necessary
+			return;
+		}
+	}
 
 	if(tick_type == TICK_TASK_TYPE_CALCULATION) {
 		update_sensor_data();
@@ -383,7 +402,7 @@ void imu_blinkenlights(void) {
 	}
 }
 
-void update_sensor_data_callback(Async *a) {
+void update_sensor_data_save(void) {
 	// We disable irq during copying of data, otherwise we may get an interrupt
 	// right in the middle of the memcpy and the data is corrupted
 	__disable_irq();
@@ -451,10 +470,11 @@ void update_sensor_data_callback(Async *a) {
 			break;
 		}
 	}
+}
 
+void update_sensor_data_callback(Async *a) {
 	// We give the I2C mutex back and we allow a new dma request
 	imu_waiting_for_dma = false;
-	mutex_give(mutex_twi_bricklet);
 }
 
 void update_sensor_data(void) {
@@ -467,14 +487,18 @@ void update_sensor_data(void) {
 			twid.pTransfer = NULL;
 			imu_waiting_for_dma_counter = 0;
 			imu_waiting_for_dma = false;
-		} else {
-			return;
+			imu_mutex_taken = false;
+			if(imu_mutex_taken) {
+				mutex_give(mutex_twi_bricklet);
+			}
 		}
+		return;
 	}
 
-	// Make sure that we can't start two DMA requests at a time
-	imu_waiting_for_dma = true;
-	imu_waiting_for_dma_counter = 0;
+	// Don't try to update configuration if mutex is taken
+	if(imu_mutex_taken) {
+		return;
+	}
 
 	// First we take a look for configuration updates
 	if(imu_update != 0) {
@@ -492,6 +516,10 @@ void update_sensor_data(void) {
 
 		return;
 	}
+
+	// Make sure that we can't start two DMA requests at a time
+	imu_waiting_for_dma = true;
+	imu_waiting_for_dma_counter = 0;
 
 	// Unfortunately there does not seem to be a way to
 	// get an interrupt from the BMO055 if new data is ready
@@ -570,6 +598,7 @@ void bmo_read_registers(const uint8_t reg, uint8_t *data, const uint8_t length) 
 }
 
 void bmo_read_registers_dma(const uint8_t reg, uint8_t *data, const uint8_t length, void *callback) {
+	imu_mutex_taken = true;
 	mutex_take(mutex_twi_bricklet, MUTEX_BLOCKING);
 	imu_async.callback = callback;
 

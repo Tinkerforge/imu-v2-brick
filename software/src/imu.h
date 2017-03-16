@@ -287,6 +287,7 @@ bool read_calibration_from_bno055_and_save_to_flash(void);
 bool read_calibration_from_flash_and_save_to_bno055(void);
 void imu_update_sensor_fusion_mode(void);
 void imu_update_sensor_configuration(void);
+void update_sensor_data_save(void);
 void imu_init(void);
 
 #endif
