@@ -24,7 +24,7 @@ class Example
 		// Don't use device before ipcon is connected
 
 		// Register quaternion callback to function QuaternionCB
-		imu.Quaternion += QuaternionCB;
+		imu.QuaternionCallback += QuaternionCB;
 
 		// Set period for quaternion callback to 0.1s (100ms)
 		imu.SetQuaternionPeriod(100);

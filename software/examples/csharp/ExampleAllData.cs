@@ -44,7 +44,7 @@ class Example
 		// Don't use device before ipcon is connected
 
 		// Register all data callback to function AllDataCB
-		imu.AllData += AllDataCB;
+		imu.AllDataCallback += AllDataCB;
 
 		// Set period for all data callback to 0.1s (100ms)
 		imu.SetAllDataPeriod(100);
