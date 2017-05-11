@@ -29,7 +29,7 @@
 
 #define BRICK_FIRMWARE_VERSION_MAJOR 2
 #define BRICK_FIRMWARE_VERSION_MINOR 0
-#define BRICK_FIRMWARE_VERSION_REVISION 7
+#define BRICK_FIRMWARE_VERSION_REVISION 8
 
 #define BRICK_HARDWARE_VERSION_MAJOR 2
 #define BRICK_HARDWARE_VERSION_MINOR 0
@@ -51,7 +51,6 @@
 //#define LOGGING_LEVEL LOGGING_DEBUG
 #define LOGGING_LEVEL LOGGING_NONE
 
-
 // ************** BRICK SETTINGS **************
 
 // Frequencies
@@ -60,6 +59,7 @@
 #define BOARD_ADC_FREQ 16000000 // Frequency of ADC
 #define BOARD_OSC_EXTERNAL      // Use external oscillator
 
+#define BRICK_HAS_CO_MCU_SUPPORT
 
 // UART for console output (printf)
 #define PIN_CONSOLE_RXD  {1 << 21, PIOA, ID_PIOA, PIO_PERIPH_A, PIO_DEFAULT}

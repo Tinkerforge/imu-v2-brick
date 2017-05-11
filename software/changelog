@@ -25,3 +25,6 @@
 - Move I2C mutex handling outside of interrupt.
   This fixes a race condition with the Accelerometer Bricklet (and 
   potentially other Bricklets that use I2C).
+
+2017-05-11: 2.0.8 (TBD)
+- Add support for co-mcu Bricklets
