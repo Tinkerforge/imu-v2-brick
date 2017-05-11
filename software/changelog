@@ -26,5 +26,5 @@
   This fixes a race condition with the Accelerometer Bricklet (and 
   potentially other Bricklets that use I2C).
 
-2017-05-11: 2.0.8 (TBD)
+2017-05-11: 2.0.8 (8582e88)
 - Add support for co-mcu Bricklets
