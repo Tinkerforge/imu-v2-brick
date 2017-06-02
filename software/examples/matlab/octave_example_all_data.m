@@ -5,8 +5,8 @@ function octave_example_all_data()
     PORT = 4223;
     UID = "XXYYZZ"; % Change XXYYZZ to the UID of your IMU Brick 2.0
 
-    ipcon = java_new("com.tinkerforge.IPConnection"); % Create IP connection
-    imu = java_new("com.tinkerforge.BrickIMUV2", UID, ipcon); % Create device object
+    ipcon = javaObject("com.tinkerforge.IPConnection"); % Create IP connection
+    imu = javaObject("com.tinkerforge.BrickIMUV2", UID, ipcon); % Create device object
 
     ipcon.connect(HOST, PORT); % Connect to brickd
     % Don't use device before ipcon is connected
