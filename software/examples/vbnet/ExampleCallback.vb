@@ -7,8 +7,8 @@ Module ExampleCallback
     Const UID As String = "XXYYZZ" ' Change XXYYZZ to the UID of your IMU Brick 2.0
 
     ' Callback subroutine for quaternion callback
-    Sub QuaternionCB(ByVal sender As BrickIMUV2, _
-                     ByVal w As Short, ByVal x As Short, ByVal y As Short, ByVal z As Short)
+    Sub QuaternionCB(ByVal sender As BrickIMUV2, ByVal w As Short, ByVal x As Short, _
+                     ByVal y As Short, ByVal z As Short)
         Dim s As String = "w: {0:F02}, x: {1:F02}, y: {2:F02}, z: {3:F02}"
         Console.WriteLine(String.Format(s, w/16383.0, x/16383.0, y/16383.0, z/16383.0))
     End Sub
@@ -21,7 +21,7 @@ Module ExampleCallback
         ' Don't use device before ipcon is connected
 
         ' Register quaternion callback to subroutine QuaternionCB
-        AddHandler imu.Quaternion, AddressOf QuaternionCB
+        AddHandler imu.QuaternionCallback, AddressOf QuaternionCB
 
         ' Set period for quaternion callback to 0.1s (100ms)
         imu.SetQuaternionPeriod(100)

@@ -12,16 +12,14 @@ type
     ipcon: TIPConnection;
     imu: TBrickIMUV2;
   public
-    procedure AllDataCB(sender: TBrickIMUV2;
-                        const acceleration: TArray0To2OfInt16;
+    procedure AllDataCB(sender: TBrickIMUV2; const acceleration: TArray0To2OfInt16;
                         const magneticField: TArray0To2OfInt16;
                         const angularVelocity: TArray0To2OfInt16;
                         const eulerAngle: TArray0To2OfInt16;
                         const quaternion: TArray0To3OfInt16;
                         const linearAcceleration: TArray0To2OfInt16;
                         const gravityVector: TArray0To2OfInt16;
-                        const temperature: shortint;
-                        const calibrationStatus: byte);
+                        const temperature: shortint; const calibrationStatus: byte);
     procedure Execute;
   end;
 
@@ -34,16 +32,14 @@ var
   e: TExample;
 
 { Callback procedure for all data callback }
-procedure TExample.AllDataCB(sender: TBrickIMUV2;
-                             const acceleration: TArray0To2OfInt16;
+procedure TExample.AllDataCB(sender: TBrickIMUV2; const acceleration: TArray0To2OfInt16;
                              const magneticField: TArray0To2OfInt16;
                              const angularVelocity: TArray0To2OfInt16;
                              const eulerAngle: TArray0To2OfInt16;
                              const quaternion: TArray0To3OfInt16;
                              const linearAcceleration: TArray0To2OfInt16;
                              const gravityVector: TArray0To2OfInt16;
-                             const temperature: shortint;
-                             const calibrationStatus: byte);
+                             const temperature: shortint; const calibrationStatus: byte);
 begin
   WriteLn(Format('Acceleration        x: %.02f y: %.02f z: %.02f m/s²'#10 +
                  'Magnetic Field      x: %.02f y: %.02f z: %.02f µT'#10 +

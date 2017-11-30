@@ -41,7 +41,7 @@ Module ExampleAllData
         ' Don't use device before ipcon is connected
 
         ' Register all data callback to subroutine AllDataCB
-        AddHandler imu.AllData, AddressOf AllDataCB
+        AddHandler imu.AllDataCallback, AddressOf AllDataCB
 
         ' Set period for all data callback to 0.1s (100ms)
         imu.SetAllDataPeriod(100)

@@ -9,9 +9,8 @@ from tinkerforge.ip_connection import IPConnection
 from tinkerforge.brick_imu_v2 import BrickIMUV2
 
 # Callback function for all data callback
-def cb_all_data(acceleration, magnetic_field, angular_velocity,
-                euler_angle, quaternion, linear_acceleration,
-                gravity_vector, temperature, calibration_status):
+def cb_all_data(acceleration, magnetic_field, angular_velocity, euler_angle, quaternion,
+                linear_acceleration, gravity_vector, temperature, calibration_status):
     print(u"""
 Acceleration        x: {:.2f} y: {:.2f} z: {:.2f} m/s²
 Magnetic Field      x: {:.2f} y: {:.2f} z: {:.2f} µT

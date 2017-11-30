@@ -11,9 +11,9 @@ const PORT = 4223;
 const UID = 'XXYYZZ'; // Change XXYYZZ to the UID of your IMU Brick 2.0
 
 // Callback function for all data callback
-function cb_allData($acceleration, $magnetic_field, $angular_velocity,
-                    $euler_angle, $quaternion, $linear_acceleration,
-                    $gravity_vector, $temperature, $calibration_status)
+function cb_allData($acceleration, $magnetic_field, $angular_velocity, $euler_angle,
+                    $quaternion, $linear_acceleration, $gravity_vector, $temperature,
+                    $calibration_status)
 {
     $s = sprintf("Acceleration        x: %.02f y: %.02f z: %.02f m/s²\n" .
                  "Magnetic Field      x: %.02f y: %.02f z: %.02f µT\n" .

@@ -10,9 +10,8 @@ use constant UID => 'XXYYZZ'; # Change XXYYZZ to the UID of your IMU Brick 2.0
 # Callback subroutine for all data callback
 sub cb_all_data
 {
-    my ($acceleration, $magnetic_field, $angular_velocity, $euler_angle,
-        $quaternion, $linear_acceleration, $gravity_vector, $temperature,
-        $calibration_status) = @_;
+    my ($acceleration, $magnetic_field, $angular_velocity, $euler_angle, $quaternion,
+        $linear_acceleration, $gravity_vector, $temperature, $calibration_status) = @_;
 
     printf("Acceleration        x: %.02f y: %.02f z: %.02f m/s²\n" .
            "Magnetic Field      x: %.02f y: %.02f z: %.02f µT\n" .

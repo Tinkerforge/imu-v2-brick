@@ -17,8 +17,8 @@ AllDataCB[sender_,{acceleration1_,acceleration2_,acceleration3_},
           {eulerAngle1_,eulerAngle2_,eulerAngle3_},
           {quaternion1_,quaternion2_,quaternion3_,quaternion4_},
           {linearAcceleration1_,linearAcceleration2_,linearAcceleration3_},
-          {gravityVector1_,gravityVector2_,gravityVector3_},
-          temperature_,calibrationStatus_]:=
+          {gravityVector1_,gravityVector2_,gravityVector3_},temperature_,
+          calibrationStatus_]:=
  Print["Acceleration        x: "<>ToString[NumberForm[N[acceleration1/100.0],{10,2}]]<>
        " y: "<>ToString[NumberForm[N[acceleration2/100.0],{10,2}]]<>
        " z: "<>ToString[NumberForm[N[acceleration3/100.0],{10,2}]]<>" m/s²\n"<>
@@ -43,7 +43,7 @@ AllDataCB[sender_,{acceleration1_,acceleration2_,acceleration3_},
        " z: "<>ToString[NumberForm[N[gravityVector3/100.0],{10,2}]]<>" m/s²\n"<>
        "Temperature         "<>ToString[temperature]<>" °C\n"<>
        "Calibration Status  "<>StringJoin[Map[ToString,IntegerDigits[calibrationStatus,2,8]]]<>"\n"]
-AddEventHandler[imu@AllData,AllDataCB]
+AddEventHandler[imu@AllDataCallback,AllDataCB]
 
 (*Set period for all data callback to 0.1s (100ms)*)
 imu@SetAllDataPeriod[100]

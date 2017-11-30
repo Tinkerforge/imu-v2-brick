@@ -8,9 +8,8 @@ class Example
 	private static string UID = "XXYYZZ"; // Change XXYYZZ to the UID of your IMU Brick 2.0
 
 	// Callback function for all data callback
-	static void AllDataCB(BrickIMUV2 sender, short[] acceleration,
-	                      short[] magneticField, short[] angularVelocity,
-	                      short[] eulerAngle, short[] quaternion,
+	static void AllDataCB(BrickIMUV2 sender, short[] acceleration, short[] magneticField,
+	                      short[] angularVelocity, short[] eulerAngle, short[] quaternion,
 	                      short[] linearAcceleration, short[] gravityVector,
 	                      short temperature, byte calibrationStatus)
 	{

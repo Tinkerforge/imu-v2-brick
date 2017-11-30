@@ -16,7 +16,7 @@ QuaternionCB[sender_,w_,x_,y_,z_]:=
        ", x: "<>ToString[NumberForm[N[x/16383.0],{10,2}]]<>
        ", y: "<>ToString[NumberForm[N[y/16383.0],{10,2}]]<>
        ", z: "<>ToString[NumberForm[N[z/16383.0],{10,2}]]]
-AddEventHandler[imu@Quaternion,QuaternionCB]
+AddEventHandler[imu@QuaternionCallback,QuaternionCB]
 
 (*Set period for quaternion callback to 0.1s (100ms)*)
 imu@SetQuaternionPeriod[100]

@@ -17,9 +17,11 @@ ipcon.connect HOST, PORT # Connect to brickd
 # Don't use device before ipcon is connected
 
 # Register all data callback
-imu.register_callback(BrickIMUV2::CALLBACK_ALL_DATA) do
-  |acceleration, magnetic_field, angular_velocity, euler_angle, quaternion,
-   linear_acceleration, gravity_vector, temperature, calibration_status|
+imu.register_callback(BrickIMUV2::CALLBACK_ALL_DATA) do |acceleration, magnetic_field,
+                                                         angular_velocity, euler_angle,
+                                                         quaternion, linear_acceleration,
+                                                         gravity_vector, temperature,
+                                                         calibration_status|
   s = "Acceleration        x: %.02f y: %.02f z: %.02f m/s²\n" +
       "Magnetic Field      x: %.02f y: %.02f z: %.02f µT\n" +
       "Angular Velocity    x: %.02f y: %.02f z: %.02f °/s\n" +
