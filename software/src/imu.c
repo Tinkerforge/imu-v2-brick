@@ -61,7 +61,6 @@ extern Twid twid;
 extern Mutex mutex_twi_bricklet;
 
 extern ComInfo com_info;
-extern bool usb_first_connection;
 
 Pin pins_imu_led[] = {PINS_IMU_LED};
 int8_t pins_led_tc_channel[] = {-1, -1, -1, -1, -1, -1, 1, 2, 0, -1};
@@ -128,18 +127,6 @@ void tick_task(const uint8_t tick_type) {
 			}
 		}
 	} else if(tick_type == TICK_TASK_TYPE_MESSAGE) {
-		if(usb_first_connection && !usbd_hal_is_disabled(IN_EP)) {
-			message_counter++;
-			if(message_counter >= 100) {
-				message_counter = 0;
-				if(brick_init_enumeration(COM_USB)) {
-					com_info.current = COM_USB;
-					usb_first_connection = false;
-					message_counter = 0;
-				}
-			}
-		}
-
 		for(uint8_t i = 0; i < IMU_PERIOD_NUM; i++) {
 			if((imu_period[i] != 0) &&
 			   (imu_period[i] <= imu_period_counter[i])) {
