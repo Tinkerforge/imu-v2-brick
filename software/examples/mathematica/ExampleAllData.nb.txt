@@ -20,27 +20,27 @@ AllDataCB[sender_,{acceleration1_,acceleration2_,acceleration3_},
           {gravityVector1_,gravityVector2_,gravityVector3_},temperature_,
           calibrationStatus_]:=
  Print["Acceleration        x: "<>ToString[NumberForm[N[acceleration1/100.0],{10,2}]]<>
-       " y: "<>ToString[NumberForm[N[acceleration2/100.0],{10,2}]]<>
-       " z: "<>ToString[NumberForm[N[acceleration3/100.0],{10,2}]]<>" m/s²\n"<>
+       "                    y: "<>ToString[NumberForm[N[acceleration2/100.0],{10,2}]]<>
+       "                    z: "<>ToString[NumberForm[N[acceleration3/100.0],{10,2}]]<>" m/s²\n"<>
        "Magnetic Field      x: "<>ToString[NumberForm[N[magneticField1/16.0],{10,2}]]<>
-       " y: "<>ToString[NumberForm[N[magneticField2/16.0],{10,2}]]<>
-       " z: "<>ToString[NumberForm[N[magneticField3/16.0],{10,2}]]<>" µT\n"<>
+       "                    y: "<>ToString[NumberForm[N[magneticField2/16.0],{10,2}]]<>
+       "                    z: "<>ToString[NumberForm[N[magneticField3/16.0],{10,2}]]<>" µT\n"<>
        "Angular Velocity    x: "<>ToString[NumberForm[N[angularVelocity1/16.0],{10,2}]]<>
-       " y: "<>ToString[NumberForm[N[angularVelocity2/16.0],{10,2}]]<>
-       " z: "<>ToString[NumberForm[N[angularVelocity3/16.0],{10,2}]]<>" °/s\n"<>
+       "                    y: "<>ToString[NumberForm[N[angularVelocity2/16.0],{10,2}]]<>
+       "                    z: "<>ToString[NumberForm[N[angularVelocity3/16.0],{10,2}]]<>" °/s\n"<>
        "Euler Angle         x: "<>ToString[NumberForm[N[eulerAngle1/16.0],{10,2}]]<>
-       " y: "<>ToString[NumberForm[N[eulerAngle2/16.0],{10,2}]]<>
-       " z: "<>ToString[NumberForm[N[eulerAngle3/16.0],{10,2}]]<>" °\n"<>
+       "                    y: "<>ToString[NumberForm[N[eulerAngle2/16.0],{10,2}]]<>
+       "                    z: "<>ToString[NumberForm[N[eulerAngle3/16.0],{10,2}]]<>" °\n"<>
        "Quaternion          x: "<>ToString[NumberForm[N[quaternion2/16383.0],{10,2}]]<>
-       " y: "<>ToString[NumberForm[N[quaternion3/16383.0],{10,2}]]<>
-       " z: "<>ToString[NumberForm[N[quaternion4/16383.0],{10,2}]]<>
-       " w: "<>ToString[NumberForm[N[quaternion1/16383.0],{10,2}]]<>"\n"<>
+       "                    y: "<>ToString[NumberForm[N[quaternion3/16383.0],{10,2}]]<>
+       "                    z: "<>ToString[NumberForm[N[quaternion4/16383.0],{10,2}]]<>
+       "                    w: "<>ToString[NumberForm[N[quaternion1/16383.0],{10,2}]]<>"\n"<>
        "Linear Acceleration x: "<>ToString[NumberForm[N[linearAcceleration1/100.0],{10,2}]]<>
-       " y: "<>ToString[NumberForm[N[linearAcceleration2/100.0],{10,2}]]<>
-       " z: "<>ToString[NumberForm[N[linearAcceleration3/100.0],{10,2}]]<>" m/s²\n"<>
+       "                    y: "<>ToString[NumberForm[N[linearAcceleration2/100.0],{10,2}]]<>
+       "                    z: "<>ToString[NumberForm[N[linearAcceleration3/100.0],{10,2}]]<>" m/s²\n"<>
        "Gravity Vector      x: "<>ToString[NumberForm[N[gravityVector1/100.0],{10,2}]]<>
-       " y: "<>ToString[NumberForm[N[gravityVector2/100.0],{10,2}]]<>
-       " z: "<>ToString[NumberForm[N[gravityVector3/100.0],{10,2}]]<>" m/s²\n"<>
+       "                    y: "<>ToString[NumberForm[N[gravityVector2/100.0],{10,2}]]<>
+       "                    z: "<>ToString[NumberForm[N[gravityVector3/100.0],{10,2}]]<>" m/s²\n"<>
        "Temperature         "<>ToString[temperature]<>" °C\n"<>
        "Calibration Status  "<>StringJoin[Map[ToString,IntegerDigits[calibrationStatus,2,8]]]<>"\n"]
 AddEventHandler[imu@AllDataCallback,AllDataCB]
