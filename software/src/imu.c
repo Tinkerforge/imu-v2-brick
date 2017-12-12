@@ -94,8 +94,6 @@ uint32_t cal_counter = 0;
 const IMUCalibrationConst *imu_calibration_in_flash = (const IMUCalibrationConst*)IMU_CALIBRATION_ADDRESS;
 
 void tick_task(const uint8_t tick_type) {
-	static int8_t message_counter = 0;
-
 	// Check if dma transfer ended in calculation and message task
 	// If a bricklet takes the mutex in the calculation task, we can still
 	// handle it here in the message task.
