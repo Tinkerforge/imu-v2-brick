@@ -57,7 +57,7 @@ bool imu_mutex_taken = false;
 uint8_t imu_waiting_for_dma_counter = 0;
 
 Async imu_async;
-extern Twid twid;
+extern Twid twid0;
 extern Mutex mutex_twi_bricklet;
 
 extern ComInfo com_info;
@@ -469,7 +469,7 @@ void update_sensor_data(void) {
 		// did not come.
 		imu_waiting_for_dma_counter++;
 		if(imu_waiting_for_dma_counter > 15) {
-			twid.pTransfer = NULL;
+			twid0.pTransfer = NULL;
 			imu_waiting_for_dma_counter = 0;
 			imu_waiting_for_dma = false;
 			imu_mutex_taken = false;
@@ -548,7 +548,7 @@ void update_sensor_data(void) {
 
 void bmo_write_register(const uint8_t reg, uint8_t const value) {
 	mutex_take(mutex_twi_bricklet, MUTEX_BLOCKING);
-	TWID_Write(&twid,
+	TWID_Write(&twid0,
 	           BMO055_ADDRESS_HIGH,
 	           reg,
 	           1,
@@ -560,7 +560,7 @@ void bmo_write_register(const uint8_t reg, uint8_t const value) {
 
 void bmo_write_registers(const uint8_t reg, const uint8_t *data, const uint8_t length) {
 	mutex_take(mutex_twi_bricklet, MUTEX_BLOCKING);
-    TWID_Write(&twid,
+    TWID_Write(&twid0,
     		   BMO055_ADDRESS_HIGH,
     		   reg,
                1,
@@ -572,7 +572,7 @@ void bmo_write_registers(const uint8_t reg, const uint8_t *data, const uint8_t l
 
 void bmo_read_registers(const uint8_t reg, uint8_t *data, const uint8_t length) {
 	mutex_take(mutex_twi_bricklet, MUTEX_BLOCKING);
-    TWID_Read(&twid,
+    TWID_Read(&twid0,
     		  BMO055_ADDRESS_HIGH,
     		  reg,
               1,
@@ -587,7 +587,7 @@ void bmo_read_registers_dma(const uint8_t reg, uint8_t *data, const uint8_t leng
 	mutex_take(mutex_twi_bricklet, MUTEX_BLOCKING);
 	imu_async.callback = callback;
 
-	TWID_Read(&twid,
+	TWID_Read(&twid0,
 	          BMO055_ADDRESS_HIGH,
 	          reg,
 	          1,
