@@ -19,9 +19,10 @@ class Example
 		short w, x, y, z;
 		imu.GetQuaternion(out w, out x, out y, out z);
 
-		string s = "w: {0:F02}, x: {1:F02}, y: {2:F02}, z: {3:F02}";
-		string f = String.Format(s, w/16383.0, x/16383.0, y/16383.0, z/16383.0);
-		Console.WriteLine(f);
+		Console.WriteLine("Quaternion [W]: " + w/16383.0);
+		Console.WriteLine("Quaternion [X]: " + x/16383.0);
+		Console.WriteLine("Quaternion [Y]: " + y/16383.0);
+		Console.WriteLine("Quaternion [Z]: " + z/16383.0);
 
 		Console.WriteLine("Press enter to exit");
 		Console.ReadLine();

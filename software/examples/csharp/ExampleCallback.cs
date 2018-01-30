@@ -10,9 +10,11 @@ class Example
 	// Callback function for quaternion callback
 	static void QuaternionCB(BrickIMUV2 sender, short w, short x, short y, short z)
 	{
-		string s = "w: {0:F02}, x: {1:F02}, y: {2:F02}, z: {3:F02}";
-		string f = String.Format(s, w/16383.0, x/16383.0, y/16383.0, z/16383.0);
-		Console.WriteLine(f);
+		Console.WriteLine("Quaternion [W]: " + w/16383.0);
+		Console.WriteLine("Quaternion [X]: " + x/16383.0);
+		Console.WriteLine("Quaternion [Y]: " + y/16383.0);
+		Console.WriteLine("Quaternion [Z]: " + z/16383.0);
+		Console.WriteLine("");
 	}
 
 	static void Main()

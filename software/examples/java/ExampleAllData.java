@@ -24,25 +24,31 @@ public class ExampleAllData {
 			                    short[] quaternion, short[] linearAcceleration,
 			                    short[] gravityVector, byte temperature,
 			                    short calibrationStatus) {
-				String s = "Acceleration        x: %.02f y: %.02f z: %.02f m/s²%n" +
-				           "Magnetic Field      x: %.02f y: %.02f z: %.02f µT%n" +
-				           "Angular Velocity    x: %.02f y: %.02f z: %.02f °/s%n" +
-				           "Euler Angle         x: %.02f y: %.02f z: %.02f °%n" +
-				           "Quaternion          x: %.02f y: %.02f z: %.02f w: %.02f%n" +
-				           "Linear Acceleration x: %.02f y: %.02f z: %.02f m/s²%n" +
-				           "Gravity Vector      x: %.02f y: %.02f z: %.02f m/s²%n" +
-				           "Temperature         %d °C%n" +
-				           "Calibration Status  %s%n%n";
-				System.out.format(s,
-				                  acceleration[0]/100.0,       acceleration[1]/100.0,       acceleration[2]/100.0,
-				                  magneticField[0]/16.0,       magneticField[1]/16.0,       magneticField[2]/16.0,
-				                  angularVelocity[0]/16.0,     angularVelocity[1]/16.0,     angularVelocity[2]/16.0,
-				                  eulerAngle[0]/16.0,          eulerAngle[1]/16.0,          eulerAngle[2]/16.0,
-				                  quaternion[1]/16383.0,       quaternion[2]/16383.0,       quaternion[3]/16383.0,       quaternion[0]/16383.0,
-				                  linearAcceleration[0]/100.0, linearAcceleration[1]/100.0, linearAcceleration[2]/100.0,
-				                  gravityVector[0]/100.0,      gravityVector[1]/100.0,      gravityVector[2]/100.0,
-				                  temperature,
-				                  Integer.toBinaryString(calibrationStatus));
+				System.out.println("Acceleration [X]: " + acceleration[0]/100.0 + " m/s²");
+				System.out.println("Acceleration [Y]: " + acceleration[1]/100.0 + " m/s²");
+				System.out.println("Acceleration [Z]: " + acceleration[2]/100.0 + " m/s²");
+				System.out.println("Magnetic Field [X]: " + magneticField[0]/16.0 + " µT");
+				System.out.println("Magnetic Field [Y]: " + magneticField[1]/16.0 + " µT");
+				System.out.println("Magnetic Field [Z]: " + magneticField[2]/16.0 + " µT");
+				System.out.println("Angular Velocity [X]: " + angularVelocity[0]/16.0 + " °/s");
+				System.out.println("Angular Velocity [Y]: " + angularVelocity[1]/16.0 + " °/s");
+				System.out.println("Angular Velocity [Z]: " + angularVelocity[2]/16.0 + " °/s");
+				System.out.println("Euler Angle [X]: " + eulerAngle[0]/16.0 + " °");
+				System.out.println("Euler Angle [Y]: " + eulerAngle[1]/16.0 + " °");
+				System.out.println("Euler Angle [Z]: " + eulerAngle[2]/16.0 + " °");
+				System.out.println("Quaternion [W]: " + quaternion[0]/16383.0);
+				System.out.println("Quaternion [X]: " + quaternion[1]/16383.0);
+				System.out.println("Quaternion [Y]: " + quaternion[2]/16383.0);
+				System.out.println("Quaternion [Z]: " + quaternion[3]/16383.0);
+				System.out.println("Linear Acceleration [X]: " + linearAcceleration[0]/100.0 + " m/s²");
+				System.out.println("Linear Acceleration [Y]: " + linearAcceleration[1]/100.0 + " m/s²");
+				System.out.println("Linear Acceleration [Z]: " + linearAcceleration[2]/100.0 + " m/s²");
+				System.out.println("Gravity Vector [X]: " + gravityVector[0]/100.0 + " m/s²");
+				System.out.println("Gravity Vector [Y]: " + gravityVector[1]/100.0 + " m/s²");
+				System.out.println("Gravity Vector [Z]: " + gravityVector[2]/100.0 + " m/s²");
+				System.out.println("Temperature: " + temperature + " °C");
+				System.out.println("Calibration Status: " + Integer.toBinaryString(calibrationStatus));
+				System.out.println("");
 			}
 		});
 

@@ -12,25 +12,31 @@ Module ExampleAllData
                   ByVal eulerAngle As Short(), ByVal quaternion As Short(), _
                   ByVal linearAcceleration As Short(), ByVal gravityVector As Short(), _
                   ByVal temperature As Short, ByVal calibrationStatus As Byte)
-        Dim s As String = "Acceleration        x: {0:F02} y: {1:F02} z: {2:F02} m/s²" + CHR(10) + _
-                          "Magnetic Field      x: {3:F02} y: {4:F02} z: {5:F02} µT" + CHR(10) + _
-                          "Angular Velocity    x: {6:F02} y: {7:F02} z: {8:F02} °/s" + CHR(10) + _
-                          "Euler Angle         x: {9:F02} y: {10:F02} z: {11:F02} °" + CHR(10) + _
-                          "Quaternion          x: {12:F02} y: {13:F02} z: {14:F02} w: {15:F02}" + CHR(10) + _
-                          "Linear Acceleration x: {16:F02} y: {17:F02} z: {18:F02} m/s²" + CHR(10) + _
-                          "Gravity Vector      x: {19:F02} y: {20:F02} z: {21:F02} m/s²" + CHR(10) + _
-                          "Temperature         {22} °C" + CHR(10) + _
-                          "Calibration Status  {23}" + CHR(10)
-        Dim o As Object() = {acceleration(0)/100.0,       acceleration(1)/100.0,       acceleration(2)/100.0, _
-                             magneticField(0)/16.0,       magneticField(1)/16.0,       magneticField(2)/16.0, _
-                             angularVelocity(0)/16.0,     angularVelocity(1)/16.0,     angularVelocity(2)/16.0, _
-                             eulerAngle(0)/16.0,          eulerAngle(1)/16.0,          eulerAngle(2)/16.0, _
-                             quaternion(1)/16383.0,       quaternion(2)/16383.0,       quaternion(3)/16383.0,       quaternion(0)/16383.0, _
-                             linearAcceleration(0)/100.0, linearAcceleration(1)/100.0, linearAcceleration(2)/100.0, _
-                             gravityVector(0)/100.0,      gravityVector(1)/100.0,      gravityVector(2)/100.0, _
-                             temperature,
-                             Convert.ToString(calibrationStatus, 2)}
-        Console.WriteLine(String.Format(s, o))
+        Console.WriteLine("Acceleration [X]: " + (acceleration(0)/100.0).ToString() + " m/s²")
+        Console.WriteLine("Acceleration [Y]: " + (acceleration(1)/100.0).ToString() + " m/s²")
+        Console.WriteLine("Acceleration [Z]: " + (acceleration(2)/100.0).ToString() + " m/s²")
+        Console.WriteLine("Magnetic Field [X]: " + (magneticField(0)/16.0).ToString() + " µT")
+        Console.WriteLine("Magnetic Field [Y]: " + (magneticField(1)/16.0).ToString() + " µT")
+        Console.WriteLine("Magnetic Field [Z]: " + (magneticField(2)/16.0).ToString() + " µT")
+        Console.WriteLine("Angular Velocity [X]: " + (angularVelocity(0)/16.0).ToString() + " °/s")
+        Console.WriteLine("Angular Velocity [Y]: " + (angularVelocity(1)/16.0).ToString() + " °/s")
+        Console.WriteLine("Angular Velocity [Z]: " + (angularVelocity(2)/16.0).ToString() + " °/s")
+        Console.WriteLine("Euler Angle [X]: " + (eulerAngle(0)/16.0).ToString() + " °")
+        Console.WriteLine("Euler Angle [Y]: " + (eulerAngle(1)/16.0).ToString() + " °")
+        Console.WriteLine("Euler Angle [Z]: " + (eulerAngle(2)/16.0).ToString() + " °")
+        Console.WriteLine("Quaternion [W]: " + (quaternion(0)/16383.0).ToString())
+        Console.WriteLine("Quaternion [X]: " + (quaternion(1)/16383.0).ToString())
+        Console.WriteLine("Quaternion [Y]: " + (quaternion(2)/16383.0).ToString())
+        Console.WriteLine("Quaternion [Z]: " + (quaternion(3)/16383.0).ToString())
+        Console.WriteLine("Linear Acceleration [X]: " + (linearAcceleration(0)/100.0).ToString() + " m/s²")
+        Console.WriteLine("Linear Acceleration [Y]: " + (linearAcceleration(1)/100.0).ToString() + " m/s²")
+        Console.WriteLine("Linear Acceleration [Z]: " + (linearAcceleration(2)/100.0).ToString() + " m/s²")
+        Console.WriteLine("Gravity Vector [X]: " + (gravityVector(0)/100.0).ToString() + " m/s²")
+        Console.WriteLine("Gravity Vector [Y]: " + (gravityVector(1)/100.0).ToString() + " m/s²")
+        Console.WriteLine("Gravity Vector [Z]: " + (gravityVector(2)/100.0).ToString() + " m/s²")
+        Console.WriteLine("Temperature: " + temperature.ToString() + " °C")
+        Console.WriteLine("Calibration Status: " + Convert.ToString(calibrationStatus, 2))
+        Console.WriteLine("")
     End Sub
 
     Sub Main()

@@ -29,8 +29,11 @@ var
 procedure TExample.QuaternionCB(sender: TBrickIMUV2; const w: smallint; const x: smallint;
                                 const y: smallint; const z: smallint);
 begin
-  WriteLn(Format('w: %.2f, x: %.2f, y: %.2f, z: %.2f',
-                 [w/16383.0, x/16383.0, y/16383.0, z/16383.0]));
+  WriteLn(Format('Quaternion [W]: %f', [w/16383.0]));
+  WriteLn(Format('Quaternion [X]: %f', [x/16383.0]));
+  WriteLn(Format('Quaternion [Y]: %f', [y/16383.0]));
+  WriteLn(Format('Quaternion [Z]: %f', [z/16383.0]));
+  WriteLn('');
 end;
 
 procedure TExample.Execute;

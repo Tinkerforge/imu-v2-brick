@@ -15,8 +15,11 @@ $ipcon->connect(&HOST, &PORT); # Connect to brickd
 
 # Get current quaternion
 my ($w, $x, $y, $z) = $imu->get_quaternion();
-printf("w: %.02f, x: %.02f, y: %.02f, z: %.02f\n",
-       $w/16383.0, $x/16383.0, $y/16383.0, $z/16383.0);
+
+print "Quaternion [W]: " . $w/16383.0 . "\n";
+print "Quaternion [X]: " . $x/16383.0 . "\n";
+print "Quaternion [Y]: " . $y/16383.0 . "\n";
+print "Quaternion [Z]: " . $z/16383.0 . "\n";
 
 print "Press key to exit\n";
 <STDIN>;

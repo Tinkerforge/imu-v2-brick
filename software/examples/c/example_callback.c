@@ -11,8 +11,11 @@
 void cb_quaternion(int16_t w, int16_t x, int16_t y, int16_t z, void *user_data) {
 	(void)user_data; // avoid unused parameter warning
 
-	printf("w: %.02f, x: %.02f, y: %.02f, z: %.02f\n",
-	       w/16383.0, x/16383.0, y/16383.0, z/16383.0);
+	printf("Quaternion [W]: %f\n", w/16383.0);
+	printf("Quaternion [X]: %f\n", x/16383.0);
+	printf("Quaternion [Y]: %f\n", y/16383.0);
+	printf("Quaternion [Z]: %f\n", z/16383.0);
+	printf("\n");
 }
 
 int main(void) {

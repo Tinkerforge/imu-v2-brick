@@ -12,10 +12,12 @@ function octave_example_simple()
     % Don't use device before ipcon is connected
 
     % Get current quaternion
-    q = imu.getQuaternion();
-    fprintf("w: %.2f, x: %.2f, y: %.2f, z: %.2f\n",
-            java2int(q.w)/16383.0, java2int(q.x)/16383.0,
-            java2int(q.y)/16383.0, java2int(q.z)/16383.0);
+    quaternion = imu.getQuaternion();
+
+    fprintf("Quaternion [W]: %g\n", java2int(quaternion.w)/16383.0);
+    fprintf("Quaternion [X]: %g\n", java2int(quaternion.x)/16383.0);
+    fprintf("Quaternion [Y]: %g\n", java2int(quaternion.y)/16383.0);
+    fprintf("Quaternion [Z]: %g\n", java2int(quaternion.z)/16383.0);
 
     input("Press key to exit\n", "s");
     ipcon.disconnect();

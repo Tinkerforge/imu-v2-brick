@@ -20,8 +20,11 @@ public class ExampleCallback {
 		// Add quaternion listener
 		imu.addQuaternionListener(new BrickIMUV2.QuaternionListener() {
 			public void quaternion(short w, short x, short y, short z) {
-				String s = "w: %.02f, x: %.02f, y: %.02f, z: %.02f%n";
-				System.out.format(s, w/16383.0, x/16383.0, y/16383.0, z/16383.0);
+				System.out.println("Quaternion [W]: " + w/16383.0);
+				System.out.println("Quaternion [X]: " + x/16383.0);
+				System.out.println("Quaternion [Y]: " + y/16383.0);
+				System.out.println("Quaternion [Z]: " + z/16383.0);
+				System.out.println("");
 			}
 		});
 

@@ -19,9 +19,12 @@ public class ExampleSimple {
 		// Don't use device before ipcon is connected
 
 		// Get current quaternion
-		Quaternion q = imu.getQuaternion(); // Can throw com.tinkerforge.TimeoutException
-		String s = "w: %.02f, x: %.02f, y: %.02f, z: %.02f%n";
-		System.out.format(s, q.w/16383.0, q.x/16383.0, q.y/16383.0, q.z/16383.0);
+		Quaternion quaternion = imu.getQuaternion(); // Can throw com.tinkerforge.TimeoutException
+
+		System.out.println("Quaternion [W]: " + quaternion.w/16383.0);
+		System.out.println("Quaternion [X]: " + quaternion.x/16383.0);
+		System.out.println("Quaternion [Y]: " + quaternion.y/16383.0);
+		System.out.println("Quaternion [Z]: " + quaternion.z/16383.0);
 
 		System.out.println("Press key to exit"); System.in.read();
 		ipcon.disconnect();

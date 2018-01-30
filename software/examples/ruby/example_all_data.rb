@@ -22,25 +22,31 @@ imu.register_callback(BrickIMUV2::CALLBACK_ALL_DATA) do |acceleration, magnetic_
                                                          quaternion, linear_acceleration,
                                                          gravity_vector, temperature,
                                                          calibration_status|
-  s = "Acceleration        x: %.02f y: %.02f z: %.02f m/s²\n" +
-      "Magnetic Field      x: %.02f y: %.02f z: %.02f µT\n" +
-      "Angular Velocity    x: %.02f y: %.02f z: %.02f °/s\n" +
-      "Euler Angle         x: %.02f y: %.02f z: %.02f °\n" +
-      "Quaternion          x: %.02f y: %.02f z: %.02f w: %.02f\n" +
-      "Linear Acceleration x: %.02f y: %.02f z: %.02f m/s²\n" +
-      "Gravity Vector      x: %.02f y: %.02f z: %.02f m/s²\n" +
-      "Temperature         %d °C\n" +
-      "Calibration Status  %08b\n\n"
-  puts s %
-       [acceleration[0]/100.0,        acceleration[1]/100.0,        acceleration[2]/100.0,
-        magnetic_field[0]/16.0,       magnetic_field[1]/16.0,       magnetic_field[2]/16.0,
-        angular_velocity[0]/16.0,     angular_velocity[1]/16.0,     angular_velocity[2]/16.0,
-        euler_angle[0]/16.0,          euler_angle[1]/16.0,          euler_angle[2]/16.0,
-        quaternion[1]/16383.0,        quaternion[2]/16383.0,        quaternion[3]/16383.0,        quaternion[0]/16383.0,
-        linear_acceleration[0]/100.0, linear_acceleration[1]/100.0, linear_acceleration[2]/100.0,
-        gravity_vector[0]/100.0,      gravity_vector[1]/100.0,      gravity_vector[2]/100.0,
-        temperature,
-        calibration_status]
+  puts "Acceleration [X]: #{acceleration[0]/100.0} m/s²"
+  puts "Acceleration [Y]: #{acceleration[1]/100.0} m/s²"
+  puts "Acceleration [Z]: #{acceleration[2]/100.0} m/s²"
+  puts "Magnetic Field [X]: #{magnetic_field[0]/16.0} µT"
+  puts "Magnetic Field [Y]: #{magnetic_field[1]/16.0} µT"
+  puts "Magnetic Field [Z]: #{magnetic_field[2]/16.0} µT"
+  puts "Angular Velocity [X]: #{angular_velocity[0]/16.0} °/s"
+  puts "Angular Velocity [Y]: #{angular_velocity[1]/16.0} °/s"
+  puts "Angular Velocity [Z]: #{angular_velocity[2]/16.0} °/s"
+  puts "Euler Angle [X]: #{euler_angle[0]/16.0} °"
+  puts "Euler Angle [Y]: #{euler_angle[1]/16.0} °"
+  puts "Euler Angle [Z]: #{euler_angle[2]/16.0} °"
+  puts "Quaternion [W]: #{quaternion[0]/16383.0}"
+  puts "Quaternion [X]: #{quaternion[1]/16383.0}"
+  puts "Quaternion [Y]: #{quaternion[2]/16383.0}"
+  puts "Quaternion [Z]: #{quaternion[3]/16383.0}"
+  puts "Linear Acceleration [X]: #{linear_acceleration[0]/100.0} m/s²"
+  puts "Linear Acceleration [Y]: #{linear_acceleration[1]/100.0} m/s²"
+  puts "Linear Acceleration [Z]: #{linear_acceleration[2]/100.0} m/s²"
+  puts "Gravity Vector [X]: #{gravity_vector[0]/100.0} m/s²"
+  puts "Gravity Vector [Y]: #{gravity_vector[1]/100.0} m/s²"
+  puts "Gravity Vector [Z]: #{gravity_vector[2]/100.0} m/s²"
+  puts "Temperature: #{temperature} °C"
+  puts "Calibration Status: #{'%08b' % calibration_status}"
+  puts ''
 end
 
 # Set period for all data callback to 0.1s (100ms)

@@ -10,8 +10,11 @@ from tinkerforge.brick_imu_v2 import BrickIMUV2
 
 # Callback function for quaternion callback
 def cb_quaternion(w, x, y, z):
-    print("w: {:.02f}, x: {:.02f}, y: {:.02f}, z: {:.02f}"
-          .format(w/16383.0, x/16383.0, y/16383.0, z/16383.0))
+    print("Quaternion [W]: " + str(w/16383.0))
+    print("Quaternion [X]: " + str(x/16383.0))
+    print("Quaternion [Y]: " + str(y/16383.0))
+    print("Quaternion [Z]: " + str(z/16383.0))
+    print("")
 
 if __name__ == "__main__":
     ipcon = IPConnection() # Create IP connection

@@ -17,11 +17,12 @@ $ipcon->connect(HOST, PORT); // Connect to brickd
 // Don't use device before ipcon is connected
 
 // Get current quaternion
-$q = $imu->getquaternion();
-$s = sprintf("w: %.02f, x: %.02f, y: %.02f, z: %.02f\n",
-             $q['w']/16383.0, $q['x']/16383.0, $q['y']/16383.0, $q['z']/16383.0);
+$quaternion = $imu->getQuaternion();
 
-echo "$s";
+echo "Quaternion [W]: " . $quaternion['w']/16383.0 . "\n";
+echo "Quaternion [X]: " . $quaternion['x']/16383.0 . "\n";
+echo "Quaternion [Y]: " . $quaternion['y']/16383.0 . "\n";
+echo "Quaternion [Z]: " . $quaternion['z']/16383.0 . "\n";
 
 echo "Press key to exit\n";
 fgetc(fopen('php://stdin', 'r'));

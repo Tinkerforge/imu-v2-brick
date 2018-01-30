@@ -13,10 +13,11 @@ const UID = 'XXYYZZ'; // Change XXYYZZ to the UID of your IMU Brick 2.0
 // Callback function for quaternion callback
 function cb_quaternion($w, $x, $y, $z)
 {
-    $s = sprintf("w: %.02f, x: %.02f, y: %.02f, z: %.02f\n",
-                 $w/16383.0, $x/16383.0, $y/16383.0, $z/16383.0);
-
-    echo "$s";
+    echo "Quaternion [W]: " . $w/16383.0 . "\n";
+    echo "Quaternion [X]: " . $x/16383.0 . "\n";
+    echo "Quaternion [Y]: " . $y/16383.0 . "\n";
+    echo "Quaternion [Z]: " . $z/16383.0 . "\n";
+    echo "\n";
 }
 
 $ipcon = new IPConnection(); // Create IP connection

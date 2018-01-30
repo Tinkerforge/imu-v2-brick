@@ -41,24 +41,31 @@ procedure TExample.AllDataCB(sender: TBrickIMUV2; const acceleration: TArray0To2
                              const gravityVector: TArray0To2OfInt16;
                              const temperature: shortint; const calibrationStatus: byte);
 begin
-  WriteLn(Format('Acceleration        x: %.02f y: %.02f z: %.02f m/s²'#10 +
-                 'Magnetic Field      x: %.02f y: %.02f z: %.02f µT'#10 +
-                 'Angular Velocity    x: %.02f y: %.02f z: %.02f °/s'#10 +
-                 'Euler Angle         x: %.02f y: %.02f z: %.02f °'#10 +
-                 'Quaternion          x: %.02f y: %.02f z: %.02f w: %.02f'#10 +
-                 'Linear Acceleration x: %.02f y: %.02f z: %.02f m/s²'#10 +
-                 'Gravity Vector      x: %.02f y: %.02f z: %.02f m/s²'#10 +
-                 'Temperature         %d °C'#10 +
-                 'Calibration Status  %d'#10,
-                 [acceleration[0]/100.0,       acceleration[1]/100.0,       acceleration[2]/100.0,
-                  magneticField[0]/16.0,       magneticField[1]/16.0,       magneticField[2]/16.0,
-                  angularVelocity[0]/16.0,     angularVelocity[1]/16.0,     angularVelocity[2]/16.0,
-                  eulerAngle[0]/16.0,          eulerAngle[1]/16.0,          eulerAngle[2]/16.0,
-                  quaternion[1]/16383.0,       quaternion[2]/16383.0,       quaternion[3]/16383.0,       quaternion[0]/16383.0,
-                  linearAcceleration[0]/100.0, linearAcceleration[1]/100.0, linearAcceleration[2]/100.0,
-                  gravityVector[0]/100.0,      gravityVector[1]/100.0,      gravityVector[2]/100.0,
-                  temperature,
-                  calibrationStatus]));
+  WriteLn(Format('Acceleration [X]: %f m/s²', [acceleration[0]/100.0]));
+  WriteLn(Format('Acceleration [Y]: %f m/s²', [acceleration[1]/100.0]));
+  WriteLn(Format('Acceleration [Z]: %f m/s²', [acceleration[2]/100.0]));
+  WriteLn(Format('Magnetic Field [X]: %f µT', [magneticField[0]/16.0]));
+  WriteLn(Format('Magnetic Field [Y]: %f µT', [magneticField[1]/16.0]));
+  WriteLn(Format('Magnetic Field [Z]: %f µT', [magneticField[2]/16.0]));
+  WriteLn(Format('Angular Velocity [X]: %f °/s', [angularVelocity[0]/16.0]));
+  WriteLn(Format('Angular Velocity [Y]: %f °/s', [angularVelocity[1]/16.0]));
+  WriteLn(Format('Angular Velocity [Z]: %f °/s', [angularVelocity[2]/16.0]));
+  WriteLn(Format('Euler Angle [X]: %f °', [eulerAngle[0]/16.0]));
+  WriteLn(Format('Euler Angle [Y]: %f °', [eulerAngle[1]/16.0]));
+  WriteLn(Format('Euler Angle [Z]: %f °', [eulerAngle[2]/16.0]));
+  WriteLn(Format('Quaternion [W]: %f', [quaternion[0]/16383.0]));
+  WriteLn(Format('Quaternion [X]: %f', [quaternion[1]/16383.0]));
+  WriteLn(Format('Quaternion [Y]: %f', [quaternion[2]/16383.0]));
+  WriteLn(Format('Quaternion [Z]: %f', [quaternion[3]/16383.0]));
+  WriteLn(Format('Linear Acceleration [X]: %f m/s²', [linearAcceleration[0]/100.0]));
+  WriteLn(Format('Linear Acceleration [Y]: %f m/s²', [linearAcceleration[1]/100.0]));
+  WriteLn(Format('Linear Acceleration [Z]: %f m/s²', [linearAcceleration[2]/100.0]));
+  WriteLn(Format('Gravity Vector [X]: %f m/s²', [gravityVector[0]/100.0]));
+  WriteLn(Format('Gravity Vector [Y]: %f m/s²', [gravityVector[1]/100.0]));
+  WriteLn(Format('Gravity Vector [Z]: %f m/s²', [gravityVector[2]/100.0]));
+  WriteLn(Format('Temperature: %d °C', [temperature]));
+  WriteLn(Format('Calibration Status: %d', [calibrationStatus]));
+  WriteLn('');
 end;
 
 procedure TExample.Execute;

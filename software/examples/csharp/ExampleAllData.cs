@@ -13,25 +13,31 @@ class Example
 	                      short[] linearAcceleration, short[] gravityVector,
 	                      short temperature, byte calibrationStatus)
 	{
-		string s = "Acceleration        x: {0:F02} y: {1:F02} z: {2:F02} m/s²\n" +
-		           "Magnetic Field      x: {3:F02} y: {4:F02} z: {5:F02} µT\n" +
-		           "Angular Velocity    x: {6:F02} y: {7:F02} z: {8:F02} °/s\n" +
-		           "Euler Angle         x: {9:F02} y: {10:F02} z: {11:F02} °\n" +
-		           "Quaternion          x: {12:F02} y: {13:F02} z: {14:F02} w: {15:F02}\n" +
-		           "Linear Acceleration x: {16:F02} y: {17:F02} z: {18:F02} m/s²\n" +
-		           "Gravity Vector      x: {19:F02} y: {20:F02} z: {21:F02} m/s²\n" +
-		           "Temperature         {22} °C\n" +
-		           "Calibration Status  {23}\n";
-		object[] o = {acceleration[0]/100.0,       acceleration[1]/100.0,       acceleration[2]/100.0,
-		              magneticField[0]/16.0,       magneticField[1]/16.0,       magneticField[2]/16.0,
-		              angularVelocity[0]/16.0,     angularVelocity[1]/16.0,     angularVelocity[2]/16.0,
-		              eulerAngle[0]/16.0,          eulerAngle[1]/16.0,          eulerAngle[2]/16.0,
-		              quaternion[1]/16383.0,       quaternion[2]/16383.0,       quaternion[3]/16383.0,       quaternion[0]/16383.0,
-		              linearAcceleration[0]/100.0, linearAcceleration[1]/100.0, linearAcceleration[2]/100.0,
-		              gravityVector[0]/100.0,      gravityVector[1]/100.0,      gravityVector[2]/100.0,
-		              temperature,
-		              Convert.ToString(calibrationStatus, 2)};
-		Console.WriteLine(String.Format(s, o));
+		Console.WriteLine("Acceleration [X]: " + acceleration[0]/100.0 + " m/s²");
+		Console.WriteLine("Acceleration [Y]: " + acceleration[1]/100.0 + " m/s²");
+		Console.WriteLine("Acceleration [Z]: " + acceleration[2]/100.0 + " m/s²");
+		Console.WriteLine("Magnetic Field [X]: " + magneticField[0]/16.0 + " µT");
+		Console.WriteLine("Magnetic Field [Y]: " + magneticField[1]/16.0 + " µT");
+		Console.WriteLine("Magnetic Field [Z]: " + magneticField[2]/16.0 + " µT");
+		Console.WriteLine("Angular Velocity [X]: " + angularVelocity[0]/16.0 + " °/s");
+		Console.WriteLine("Angular Velocity [Y]: " + angularVelocity[1]/16.0 + " °/s");
+		Console.WriteLine("Angular Velocity [Z]: " + angularVelocity[2]/16.0 + " °/s");
+		Console.WriteLine("Euler Angle [X]: " + eulerAngle[0]/16.0 + " °");
+		Console.WriteLine("Euler Angle [Y]: " + eulerAngle[1]/16.0 + " °");
+		Console.WriteLine("Euler Angle [Z]: " + eulerAngle[2]/16.0 + " °");
+		Console.WriteLine("Quaternion [W]: " + quaternion[0]/16383.0);
+		Console.WriteLine("Quaternion [X]: " + quaternion[1]/16383.0);
+		Console.WriteLine("Quaternion [Y]: " + quaternion[2]/16383.0);
+		Console.WriteLine("Quaternion [Z]: " + quaternion[3]/16383.0);
+		Console.WriteLine("Linear Acceleration [X]: " + linearAcceleration[0]/100.0 + " m/s²");
+		Console.WriteLine("Linear Acceleration [Y]: " + linearAcceleration[1]/100.0 + " m/s²");
+		Console.WriteLine("Linear Acceleration [Z]: " + linearAcceleration[2]/100.0 + " m/s²");
+		Console.WriteLine("Gravity Vector [X]: " + gravityVector[0]/100.0 + " m/s²");
+		Console.WriteLine("Gravity Vector [Y]: " + gravityVector[1]/100.0 + " m/s²");
+		Console.WriteLine("Gravity Vector [Z]: " + gravityVector[2]/100.0 + " m/s²");
+		Console.WriteLine("Temperature: " + temperature + " °C");
+		Console.WriteLine("Calibration Status: " + Convert.ToString(calibrationStatus, 2));
+		Console.WriteLine("");
 	}
 
 	static void Main()

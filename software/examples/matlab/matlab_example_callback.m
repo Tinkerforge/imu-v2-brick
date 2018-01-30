@@ -24,6 +24,9 @@ end
 
 % Callback function for quaternion callback
 function cb_quaternion(e)
-    fprintf('w: %.2f, x: %.2f, y: %.2f, z: %.2f\n', ...
-            e.w/16383.0, e.x/16383.0, e.y/16383.0, e.z/16383.0);
+    fprintf('Quaternion [W]: %g\n', e.w/16383.0);
+    fprintf('Quaternion [X]: %g\n', e.x/16383.0);
+    fprintf('Quaternion [Y]: %g\n', e.y/16383.0);
+    fprintf('Quaternion [Z]: %g\n', e.z/16383.0);
+    fprintf('\n');
 end

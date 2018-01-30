@@ -23,9 +23,11 @@ end
 
 % Callback function for quaternion callback
 function cb_quaternion(e)
-    fprintf("w: %.2f, x: %.2f, y: %.2f, z: %.2f\n",
-            java2int(e.w)/16383.0, java2int(e.x)/16383.0,
-            java2int(e.y)/16383.0, java2int(e.z)/16383.0);
+    fprintf("Quaternion [W]: %g\n", java2int(e.w)/16383.0);
+    fprintf("Quaternion [X]: %g\n", java2int(e.x)/16383.0);
+    fprintf("Quaternion [Y]: %g\n", java2int(e.y)/16383.0);
+    fprintf("Quaternion [Z]: %g\n", java2int(e.z)/16383.0);
+    fprintf("\n");
 end
 
 function int = java2int(value)

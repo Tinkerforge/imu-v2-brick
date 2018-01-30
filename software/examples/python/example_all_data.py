@@ -11,25 +11,31 @@ from tinkerforge.brick_imu_v2 import BrickIMUV2
 # Callback function for all data callback
 def cb_all_data(acceleration, magnetic_field, angular_velocity, euler_angle, quaternion,
                 linear_acceleration, gravity_vector, temperature, calibration_status):
-    print(u"""
-Acceleration        x: {:.2f} y: {:.2f} z: {:.2f} m/s²
-Magnetic Field      x: {:.2f} y: {:.2f} z: {:.2f} µT
-Angular Velocity    x: {:.2f} y: {:.2f} z: {:.2f} °/s
-Euler Angle         x: {:.2f} y: {:.2f} z: {:.2f} °
-Quaternion          x: {:.2f} y: {:.2f} z: {:.2f} w: {:.2f}
-Linear Acceleration x: {:.2f} y: {:.2f} z: {:.2f} m/s²
-Gravity Vector      x: {:.2f} y: {:.2f} z: {:.2f} m/s²
-Temperature         {} °C
-Calibration Status  {:08b}
-""".format(acceleration[0]/100.0,        acceleration[1]/100.0,        acceleration[2]/100.0,
-           magnetic_field[0]/16.0,       magnetic_field[1]/16.0,       magnetic_field[2]/16.0,
-           angular_velocity[0]/16.0,     angular_velocity[1]/16.0,     angular_velocity[2]/16.0,
-           euler_angle[0]/16.0,          euler_angle[1]/16.0,          euler_angle[2]/16.0,
-           quaternion[1]/16383.0,        quaternion[2]/16383.0,        quaternion[3]/16383.0,        quaternion[0]/16383.0,
-           linear_acceleration[0]/100.0, linear_acceleration[1]/100.0, linear_acceleration[2]/100.0,
-           gravity_vector[0]/100.0,      gravity_vector[1]/100.0,      gravity_vector[2]/100.0,
-           temperature,
-           calibration_status))
+    print("Acceleration [X]: " + str(acceleration[0]/100.0) + " m/s²")
+    print("Acceleration [Y]: " + str(acceleration[1]/100.0) + " m/s²")
+    print("Acceleration [Z]: " + str(acceleration[2]/100.0) + " m/s²")
+    print("Magnetic Field [X]: " + str(magnetic_field[0]/16.0) + " µT")
+    print("Magnetic Field [Y]: " + str(magnetic_field[1]/16.0) + " µT")
+    print("Magnetic Field [Z]: " + str(magnetic_field[2]/16.0) + " µT")
+    print("Angular Velocity [X]: " + str(angular_velocity[0]/16.0) + " °/s")
+    print("Angular Velocity [Y]: " + str(angular_velocity[1]/16.0) + " °/s")
+    print("Angular Velocity [Z]: " + str(angular_velocity[2]/16.0) + " °/s")
+    print("Euler Angle [X]: " + str(euler_angle[0]/16.0) + " °")
+    print("Euler Angle [Y]: " + str(euler_angle[1]/16.0) + " °")
+    print("Euler Angle [Z]: " + str(euler_angle[2]/16.0) + " °")
+    print("Quaternion [W]: " + str(quaternion[0]/16383.0))
+    print("Quaternion [X]: " + str(quaternion[1]/16383.0))
+    print("Quaternion [Y]: " + str(quaternion[2]/16383.0))
+    print("Quaternion [Z]: " + str(quaternion[3]/16383.0))
+    print("Linear Acceleration [X]: " + str(linear_acceleration[0]/100.0) + " m/s²")
+    print("Linear Acceleration [Y]: " + str(linear_acceleration[1]/100.0) + " m/s²")
+    print("Linear Acceleration [Z]: " + str(linear_acceleration[2]/100.0) + " m/s²")
+    print("Gravity Vector [X]: " + str(gravity_vector[0]/100.0) + " m/s²")
+    print("Gravity Vector [Y]: " + str(gravity_vector[1]/100.0) + " m/s²")
+    print("Gravity Vector [Z]: " + str(gravity_vector[2]/100.0) + " m/s²")
+    print("Temperature: " + str(temperature) + " °C")
+    print("Calibration Status: " + format(calibration_status, "08b"))
+    print("")
 
 if __name__ == "__main__":
     ipcon = IPConnection() # Create IP connection

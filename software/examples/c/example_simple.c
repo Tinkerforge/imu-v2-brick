@@ -30,8 +30,10 @@ int main(void) {
 		return 1;
 	}
 
-	printf("w: %.2f, x: %.2f, y: %.2f, z: %.2f\n",
-	       w/16383.0, x/16383.0, y/16383.0, z/16383.0);
+	printf("Quaternion [W]: %f\n", w/16383.0);
+	printf("Quaternion [X]: %f\n", x/16383.0);
+	printf("Quaternion [Y]: %f\n", y/16383.0);
+	printf("Quaternion [Z]: %f\n", z/16383.0);
 
 	printf("Press key to exit\n");
 	getchar();
