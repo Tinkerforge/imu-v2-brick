@@ -41,6 +41,7 @@
 #include "bricklib/utility/sqrt.h"
 #include "bricklib/utility/mutex.h"
 #include "bricklib/drivers/flash/flashd.h"
+#include "bricklib/drivers/efc/efc.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -488,6 +489,9 @@ void update_sensor_data(void) {
 		} else if(imu_update & IMU_UPDATE_SENSOR_FUSION_MODE) {
 			imu_update_sensor_fusion_mode();
 			imu_update &= ~IMU_UPDATE_SENSOR_FUSION_MODE;
+		} else if(imu_update & IMU_UPDATE_SENSOR_CALIBRATION) {
+			read_calibration_from_bno055_and_save_to_flash();
+			imu_update &= ~IMU_UPDATE_SENSOR_CALIBRATION;
 		} else {
 			// Unknown update!
 			// We delete it to not end up in an endless loop
@@ -592,8 +596,7 @@ void bmo_read_registers_dma(const uint8_t reg, uint8_t *data, const uint8_t leng
 }
 
 bool read_calibration_from_bno055_and_save_to_flash(void) {
-	// TODO: Saving of calibration state currently only works in SAM3S processor family
-	if(sensor_data.calibration_status != 0xFF || !IS_SAM3()) {
+	if(sensor_data.calibration_status != 0xFF) {
 		return false;
 	}
 
@@ -615,12 +618,23 @@ bool read_calibration_from_bno055_and_save_to_flash(void) {
 	DISABLE_RESET_BUTTON();
 	__disable_irq();
 
+	// Only change wait states on SAM4, because this makes a SAM3 hang for unknown reasons
+	if(!IS_SAM3()) {
+		EFC_SetWaitState(EFC, 6);
+	}
+
 	// Unlock flash region
 	if(FLASHD_Unlock(IMU_CALIBRATION_ADDRESS,
 	                 END_OF_BRICKLET_MEMORY,
 	                 NULL,
 	                 NULL) != 0) {
 		return false;
+	}
+
+	// On SAM4 we have to erase the flash here, the EFC_FCMD_EWP command does not work...
+	if(!IS_SAM3()) {
+		// EFC_FCMD_EPA = 0x07
+		EFC_PerformCommand(EFC, 0x07, (((256-32)/16) << 4) | 2, 0);
 	}
 
 	if(FLASHD_Write(IMU_CALIBRATION_ADDRESS,
@@ -634,6 +648,10 @@ bool read_calibration_from_bno055_and_save_to_flash(void) {
 	               NULL,
 			       NULL) != 0) {
 		return false;
+	}
+
+	if(!IS_SAM3()) {
+		EFC_SetWaitState(EFC, 2);
 	}
 
 	__enable_irq();

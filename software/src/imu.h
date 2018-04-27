@@ -30,6 +30,7 @@
 // Sensor configuration constants
 #define IMU_UPDATE_SENSOR_CONFIGURATION     (1 << 0)
 #define IMU_UPDATE_SENSOR_FUSION_MODE       (1 << 1)
+#define IMU_UPDATE_SENSOR_CALIBRATION       (1 << 2)
 
 #define IMU_MAGNETOMETER_RATE_2HZ           0
 #define IMU_MAGNETOMETER_RATE_6HZ           1

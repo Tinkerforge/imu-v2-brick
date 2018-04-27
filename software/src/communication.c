@@ -181,7 +181,9 @@ void save_calibration(const ComType com, const SaveCalibration *data) {
 
 	scr.header               = data->header;
 	scr.header.length        = sizeof(SaveCalibrationReturn);
-	if(read_calibration_from_bno055_and_save_to_flash()) {
+
+	if(sensor_data.calibration_status == 0xFF) {
+		imu_update |= IMU_UPDATE_SENSOR_CALIBRATION;
 		scr.calibration_done = true;
 	} else {
 		scr.calibration_done = false;
