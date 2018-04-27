@@ -39,7 +39,7 @@
 2018-01-11: 2.0.11 (b5a366b)
 - Fix message duplication bug (through bricklib)
 
-2018-01-12: 2.0.12 (TBD)
+2018-04-27: 2.0.12 (TBD)
 - Add calibration support for SAM4 processors
 - Fix computation tick return-bug that (fixes erroneous callback periods)
 - Fix potential deadlock between usb stack and comcu enumeration (through bricklib)
