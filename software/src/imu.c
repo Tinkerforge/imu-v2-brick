@@ -105,11 +105,6 @@ void tick_task(const uint8_t tick_type) {
 
 		// Copy data from last DMA transfer before we start a new one
 		update_sensor_data_save();
-		if(tick_type == TICK_TASK_TYPE_CALCULATION) {
-			// If we are in the calculation task, we return here so a bricklet
-			// can properly take the i2c mutex if necessary
-			return;
-		}
 	}
 
 	if(tick_type == TICK_TASK_TYPE_CALCULATION) {
