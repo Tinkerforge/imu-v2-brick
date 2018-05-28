@@ -10,9 +10,8 @@ ipcon=NETNew["Tinkerforge.IPConnection"]
 imu=NETNew["Tinkerforge.BrickIMUV2",uid,ipcon]
 ipcon@Connect[host,port]
 
-w=0;x=0;y=0;z=0
-
 (*Get current quaternion*)
+w=0;x=0;y=0;z=0
 imu@GetQuaternion[w,x,y,z]
 
 Print["Quaternion [W]: "<>ToString[N[w/16383.0]]]

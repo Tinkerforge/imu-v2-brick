@@ -18,10 +18,8 @@ Notebook[{
    RowBox[{"ipcon", "@", RowBox[{"Connect", "[", RowBox[{"host", ",", "port"}], "]"}]}],
    RowBox[{"
 "}],
-   RowBox[{"w", "=", "0", ";", "x", "=", "0", ";", "y", "=", "0", ";", "z", "=", "0"}],
-   RowBox[{"
-"}],
    RowBox[{"(*", "Get current quaternion", "*)"}],
+   RowBox[{"w", "=", "0", ";", "x", "=", "0", ";", "y", "=", "0", ";", "z", "=", "0"}],
    RowBox[{"imu", "@", RowBox[{"GetQuaternion", "[", RowBox[{"w", ",", "x", ",", "y", ",", "z"}], "]"}]}],
    RowBox[{"
 "}],
