@@ -411,7 +411,7 @@ void get_sensor_configuration(const ComType com, const GetSensorConfiguration *d
 }
 
 void set_sensor_fusion_mode(const ComType com, const SetSensorFusionMode *data) {
-	if(data->mode > IMU_SENSOR_FUSION_ON_WO_MAG) {
+	if(data->mode > IMU_SENSOR_FUSION_ON_WO_FST_MAG_CAL) {
 		com_return_error(data, sizeof(MessageHeader), MESSAGE_ERROR_CODE_INVALID_PARAMETER, com);
 		return;
 	}

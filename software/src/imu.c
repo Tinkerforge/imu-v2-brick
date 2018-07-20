@@ -432,6 +432,7 @@ void update_sensor_data_save(void) {
 			break;
 		}
 
+		case IMU_SENSOR_FUSION_ON_WO_FST_MAG_CAL: // fall-through
 		case IMU_SENSOR_FUSION_ON: {
 			if(update_sensor_counter == 9) {
 				update_sensor_counter = 0;
@@ -751,6 +752,10 @@ void imu_update_sensor_fusion_mode(void) {
 			sensor_data.mag_z              = 0;
 
 			bmo_write_register(REG_OPR_MODE, 0b1000);
+			break;
+		}
+		case IMU_SENSOR_FUSION_ON_WO_FST_MAG_CAL: {
+			bmo_write_register(REG_OPR_MODE, 0b1011);
 			break;
 		}
 	}

@@ -73,6 +73,7 @@
 #define IMU_SENSOR_FUSION_OFF               0
 #define IMU_SENSOR_FUSION_ON                1
 #define IMU_SENSOR_FUSION_ON_WO_MAG         2
+#define IMU_SENSOR_FUSION_ON_WO_FST_MAG_CAL 3
 
 
 #define IMU_PERIOD_TYPE_ACC  0
