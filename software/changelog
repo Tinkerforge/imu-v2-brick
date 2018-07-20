@@ -44,5 +44,5 @@
 - Fix computation tick return-bug that (fixes erroneous callback periods)
 - Fix potential deadlock between usb stack and comcu enumeration (through bricklib)
 
-2018-07-20: 2.0.13 (TBD)
+2018-07-20: 2.0.13 (cb5d242)
 - Add support for fusion mode without fast magnetometer calibration
