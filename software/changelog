@@ -46,3 +46,5 @@
 
 2018-07-20: 2.0.13 (cb5d242)
 - Add support for fusion mode without fast magnetometer calibration
+- Add support for Isolator Bricklet (through bricklib)
+- Improve Co-MCU Bricklet error handling (through bricklib)
