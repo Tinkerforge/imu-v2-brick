@@ -27,10 +27,10 @@
   potentially other Bricklets that use I2C).
 
 2017-05-11: 2.0.8 (8582e88)
-- Add support for co-mcu Bricklets
+- Add support for Co-MCU Bricklets
 
 2017-06-28: 2.0.9 (85e3bdd)
-- Fix incompatibility between co-mcu support and LED Strip Bricklet (through bricklib)
+- Fix incompatibility between Co-MCU support and LED Strip Bricklet (through bricklib)
 
 2017-12-13: 2.0.10 (157789d)
 - Make sure Brick does not restart on suspend/resume (through bricklib)
@@ -41,8 +41,8 @@
 
 2018-04-27: 2.0.12 (95d693d)
 - Add calibration support for SAM4 processors
-- Fix computation tick return-bug that (fixes erroneous callback periods)
-- Fix potential deadlock between usb stack and comcu enumeration (through bricklib)
+- Fix computation tick return bug (fixes erroneous callback periods)
+- Fix potential deadlock between USB stack and Co-MCU enumeration (through bricklib)
 
 2018-07-20: 2.0.13 (cb5d242)
 - Add support for fusion mode without fast magnetometer calibration
