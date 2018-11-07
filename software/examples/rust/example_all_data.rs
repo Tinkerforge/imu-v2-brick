@@ -12,10 +12,10 @@ fn main() -> Result<(), Box<dyn Error>> {
     ipcon.connect((HOST, PORT)).recv()??; // Connect to brickd.
                                           // Don't use device before ipcon is connected.
 
-    // Create receiver for all data events.
-    let all_data_receiver = imu.get_all_data_receiver();
+    let all_data_receiver = imu.get_all_data_callback_receiver();
 
-    // Spawn thread to handle received events. This thread ends when the `imu` object
+    // Spawn thread to handle received callback messages.
+    // This thread ends when the `imu` object
     // is dropped, so there is no need for manual cleanup.
     thread::spawn(move || {
         for all_data in all_data_receiver {
