@@ -19,10 +19,10 @@ func main() {
 	// Don't use device before ipcon is connected.
 
 	imu.RegisterQuaternionCallback(func(w int16, x int16, y int16, z int16) {
-		fmt.Printf("Quaternion [W]: %d\n", float64(w)/16383.0)
-		fmt.Printf("Quaternion [X]: %d\n", float64(x)/16383.0)
-		fmt.Printf("Quaternion [Y]: %d\n", float64(y)/16383.0)
-		fmt.Printf("Quaternion [Z]: %d\n", float64(z)/16383.0)
+		fmt.Printf("Quaternion [W]: %f\n", float64(w)/16383.0)
+		fmt.Printf("Quaternion [X]: %f\n", float64(x)/16383.0)
+		fmt.Printf("Quaternion [Y]: %f\n", float64(y)/16383.0)
+		fmt.Printf("Quaternion [Z]: %f\n", float64(z)/16383.0)
 		fmt.Println()
 	})
 
