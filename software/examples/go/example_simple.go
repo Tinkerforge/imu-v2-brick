@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/tinkerforge/go-api-bindings/imu_v2_brick"
-	"github.com/tinkerforge/go-api-bindings/ipconnection"
+	"github.com/Tinkerforge/go-api-bindings/imu_v2_brick"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
 )
 
 const ADDR string = "localhost:4223"
