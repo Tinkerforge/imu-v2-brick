@@ -1,0 +1,10 @@
+
+
+# Change XXYYZZ to the UID of your IMU Brick 2.0
+
+setup:
+	# Handle incoming all data callbacks
+	subscribe to tinkerforge/callback/imu_v2_brick/XXYYZZ/all_data
+	publish '{"register": true}' to tinkerforge/register/imu_v2_brick/XXYYZZ/all_data # Register all_data callback
+	# Set period for all data callback to 0.1s (100ms)
+	publish '{"period": 100}' to tinkerforge/request/imu_v2_brick/XXYYZZ/set_all_data_period
