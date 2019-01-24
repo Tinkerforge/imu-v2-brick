@@ -2,5 +2,5 @@
 
 setup:
 	# Get current quaternion
-	subscribe to tinkerforge/response/imu_v2/XXYYZZ/get_quaternion
+	subscribe to tinkerforge/response/imu_v2_brick/XXYYZZ/get_quaternion
 	publish '' to tinkerforge/request/imu_v2_brick/XXYYZZ/get_quaternion 
