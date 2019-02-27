@@ -48,3 +48,9 @@
 - Add support for fusion mode without fast magnetometer calibration
 - Add support for Isolator Bricklet (through bricklib)
 - Improve Co-MCU Bricklet error handling (through bricklib)
+
+2019-02-27: 2.0.14 (TBD)
+- Changes through bricklib:
+  - Fix Bricklet port miss-identification
+  - Increase SPI stack timeout (for RED Brick)
+  - Fix bugs in set/get_spitfp_* functions
