@@ -49,7 +49,7 @@
 - Add support for Isolator Bricklet (through bricklib)
 - Improve Co-MCU Bricklet error handling (through bricklib)
 
-2019-02-27: 2.0.14 (TBD)
+2019-02-27: 2.0.14 (fa293e1)
 - Changes through bricklib:
   - Fix Bricklet port miss-identification
   - Increase SPI stack timeout (for RED Brick)
