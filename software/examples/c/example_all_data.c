@@ -61,7 +61,7 @@ int main(void) {
 	// Register all data callback to function cb_all_data
 	imu_v2_register_callback(&imu,
 	                         IMU_V2_CALLBACK_ALL_DATA,
-	                         (void *)cb_all_data,
+	                         (void (*)(void))cb_all_data,
 	                         NULL);
 
 	// Set period for all data callback to 0.1s (100ms)

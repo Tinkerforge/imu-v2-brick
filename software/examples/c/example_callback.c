@@ -37,7 +37,7 @@ int main(void) {
 	// Register quaternion callback to function cb_quaternion
 	imu_v2_register_callback(&imu,
 	                         IMU_V2_CALLBACK_QUATERNION,
-	                         (void *)cb_quaternion,
+	                         (void (*)(void))cb_quaternion,
 	                         NULL);
 
 	// Set period for quaternion callback to 0.1s (100ms)
