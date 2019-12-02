@@ -24,9 +24,9 @@ void cb_all_data(int16_t acceleration[3], int16_t magnetic_field[3],
 	printf("Angular Velocity [X]: %f °/s\n", angular_velocity[0]/16.0);
 	printf("Angular Velocity [Y]: %f °/s\n", angular_velocity[1]/16.0);
 	printf("Angular Velocity [Z]: %f °/s\n", angular_velocity[2]/16.0);
-	printf("Euler Angle [X]: %f °\n", euler_angle[0]/16.0);
-	printf("Euler Angle [Y]: %f °\n", euler_angle[1]/16.0);
-	printf("Euler Angle [Z]: %f °\n", euler_angle[2]/16.0);
+	printf("Euler Angle [Heading]: %f °\n", euler_angle[0]/16.0);
+	printf("Euler Angle [Roll]: %f °\n", euler_angle[1]/16.0);
+	printf("Euler Angle [Pitch]: %f °\n", euler_angle[2]/16.0);
 	printf("Quaternion [W]: %f\n", quaternion[0]/16383.0);
 	printf("Quaternion [X]: %f\n", quaternion[1]/16383.0);
 	printf("Quaternion [Y]: %f\n", quaternion[2]/16383.0);

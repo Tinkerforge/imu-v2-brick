@@ -32,9 +32,9 @@ function cb_all_data(e)
     fprintf("Angular Velocity [X]: %g °/s\n", java2int(e.angularVelocity(1))/16.0);
     fprintf("Angular Velocity [Y]: %g °/s\n", java2int(e.angularVelocity(2))/16.0);
     fprintf("Angular Velocity [Z]: %g °/s\n", java2int(e.angularVelocity(3))/16.0);
-    fprintf("Euler Angle [X]: %g °\n", java2int(e.eulerAngle(1))/16.0);
-    fprintf("Euler Angle [Y]: %g °\n", java2int(e.eulerAngle(2))/16.0);
-    fprintf("Euler Angle [Z]: %g °\n", java2int(e.eulerAngle(3))/16.0);
+    fprintf("Euler Angle [Heading]: %g °\n", java2int(e.eulerAngle(1))/16.0);
+    fprintf("Euler Angle [Roll]: %g °\n", java2int(e.eulerAngle(2))/16.0);
+    fprintf("Euler Angle [Pitch]: %g °\n", java2int(e.eulerAngle(3))/16.0);
     fprintf("Quaternion [W]: %g\n", java2int(e.quaternion(1))/16383.0);
     fprintf("Quaternion [X]: %g\n", java2int(e.quaternion(2))/16383.0);
     fprintf("Quaternion [Y]: %g\n", java2int(e.quaternion(3))/16383.0);

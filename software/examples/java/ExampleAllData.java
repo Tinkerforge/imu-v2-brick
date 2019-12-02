@@ -33,9 +33,9 @@ public class ExampleAllData {
 				System.out.println("Angular Velocity [X]: " + angularVelocity[0]/16.0 + " °/s");
 				System.out.println("Angular Velocity [Y]: " + angularVelocity[1]/16.0 + " °/s");
 				System.out.println("Angular Velocity [Z]: " + angularVelocity[2]/16.0 + " °/s");
-				System.out.println("Euler Angle [X]: " + eulerAngle[0]/16.0 + " °");
-				System.out.println("Euler Angle [Y]: " + eulerAngle[1]/16.0 + " °");
-				System.out.println("Euler Angle [Z]: " + eulerAngle[2]/16.0 + " °");
+				System.out.println("Euler Angle [Heading]: " + eulerAngle[0]/16.0 + " °");
+				System.out.println("Euler Angle [Roll]: " + eulerAngle[1]/16.0 + " °");
+				System.out.println("Euler Angle [Pitch]: " + eulerAngle[2]/16.0 + " °");
 				System.out.println("Quaternion [W]: " + quaternion[0]/16383.0);
 				System.out.println("Quaternion [X]: " + quaternion[1]/16383.0);
 				System.out.println("Quaternion [Y]: " + quaternion[2]/16383.0);

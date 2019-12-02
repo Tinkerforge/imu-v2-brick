@@ -33,9 +33,9 @@ function cb_all_data(e)
     fprintf('Angular Velocity [X]: %g °/s\n', e.angularVelocity(1)/16.0);
     fprintf('Angular Velocity [Y]: %g °/s\n', e.angularVelocity(2)/16.0);
     fprintf('Angular Velocity [Z]: %g °/s\n', e.angularVelocity(3)/16.0);
-    fprintf('Euler Angle [X]: %g °\n', e.eulerAngle(1)/16.0);
-    fprintf('Euler Angle [Y]: %g °\n', e.eulerAngle(2)/16.0);
-    fprintf('Euler Angle [Z]: %g °\n', e.eulerAngle(3)/16.0);
+    fprintf('Euler Angle [Heading]: %g °\n', e.eulerAngle(1)/16.0);
+    fprintf('Euler Angle [Roll]: %g °\n', e.eulerAngle(2)/16.0);
+    fprintf('Euler Angle [Pitch]: %g °\n', e.eulerAngle(3)/16.0);
     fprintf('Quaternion [W]: %g\n', e.quaternion(1)/16383.0);
     fprintf('Quaternion [X]: %g\n', e.quaternion(2)/16383.0);
     fprintf('Quaternion [Y]: %g\n', e.quaternion(3)/16383.0);

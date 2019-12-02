@@ -28,9 +28,9 @@ fn main() -> Result<(), Box<dyn Error>> {
             println!("Angular Velocity [X]: {} °/s", all_data.angular_velocity[0] as f32 / 16.0);
             println!("Angular Velocity [Y]: {} °/s", all_data.angular_velocity[1] as f32 / 16.0);
             println!("Angular Velocity [Z]: {} °/s", all_data.angular_velocity[2] as f32 / 16.0);
-            println!("Euler Angle [X]: {} °", all_data.euler_angle[0] as f32 / 16.0);
-            println!("Euler Angle [Y]: {} °", all_data.euler_angle[1] as f32 / 16.0);
-            println!("Euler Angle [Z]: {} °", all_data.euler_angle[2] as f32 / 16.0);
+            println!("Euler Angle [Heading]: {} °", all_data.euler_angle[0] as f32 / 16.0);
+            println!("Euler Angle [Roll]: {} °", all_data.euler_angle[1] as f32 / 16.0);
+            println!("Euler Angle [Pitch]: {} °", all_data.euler_angle[2] as f32 / 16.0);
             println!("Quaternion [W]: {}", all_data.quaternion[0] as f32 / 16383.0);
             println!("Quaternion [X]: {}", all_data.quaternion[1] as f32 / 16383.0);
             println!("Quaternion [Y]: {}", all_data.quaternion[2] as f32 / 16383.0);

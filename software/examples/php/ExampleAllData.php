@@ -24,9 +24,9 @@ function cb_allData($acceleration, $magnetic_field, $angular_velocity, $euler_an
     echo "Angular Velocity [X]: " . $angular_velocity[0]/16.0 . " °/s\n";
     echo "Angular Velocity [Y]: " . $angular_velocity[1]/16.0 . " °/s\n";
     echo "Angular Velocity [Z]: " . $angular_velocity[2]/16.0 . " °/s\n";
-    echo "Euler Angle [X]: " . $euler_angle[0]/16.0 . " °\n";
-    echo "Euler Angle [Y]: " . $euler_angle[1]/16.0 . " °\n";
-    echo "Euler Angle [Z]: " . $euler_angle[2]/16.0 . " °\n";
+    echo "Euler Angle [Heading]: " . $euler_angle[0]/16.0 . " °\n";
+    echo "Euler Angle [Roll]: " . $euler_angle[1]/16.0 . " °\n";
+    echo "Euler Angle [Pitch]: " . $euler_angle[2]/16.0 . " °\n";
     echo "Quaternion [W]: " . $quaternion[0]/16383.0 . "\n";
     echo "Quaternion [X]: " . $quaternion[1]/16383.0 . "\n";
     echo "Quaternion [Y]: " . $quaternion[2]/16383.0 . "\n";

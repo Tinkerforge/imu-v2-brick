@@ -50,9 +50,9 @@ begin
   WriteLn(Format('Angular Velocity [X]: %f °/s', [angularVelocity[0]/16.0]));
   WriteLn(Format('Angular Velocity [Y]: %f °/s', [angularVelocity[1]/16.0]));
   WriteLn(Format('Angular Velocity [Z]: %f °/s', [angularVelocity[2]/16.0]));
-  WriteLn(Format('Euler Angle [X]: %f °', [eulerAngle[0]/16.0]));
-  WriteLn(Format('Euler Angle [Y]: %f °', [eulerAngle[1]/16.0]));
-  WriteLn(Format('Euler Angle [Z]: %f °', [eulerAngle[2]/16.0]));
+  WriteLn(Format('Euler Angle [Heading]: %f °', [eulerAngle[0]/16.0]));
+  WriteLn(Format('Euler Angle [Roll]: %f °', [eulerAngle[1]/16.0]));
+  WriteLn(Format('Euler Angle [Pitch]: %f °', [eulerAngle[2]/16.0]));
   WriteLn(Format('Quaternion [W]: %f', [quaternion[0]/16383.0]));
   WriteLn(Format('Quaternion [X]: %f', [quaternion[1]/16383.0]));
   WriteLn(Format('Quaternion [Y]: %f', [quaternion[2]/16383.0]));

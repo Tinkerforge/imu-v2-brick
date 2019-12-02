@@ -35,9 +35,9 @@ imu.on(Tinkerforge.BrickIMUV2.CALLBACK_ALL_DATA,
         console.log('Angular Velocity [X]: ' + angularVelocity[0]/16.0 + ' °/s');
         console.log('Angular Velocity [Y]: ' + angularVelocity[1]/16.0 + ' °/s');
         console.log('Angular Velocity [Z]: ' + angularVelocity[2]/16.0 + ' °/s');
-        console.log('Euler Angle [X]: ' + eulerAngle[0]/16.0 + ' °');
-        console.log('Euler Angle [Y]: ' + eulerAngle[1]/16.0 + ' °');
-        console.log('Euler Angle [Z]: ' + eulerAngle[2]/16.0 + ' °');
+        console.log('Euler Angle [Heading]: ' + eulerAngle[0]/16.0 + ' °');
+        console.log('Euler Angle [Roll]: ' + eulerAngle[1]/16.0 + ' °');
+        console.log('Euler Angle [Pitch]: ' + eulerAngle[2]/16.0 + ' °');
         console.log('Quaternion [W]: ' + quaternion[0]/16383.0);
         console.log('Quaternion [X]: ' + quaternion[1]/16383.0);
         console.log('Quaternion [Y]: ' + quaternion[2]/16383.0);

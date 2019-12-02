@@ -22,9 +22,9 @@ class Example
 		Console.WriteLine("Angular Velocity [X]: " + angularVelocity[0]/16.0 + " °/s");
 		Console.WriteLine("Angular Velocity [Y]: " + angularVelocity[1]/16.0 + " °/s");
 		Console.WriteLine("Angular Velocity [Z]: " + angularVelocity[2]/16.0 + " °/s");
-		Console.WriteLine("Euler Angle [X]: " + eulerAngle[0]/16.0 + " °");
-		Console.WriteLine("Euler Angle [Y]: " + eulerAngle[1]/16.0 + " °");
-		Console.WriteLine("Euler Angle [Z]: " + eulerAngle[2]/16.0 + " °");
+		Console.WriteLine("Euler Angle [Heading]: " + eulerAngle[0]/16.0 + " °");
+		Console.WriteLine("Euler Angle [Roll]: " + eulerAngle[1]/16.0 + " °");
+		Console.WriteLine("Euler Angle [Pitch]: " + eulerAngle[2]/16.0 + " °");
 		Console.WriteLine("Quaternion [W]: " + quaternion[0]/16383.0);
 		Console.WriteLine("Quaternion [X]: " + quaternion[1]/16383.0);
 		Console.WriteLine("Quaternion [Y]: " + quaternion[2]/16383.0);

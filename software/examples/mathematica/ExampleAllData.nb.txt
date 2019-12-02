@@ -29,9 +29,9 @@ AllDataCB[sender_,{acceleration1_,acceleration2_,acceleration3_},
   Print["Angular Velocity [X]: "<>ToString[N[Quantity[angularVelocity1,"°/s/16"]]]];
   Print["Angular Velocity [Y]: "<>ToString[N[Quantity[angularVelocity2,"°/s/16"]]]];
   Print["Angular Velocity [Z]: "<>ToString[N[Quantity[angularVelocity3,"°/s/16"]]]];
-  Print["Euler Angle [X]: "<>ToString[N[Quantity[eulerAngle1,"°/16"]]]];
-  Print["Euler Angle [Y]: "<>ToString[N[Quantity[eulerAngle2,"°/16"]]]];
-  Print["Euler Angle [Z]: "<>ToString[N[Quantity[eulerAngle3,"°/16"]]]];
+  Print["Euler Angle [Heading]: "<>ToString[N[Quantity[eulerAngle1,"°/16"]]]];
+  Print["Euler Angle [Roll]: "<>ToString[N[Quantity[eulerAngle2,"°/16"]]]];
+  Print["Euler Angle [Pitch]: "<>ToString[N[Quantity[eulerAngle3,"°/16"]]]];
   Print["Quaternion [W]: "<>ToString[N[quaternion1/16383.0]]];
   Print["Quaternion [X]: "<>ToString[N[quaternion2/16383.0]]];
   Print["Quaternion [Y]: "<>ToString[N[quaternion3/16383.0]]];

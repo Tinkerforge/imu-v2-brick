@@ -23,9 +23,9 @@ sub cb_all_data
     print "Angular Velocity [X]: " . @{$angular_velocity}[0]/16.0 . " °/s\n";
     print "Angular Velocity [Y]: " . @{$angular_velocity}[1]/16.0 . " °/s\n";
     print "Angular Velocity [Z]: " . @{$angular_velocity}[2]/16.0 . " °/s\n";
-    print "Euler Angle [X]: " . @{$euler_angle}[0]/16.0 . " °\n";
-    print "Euler Angle [Y]: " . @{$euler_angle}[1]/16.0 . " °\n";
-    print "Euler Angle [Z]: " . @{$euler_angle}[2]/16.0 . " °\n";
+    print "Euler Angle [Heading]: " . @{$euler_angle}[0]/16.0 . " °\n";
+    print "Euler Angle [Roll]: " . @{$euler_angle}[1]/16.0 . " °\n";
+    print "Euler Angle [Pitch]: " . @{$euler_angle}[2]/16.0 . " °\n";
     print "Quaternion [W]: " . @{$quaternion}[0]/16383.0 . "\n";
     print "Quaternion [X]: " . @{$quaternion}[1]/16383.0 . "\n";
     print "Quaternion [Y]: " . @{$quaternion}[2]/16383.0 . "\n";
