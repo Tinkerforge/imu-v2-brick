@@ -4,6 +4,6 @@ setup:
 	# Handle incoming quaternion callbacks
 	subscribe to tinkerforge/callback/imu_v2_brick/XXYYZZ/quaternion
 	publish '{"register": true}' to tinkerforge/register/imu_v2_brick/XXYYZZ/quaternion # Register quaternion callback
-	
+
 	# Set period for quaternion callback to 0.1s (100ms)
 	publish '{"period": 100}' to tinkerforge/request/imu_v2_brick/XXYYZZ/set_quaternion_period
