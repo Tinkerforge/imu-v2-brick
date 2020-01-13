@@ -50,5 +50,5 @@ if __name__ == "__main__":
     # Set period for all data callback to 0.1s (100ms)
     imu.set_all_data_period(100)
 
-    raw_input("Press key to exit\n") # Use input() in Python 3
+    input("Press key to exit\n") # Use raw_input() in Python 2
     ipcon.disconnect()
