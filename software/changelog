@@ -55,5 +55,5 @@
   - Increase SPI stack timeout (for RED Brick)
   - Fix bugs in set/get_spitfp_* functions
 
-2021-03-23: 2.0.15 (<unknown>)
+2021-03-23: 2.0.15 (87c1a7b)
 - Fix temperature callback response size
