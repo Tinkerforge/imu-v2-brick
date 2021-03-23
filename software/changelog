@@ -54,3 +54,6 @@
   - Fix Bricklet port miss-identification
   - Increase SPI stack timeout (for RED Brick)
   - Fix bugs in set/get_spitfp_* functions
+
+2021-03-23: 2.0.15 (<unknown>)
+- Fix temperature callback response size
