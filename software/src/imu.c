@@ -181,7 +181,7 @@ void make_period_callback(const uint8_t type) {
 
 		case IMU_PERIOD_TYPE_TMP: {
 			TemperatureCallback tc;
-			com_make_default_header(&tc, com_info.uid, sizeof(AngularVelocityCallback), FID_TEMPERATURE);
+			com_make_default_header(&tc, com_info.uid, sizeof(TemperatureCallback), FID_TEMPERATURE);
 			tc.temperature = sensor_data.temperature;
 
 			send_blocking_with_timeout(&tc,
